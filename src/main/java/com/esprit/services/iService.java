@@ -1,10 +1,11 @@
 package com.esprit.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public interface iService <T>{
+public interface IService<T> {
+
     void ajouter(T t);
     void modifier(T t);
     void supprimer(T t);
-    ArrayList<T> rechercher();
+    List<T> rechercher();
 }
