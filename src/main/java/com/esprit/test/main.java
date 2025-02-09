@@ -11,9 +11,9 @@ public class main {
     public static void main(String[] args) {
 
         //  ClientService ps = new ClientService();
-         // cs.ajouter(new Client(6, "amen","wbch","null","32156sa","12/02/2003","amail@gmail.com",80f,1.50f,"i want to die"));
-        //    cs.modifier(new Client(1, "ghassen","wbch","antha","32156sa","12/02/2003","amail@gmail.com",80f,1.50f,"i want to die"));
-        //  cs.supprimer(new Client(5, "","","","","","",0f,0f,""));
+         // cs.ajouter(new Client(6, "amen","wbch","null","32156sa","12/02/2003","amail@gmail.com",80f,1.50f,"i want to die",2));
+        //    cs.modifier(new Client(1, "ghassen","wbch","antha","32156sa","12/02/2003","amail@gmail.com",80f,1.50f,"i want to die",3));
+        //  cs.supprimer(new Client(5, "","","","","","",0f,0f,"",0));
        // System.out.println(cs.rechercher());
 
        //CoachService cs = new CoachService();

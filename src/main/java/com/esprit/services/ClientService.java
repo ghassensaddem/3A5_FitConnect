@@ -12,7 +12,7 @@ public class ClientService implements IService<Client> {
 
     @Override
     public void ajouter(Client client) {
-        String req = "INSERT INTO client (nom,prenom,sexe,mdp,dateNaissance,email,poids,taille,objectif) VALUES (?,?,?,?,?,?,?,?,?)";
+        String req = "INSERT INTO client (nom,prenom,sexe,mdp,dateNaissance,email,poids,taille,objectif,id_prog) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setString(1, client.getNom());
@@ -24,6 +24,7 @@ public class ClientService implements IService<Client> {
             pst.setFloat(7, client.getPoids());
             pst.setFloat(8, client.getTaille());
             pst.setString(9, client.getObjectif());
+            pst.setInt(10,client.getId_prog());
             pst.executeUpdate();
             System.out.println("Client ajoutée");
         } catch (SQLException e) {
@@ -33,7 +34,7 @@ public class ClientService implements IService<Client> {
 
     @Override
     public void modifier(Client client) {
-        String req = "UPDATE client SET nom=? ,prenom=?,sexe=?,mdp=?,DateNaissance=?,email=?,poids=?,taille=?,objectif=? WHERE id=?";
+        String req = "UPDATE client SET nom=? ,prenom=?,sexe=?,mdp=?,DateNaissance=?,email=?,poids=?,taille=?,objectif=?,id_prog=? WHERE id=?";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setString(1, client.getNom());
@@ -45,7 +46,8 @@ public class ClientService implements IService<Client> {
             pst.setFloat(7, client.getPoids());
             pst.setFloat(8, client.getTaille());
             pst.setString(9, client.getObjectif());
-            pst.setInt(10, client.getId());
+            pst.setInt(10, client.getId_prog());
+            pst.setInt(11, client.getId());
             pst.executeUpdate();
             System.out.println("Client modifiée");
         } catch (SQLException e) {
@@ -75,7 +77,7 @@ public class ClientService implements IService<Client> {
             PreparedStatement pst = connection.prepareStatement(req);
             ResultSet rs = pst.executeQuery(req);
             while (rs.next()) {
-                clients.add(new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("sexe"),rs.getString("mdp"),rs.getString("dateNaissance"),rs.getString("email"),rs.getFloat("poids"),rs.getFloat("taille"),rs.getString("objectif")));
+                clients.add(new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("sexe"),rs.getString("mdp"),rs.getString("dateNaissance"),rs.getString("email"),rs.getFloat("poids"),rs.getFloat("taille"),rs.getString("objectif"),rs.getInt("id_Prog")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
