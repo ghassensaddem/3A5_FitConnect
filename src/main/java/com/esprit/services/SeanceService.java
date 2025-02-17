@@ -13,7 +13,7 @@ public class SeanceService implements iService<seance> {
 
     @Override
     public void ajouter(seance seance) {
-        String req = "INSERT INTO seance (date, horaire, lieu, programme_id, activite_id) VALUES (?, ?, ?, ?, ?)";
+        String req = "INSERT INTO seance (date, horaire, lieu, programme_id, idActivity ) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setDate(1, Date.valueOf(seance.getDate())); // LocalDate -> SQL Date
@@ -30,7 +30,7 @@ public class SeanceService implements iService<seance> {
 
     @Override
     public void modifier(seance seance) {
-        String req = "UPDATE seance SET date=?, horaire=?, lieu=?, programme_id=?, activite_id=? WHERE id=?";
+        String req = "UPDATE seance SET date=?, horaire=?, lieu=?, programme_id=?, idActivity =? WHERE id=?";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setDate(1, Date.valueOf(seance.getDate()));
@@ -75,7 +75,7 @@ public class SeanceService implements iService<seance> {
                         rs.getTime("horaire").toLocalTime(), // SQL Time -> LocalTime
                         rs.getString("lieu"),
                         rs.getInt("programme_id"),
-                        rs.getInt("activite_id")
+                        rs.getInt("idActivity ")
                 ));
             }
         } catch (SQLException e) {

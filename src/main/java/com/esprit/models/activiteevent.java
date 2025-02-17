@@ -7,18 +7,29 @@ public class activiteevent {
     private String horaire;
     private int nbrparticipant;
     private int idEvent;
-    public activiteevent(int id, String horaire, int nbrparticipant, int idEvent) {
+    private int idTypeActivite ;
+    public activiteevent(int id, String horaire, int nbrparticipant, int idEvent,int idTypeActivite ) {
         this.id = id;
         this.horaire = horaire;
         this.nbrparticipant = nbrparticipant;
         this.idEvent = idEvent;
+        this.idTypeActivite = idTypeActivite;
     }
-    public activiteevent( String horaire, int nbrparticipant, int idEvent ) {
+    public activiteevent( String horaire, int nbrparticipant, int idEvent ,int idTypeActivite ) {
         this.horaire = horaire;
         this.nbrparticipant = nbrparticipant;
         this.idEvent = idEvent;
+        this.idTypeActivite = idTypeActivite;
     }
 
+
+    public int getIdTypeActivite() {
+        return idTypeActivite;
+    }
+
+    public void setIdTypeActivite(int idTypeActivite) {
+        this.idTypeActivite = idTypeActivite;
+    }
 
     public int getId() {
         return id;
@@ -51,6 +62,7 @@ public class activiteevent {
         this.nbrparticipant = nbrparticipant;
     }
 
+
     @Override
     public String toString() {
         return "activiteevent{" +
@@ -58,21 +70,20 @@ public class activiteevent {
                 ", horaire='" + horaire + '\'' +
                 ", nbrparticipant=" + nbrparticipant +
                 ", idEvent=" + idEvent +
+                ", idTypeActivite=" + idTypeActivite +
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         activiteevent that = (activiteevent) o;
-        return id == that.id &&
-                nbrparticipant == that.nbrparticipant && Objects.equals(horaire, that.horaire) && idEvent == that.idEvent;
-
+        return id == that.id && nbrparticipant == that.nbrparticipant && idEvent == that.idEvent && idTypeActivite == that.idTypeActivite && Objects.equals(horaire, that.horaire);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, horaire, nbrparticipant, idEvent);
+        return Objects.hash(id, horaire, nbrparticipant, idEvent, idTypeActivite);
     }
 }

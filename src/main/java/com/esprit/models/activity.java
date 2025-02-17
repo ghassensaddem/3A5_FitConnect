@@ -1,4 +1,5 @@
 package com.esprit.models;
+/////simbuilder
 
 public class activity {
     private int idActivity;
