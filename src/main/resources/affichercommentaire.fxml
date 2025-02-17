@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="550.0" prefWidth="794.0" style="-fx-background-color: #F1F2F6;"
+            stylesheets="@styles/button.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.esprit.controllers.AfficherCommentaire">
+
+    <!-- Conteneur du tableau avec ombre -->
+    <VBox layoutX="250.0" layoutY="120.0" prefHeight="400.0" prefWidth="500.0" spacing="15.0"
+          style="-fx-padding: 25px; -fx-background-color: white; -fx-border-color: #053536; -fx-border-radius: 10px;">
+        <!-- Effet d'ombre -->
+        <effect>
+            <DropShadow color="#888888" offsetX="5.0" offsetY="5.0" radius="15.0" />
+        </effect>
+
+        <children>
+            <!-- ScrollPane pour le défilement horizontal -->
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" vbarPolicy="NEVER">
+                <TableView fx:id="comTable" prefHeight="350.0" prefWidth="800.0">
+                    <columns>
+                        <TableColumn fx:id="colcomId" prefWidth="50.0" text="ID" />
+                        <TableColumn fx:id="colcomDate" prefWidth="100.0" text="Date" />
+                        <TableColumn fx:id="colcomAuthor" prefWidth="100.0" text="Auteur" />
+                        <TableColumn fx:id="colcomContent" prefWidth="150.0" text="Contenu" />
+                        <TableColumn fx:id="colcomUpvotes" prefWidth="100.0" text="Upvotes" />
+                        <TableColumn fx:id="colcomDownvotes" prefWidth="100.0" text="Downvotes" />
+                        <!-- Colonne Post ID -->
+                        <TableColumn fx:id="colcomPostId" prefWidth="100.0" text="Post ID"/>
+                        <!-- Colonne de suppression -->
+                        <TableColumn fx:id="colcomDelete" prefWidth="100.0" text="Supprimer"/>
+                    </columns>
+                </TableView>
+            </ScrollPane>
+        </children>
+    </VBox>
+
+
+
+    <!-- Ajout d'un titre -->
+    <Label layoutX="250.0" layoutY="50.0" prefHeight="40.0" prefWidth="500.0"
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #053536;"
+           text="Affichage des Commentaires" />
+
+    <!-- Sidebar -->
+    <AnchorPane>
+        <VBox styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+
+            <ImageView fitHeight="140.0" fitWidth="130.0" layoutX="63.0" layoutY="4.0"
+                       pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@images/logo2.png" />
+                </image>
+            </ImageView>
+
+            <Button styleClass="my-button2" text="Home" />
+            <Button styleClass="my-button2" text="Activities" />
+            <Button styleClass="my-button2" text="Salles" />
+            <Button styleClass="my-button2" text="Equipement" />
+            <Button styleClass="my-button2" text="Événements" />
+            <Button styleClass="my-button2" text="Compétitions" />
+            <Button styleClass="my-button2" text="Préférences" />
+            <Button styleClass="my-button2" text="Notifications" />
+            <Button styleClass="my-button2" text="Thème" />
+            <Button styleClass="my-button2" text="Langue" />
+        </VBox>
+    </AnchorPane>
+
+</AnchorPane>

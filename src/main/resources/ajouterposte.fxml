@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+
+
+
+
+<AnchorPane prefHeight="550.0" prefWidth="794.0" style="-fx-background-color: #F1F2F6;" stylesheets="@styles/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.AjouterPost">
+
+   <!-- Conteneur du formulaire avec ombre -->
+   <VBox layoutX="310.0" layoutY="105.0" prefHeight="350.0" prefWidth="460.0" spacing="15.0" style="-fx-padding: 25px; -fx-background-color: white; -fx-border-radius: 0px; -fx-border-color: #053536;">
+
+      <!-- Effet d'ombre -->
+      <effect>
+         <DropShadow color="#888888" offsetX="5.0" offsetY="5.0" radius="15.0" />
+      </effect>
+
+
+
+      <Label text="Auteur" underline="true" />
+      <ComboBox fx:id="authorComboBox" prefHeight="35.0" prefWidth="300.0" styleClass="input-field" />
+
+      <Label text="contenu" underline="true">
+
+      </Label>
+      <TextArea fx:id="contentArea" prefHeight="200.0" prefWidth="300.0" styleClass="input-field" />
+
+      <Label text="image" underline="true">
+
+      </Label>
+      <ImageView fx:id="postImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Button text="Choisir une image" onAction="#importImage" />
+
+
+      <Button mnemonicParsing="false" onAction="#Validate" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Enregistrer post" />
+   </VBox>
+
+   <!-- Ajout du logo et des images de décoration -->
+   <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/theme.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="195.0" fitWidth="286.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/theme.png" />
+      </image>
+   </ImageView>
+
+   <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/theme.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/theme.png" />
+      </image>
+   </ImageView>
+   <Label layoutX="351.0" layoutY="21.0" prefHeight="50.0" prefWidth="392.0" styleClass="title" text="Ajout post">
+
+   </Label>
+   <AnchorPane>
+      <VBox styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+
+         <ImageView fitHeight="140.0" fitWidth="130.0" layoutX="63.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+            <image>
+               <Image url="@images/logo2.png" />
+            </image>
+         </ImageView>
+         <Button styleClass="my-button2" text="Home">
+
+         </Button>
+
+
+         <Button styleClass="my-button2" text="Activities">
+
+         </Button>
+
+         <Button styleClass="my-button2" text="Salles">
+            <graphic>
+
+            </graphic>
+         </Button>
+
+         <Button styleClass="my-button2" text="Equipement">
+
+         </Button>
+
+         <Button styleClass="my-button2" text="Evennement">
+
+         </Button>
+
+         <Button styleClass="my-button2" text="Competition">
+
+         </Button>
+
+         <Button styleClass="my-button2" text="Preferences">
+
+         </Button>
+
+         <Button styleClass="my-button2" text="Notifications">
+
+         </Button>
+
+         <Button styleClass="my-button2" text="Theme">
+
+         </Button>
+
+         <Button styleClass="my-button2" text="Language">
+
+         </Button>
+      </VBox>
+   </AnchorPane>
+
+
+</AnchorPane>
