@@ -6,19 +6,18 @@ public class typeactivite {
     private int id;
     private String title;
     private String description;
-    private int idActivite;
-    public typeactivite(int id, String title, String description,int idActivite) {
+    public typeactivite(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.idActivite = idActivite;
+
 
     }
-    public typeactivite( String title, String description,int idActivite) {
+    public typeactivite( String title, String description) {
 
         this.title = title;
         this.description = description;
-        this.idActivite = idActivite;
+
 
     }
 
@@ -45,19 +44,13 @@ public class typeactivite {
     public void setDescription(String description) {
         this.description = description;
     }
-public int getIdActivite() {
-        return idActivite;
-}
-public void setIdActivite(int idActivite) {
-        this.idActivite = idActivite;
-}
     @Override
     public String toString() {
         return "typeactivite{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", idActivite=" + idActivite +
+
                 '}';
     }
 
@@ -66,11 +59,11 @@ public void setIdActivite(int idActivite) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         typeactivite that = (typeactivite) o;
-        return id == that.id && Objects.equals(title, that.title) && Objects.equals(description, that.description) && idActivite == that.idActivite;
+        return id == that.id && Objects.equals(title, that.title) && Objects.equals(description, that.description) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, idActivite);
+        return Objects.hash(id, title, description);
     }
 }
