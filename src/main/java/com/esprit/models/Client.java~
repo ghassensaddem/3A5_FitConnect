@@ -51,7 +51,7 @@ public final class Client extends User {
     public float getTaille() {
         return taille;
     }
-
+    
 
     @Override
     public String toString() {

@@ -79,33 +79,4 @@ public class AdminService implements iService<Admin> {
 
         return clients;
     }
-
-    public ArrayList<Admin> rechercherParNom(String nom) {
-        ArrayList<Admin> admins = new ArrayList<>();
-        String req = "SELECT * FROM admin WHERE nom LIKE ?";
-
-        try {
-            PreparedStatement pst = connection.prepareStatement(req);
-            pst.setString(1, "%" + nom + "%"); // Recherche partielle avec LIKE
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                admins.add(new Admin(
-                        rs.getInt("id"),
-                        rs.getString("nom"),
-                        rs.getString("prenom"),
-                        rs.getString("sexe"),
-                        rs.getString("mdp"),
-                        rs.getString("dateNaissance"),
-                        rs.getString("email"),
-                        rs.getString("image")
-                ));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return admins;
-    }
-
 }
