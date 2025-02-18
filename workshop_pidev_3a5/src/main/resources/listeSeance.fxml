@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="578.0" prefWidth="757.0" stylesheets="@Styles2/list.css,@Styles2/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.AfficherSeance1">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="20" styleClass="sidebar">
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@Styles2/logo.png" />
+                </image>
+            </ImageView>
+            <Button styleClass="my-button2" text="Home" />
+            <Button styleClass="my-button2" text="Activities" />
+            <Button styleClass="my-button2" text="Salles" />
+            <Button styleClass="my-button2" text="Equipement" />
+            <Button styleClass="my-button2" text="Evennement" />
+            <Button styleClass="my-button2" text="Competition" />
+            <Button styleClass="my-button2" text="Preferences" />
+            <Button styleClass="my-button2" text="Notifications" />
+            <Button styleClass="my-button2" text="Theme" />
+            <Button styleClass="my-button2" text="Language" />
+         <ImageView fitHeight="103.0" fitWidth="174.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@images/theme.png" />
+            </image>
+         </ImageView>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <StackPane>
+            <VBox spacing="15" style="background-color: #FFFFFF; border-radius: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                <ScrollPane fitToWidth="false" styleClass="scroll-pane">
+                    <GridPane fx:id="usersGrid" hgap="20" prefHeight="900.0" prefWidth="900.0" style="background-color: #F4F6F9; border-radius: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" vgap="20">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="150" />
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="150" />
+                        </columnConstraints>
+
+                        <rowConstraints>
+                            <RowConstraints minHeight="120" vgrow="ALWAYS" />
+                            <RowConstraints minHeight="120" vgrow="ALWAYS" />
+                            <RowConstraints minHeight="120" vgrow="ALWAYS" />
+                            <RowConstraints minHeight="120" vgrow="ALWAYS" />
+                            <RowConstraints minHeight="120" vgrow="ALWAYS" />
+                            <RowConstraints minHeight="120" vgrow="ALWAYS" />
+                        </rowConstraints>
+                    </GridPane>
+                </ScrollPane>
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>
