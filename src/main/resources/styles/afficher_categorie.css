@@ -1,0 +1,148 @@
+/* Style de base pour l'AnchorPane */
+.root {
+    -fx-background-color: #F1F2F6;
+}
+
+/* Style pour le titre */
+.title {
+    -fx-text-fill: #053536;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Arial';
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 3);
+}
+
+/* Style pour le TableView */
+.custom-table {
+    -fx-background-color: white;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+    -fx-padding: 10px;
+}
+
+.custom-table .column-header-background {
+    -fx-background-color: #053536;
+    -fx-background-radius: 10px 10px 0 0;
+}
+
+.custom-table .column-header, .custom-table .filler {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.custom-table .table-cell {
+    -fx-text-fill: #053536;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+    -fx-padding: 10px;
+}
+
+.custom-table .table-row-cell:odd {
+    -fx-background-color: #F1F2F6;
+}
+
+.custom-table .table-row-cell:even {
+    -fx-background-color: white;
+}
+
+.custom-table .table-row-cell:selected {
+    -fx-background-color: #053536;
+    -fx-text-fill: white;
+}
+
+/* Style pour les boutons dans les colonnes */
+.action-button {
+    -fx-background-color: #053536;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+}
+
+.action-button:hover {
+    -fx-background-color: #075E54;
+    -fx-cursor: hand;
+}
+
+.action-button:pressed {
+    -fx-background-color: #054D47;
+}
+
+.modify-button {
+    -fx-background-color: #4CAF50; /* Vert pour le bouton Modifier */
+}
+
+.modify-button:hover {
+    -fx-background-color: #45a049; /* Vert plus foncé au survol */
+}
+
+.delete-button {
+    -fx-background-color: #F44336; /* Rouge pour le bouton Supprimer */
+}
+
+.delete-button:hover {
+    -fx-background-color: #e53935; /* Rouge plus foncé au survol */
+}
+
+/* Style pour les boutons animés */
+.animated-button {
+    -fx-background-color: #053536;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+    -fx-transition: all 0.3s ease;
+}
+
+.animated-button:hover {
+    -fx-background-color: #075E54;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.animated-button:pressed {
+    -fx-background-color: #054D47;
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+}
+
+/* Style pour le sidebar */
+.sidebar {
+    -fx-background-color: #053536;
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+}
+
+.sidebar .image-logo {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+}
+
+.sidebar .my-button2 {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+}
+
+.sidebar .my-button2:hover {
+    -fx-background-color: #075E54;
+    -fx-cursor: hand;
+}
+
+.sidebar .my-button2:pressed {
+    -fx-background-color: #054D47;
+}

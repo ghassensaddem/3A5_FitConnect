@@ -14,17 +14,20 @@ public class CommandeService {
 
     // Ajouter une commande
     public void ajouter(Commande commande) {
-        String req = "INSERT INTO commande (client_id, etat, date_livraison, statut_paiement) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO commande (clientId, equipementId, etat, dateLivraison, statutPaiement, quantite, dateCreation) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setInt(1, commande.getClientId());
-            pst.setString(2, commande.getEtat());
+            pst.setInt(2, commande.getEquipementId());
+            pst.setString(3, commande.getEtat());
             if (commande.getDateLivraison() != null) {
-                pst.setTimestamp(3, Timestamp.valueOf(commande.getDateLivraison()));
+                pst.setTimestamp(4, Timestamp.valueOf(commande.getDateLivraison()));
             } else {
-                pst.setNull(3, Types.TIMESTAMP);
+                pst.setNull(4, Types.TIMESTAMP);
             }
-            pst.setString(4, commande.getStatutPaiement());
+            pst.setString(5, commande.getStatutPaiement());
+            pst.setInt(6, commande.getQuantite());
+            pst.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now())); // Date de création automatique
 
             pst.executeUpdate();
             System.out.println("Commande ajoutée avec succès !");
@@ -35,18 +38,20 @@ public class CommandeService {
 
     // Modifier une commande
     public void modifier(Commande commande) {
-        String req = "UPDATE commande SET client_id=?, etat=?, date_livraison=?, statut_paiement=? WHERE id=?";
+        String req = "UPDATE commande SET clientId=?, equipementId=?, etat=?, dateLivraison=?, statutPaiement=?, quantite=? WHERE id=?";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setInt(1, commande.getClientId());
-            pst.setString(2, commande.getEtat());
+            pst.setInt(2, commande.getEquipementId());
+            pst.setString(3, commande.getEtat());
             if (commande.getDateLivraison() != null) {
-                pst.setTimestamp(3, Timestamp.valueOf(commande.getDateLivraison()));
+                pst.setTimestamp(4, Timestamp.valueOf(commande.getDateLivraison()));
             } else {
-                pst.setNull(3, Types.TIMESTAMP);
+                pst.setNull(4, Types.TIMESTAMP);
             }
-            pst.setString(4, commande.getStatutPaiement());
-            pst.setInt(5, commande.getId());
+            pst.setString(5, commande.getStatutPaiement());
+            pst.setInt(6, commande.getQuantite());
+            pst.setInt(7, commande.getId());
 
             pst.executeUpdate();
             System.out.println("Commande modifiée avec succès !");
@@ -79,11 +84,14 @@ public class CommandeService {
 
             while (rs.next()) {
                 Commande commande = new Commande(
-                        rs.getInt("id"),
-                        rs.getInt("client_id"),
-                        rs.getString("etat"),
-                        rs.getTimestamp("date_livraison") != null ? rs.getTimestamp("date_livraison").toLocalDateTime() : null,
-                        rs.getString("statut_paiement")
+                        rs.getInt("id"), // Récupère l'ID de la commande
+                        rs.getInt("clientId"), // Récupère l'ID du client
+                        rs.getInt("equipementId"), // Récupère l'ID de l'équipement
+                        rs.getString("etat"), // Récupère l'état de la commande
+                        rs.getTimestamp("dateLivraison") != null ? rs.getTimestamp("dateLivraison").toLocalDateTime() : null, // Récupère la date de livraison
+                        rs.getString("statutPaiement"), // Récupère le statut du paiement
+                        rs.getInt("quantite"), // Récupère la quantité de l'équipement
+                        rs.getTimestamp("dateCreation") != null ? rs.getTimestamp("dateCreation").toLocalDateTime() : null // Récupère la date de création depuis la base de données
                 );
                 commandes.add(commande);
             }
@@ -95,7 +103,7 @@ public class CommandeService {
     }
 
     // Récupérer une commande par son ID
-   /* public Commande rechercherParId(int id) {
+    /*public Commande rechercherParId(int id) {
         String req = "SELECT * FROM commande WHERE id=?";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
@@ -106,9 +114,11 @@ public class CommandeService {
                 return new Commande(
                         rs.getInt("id"),
                         rs.getInt("client_id"),
+                        rs.getInt("equipement_id"),
                         rs.getString("etat"),
                         rs.getTimestamp("date_livraison") != null ? rs.getTimestamp("date_livraison").toLocalDateTime() : null,
-                        rs.getString("statut_paiement")
+                        rs.getString("statut_paiement"),
+                        rs.getInt("quantite")
                 );
             }
         } catch (SQLException e) {
@@ -131,10 +141,14 @@ public class CommandeService {
             while (rs.next()) {
                 Commande commande = new Commande(
                         rs.getInt("id"),
-                        rs.getInt("client_id"),
+                        rs.getInt("clientId"),
+                        rs.getInt("equipementId"),
                         rs.getString("etat"),
-                        rs.getTimestamp("date_livraison") != null ? rs.getTimestamp("date_livraison").toLocalDateTime() : null,
-                        rs.getString("statut_paiement")
+                        rs.getTimestamp("dateLivraison") != null ? rs.getTimestamp("dateLivraison").toLocalDateTime() : null,
+                        rs.getString("statutPaiement"),
+                        rs.getInt("quantite"),
+                                rs.getTimestamp("dateCreation") != null ? rs.getTimestamp("dateCreation").toLocalDateTime() : null,
+
                 );
                 commandes.add(commande);
             }
@@ -143,5 +157,7 @@ public class CommandeService {
         }
 
         return commandes;
-    }*/
+    }
+
+     */
 }
