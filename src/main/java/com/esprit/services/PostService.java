@@ -5,6 +5,7 @@ import com.esprit.models.Commentaire;
 import com.esprit.utils.DataSource;
 
 import java.sql.*;
+import java.time.LocalDate;  // Importation de LocalDate
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +32,10 @@ public class PostService implements iService<Post> {
         }
     }
 
+
     @Override
     public void modifier(Post post) {
-        // Mise à jour avec client_id
+        // Mettre à jour la date avec la date actuelle
         String req = "UPDATE post SET author=?, contenu=?, upvotes=?, downvotes=?, image=? WHERE id=?";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
@@ -49,6 +51,7 @@ public class PostService implements iService<Post> {
             System.out.println(e.getMessage());
         }
     }
+
 
     @Override
     public void supprimer(Post post) {
@@ -71,6 +74,8 @@ public class PostService implements iService<Post> {
             PreparedStatement pst = connection.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
+                // Conversion String en LocalDate pour le champ date
+                LocalDate date = rs.getDate("date").toLocalDate();
                 posts.add(new Post(
                         rs.getInt("id"),
                         rs.getString("author"),
@@ -78,8 +83,8 @@ public class PostService implements iService<Post> {
                         rs.getInt("upvotes"),
                         rs.getInt("downvotes"),
                         rs.getString("image"),
-                        rs.getString("date"), // Récupérer la date
-                        rs.getInt("client_id") // Récupérer client_id
+                        date,  // Date convertie en LocalDate
+                        rs.getInt("client_id")
                 ));
             }
         } catch (SQLException e) {
@@ -101,6 +106,8 @@ public class PostService implements iService<Post> {
             pst.setInt(1, postId);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
+                // Conversion String en LocalDate pour le champ date
+                LocalDate date = rs.getDate("date").toLocalDate();
                 Commentaire commentaire = new Commentaire(
                         rs.getInt("id"),
                         rs.getString("author"),
@@ -108,9 +115,9 @@ public class PostService implements iService<Post> {
                         rs.getInt("upvotes"),
                         rs.getInt("downvotes"),
                         rs.getInt("post_id"),
-                        rs.getString("date"),
+                        date, // Date convertie en LocalDate
                         rs.getInt("client_id")
-                ); // Point-virgule ajouté ici
+                );
                 commentaires.add(commentaire);
             }
         } catch (SQLException e) {
@@ -118,5 +125,39 @@ public class PostService implements iService<Post> {
         }
         return commentaires;
     }
+
+    public List<String> getAllClientEmails() {
+        List<String> emails = new ArrayList<>();
+        String req = "SELECT email FROM client"; // Requête pour récupérer les emails des clients
+        try {
+            PreparedStatement pst = connection.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                emails.add(rs.getString("email")); // Récupère l'email et l'ajoute à la liste
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return emails;
+    }
+
+    public int getClientIdByEmail(String email) {
+        int clientId = -1; // Valeur par défaut si l'email n'est pas trouvé
+        String req = "SELECT id FROM client WHERE email = ?"; // Requête pour récupérer l'ID du client via son email
+        try {
+            PreparedStatement pst = connection.prepareStatement(req);
+            pst.setString(1, email); // On met l'email dans la requête
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                clientId = rs.getInt("id"); // Si l'email est trouvé, on récupère l'ID
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return clientId; // Retourne l'ID trouvé ou -1 si l'email n'existe pas
+    }
+
+
+
 
 }

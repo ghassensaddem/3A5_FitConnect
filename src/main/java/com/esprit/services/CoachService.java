@@ -12,7 +12,7 @@ public class CoachService implements iService<Coach> {
 
     @Override
     public void ajouter(Coach coach) {
-        String req = "INSERT INTO coach (nom,prenom,sexe,mdp,dateNaissance,email,lieuEngagement,specialite) VALUES (?,?,?,?,?,?,?,?)";
+        String req = "INSERT INTO coach (nom,prenom,sexe,mdp,dateNaissance,email,lieuEngagement,specialite,image) VALUES (?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setString(1, coach.getNom());
@@ -23,6 +23,7 @@ public class CoachService implements iService<Coach> {
             pst.setString(6, coach.getEmail());
             pst.setString(7, coach.getLieuEngagement());
             pst.setString(8, coach.getSpecialite());
+            pst.setString(9, coach.getImage());
 
             pst.executeUpdate();
             System.out.println("coach ajoutée");
@@ -33,7 +34,7 @@ public class CoachService implements iService<Coach> {
 
     @Override
     public void modifier(Coach coach) {
-        String req = "UPDATE coach SET nom=? ,prenom=?,sexe=?,mdp=?,DateNaissance=?,email=?,lieuEngagement=?,specialite=? WHERE id=?";
+        String req = "UPDATE coach SET nom=? ,prenom=?,sexe=?,mdp=?,DateNaissance=?,email=?,lieuEngagement=?,specialite=?,image=? WHERE id=?";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setString(1, coach.getNom());
@@ -44,7 +45,8 @@ public class CoachService implements iService<Coach> {
             pst.setString(6, coach.getEmail());
             pst.setString(7, coach.getLieuEngagement());
             pst.setString(8,coach.getSpecialite());
-            pst.setInt(9, coach.getId());
+            pst.setString(9,coach.getImage());
+            pst.setInt(10, coach.getId());
             pst.executeUpdate();
             System.out.println("coach modifiée");
         } catch (SQLException e) {
@@ -74,7 +76,7 @@ public class CoachService implements iService<Coach> {
             PreparedStatement pst = connection.prepareStatement(req);
             ResultSet rs = pst.executeQuery(req);
             while (rs.next()) {
-                coachs.add(new Coach(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("sexe"),rs.getString("mdp"),rs.getString("dateNaissance"),rs.getString("email"),rs.getString("lieuEngagement"),rs.getString("specialite")));
+                coachs.add(new Coach(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("sexe"),rs.getString("mdp"),rs.getString("dateNaissance"),rs.getString("email"),rs.getString("image"),rs.getString("lieuEngagement"),rs.getString("specialite")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -82,4 +84,75 @@ public class CoachService implements iService<Coach> {
 
         return coachs;
     }
+
+    public ArrayList<Coach> rechercherParNom(String nom) {
+        ArrayList<Coach> coachs = new ArrayList<>();
+        String req = "SELECT * FROM coach WHERE nom LIKE ?";
+
+        try {
+            PreparedStatement pst = connection.prepareStatement(req);
+            pst.setString(1, "%" + nom + "%"); // Recherche partielle avec LIKE
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                coachs.add(new Coach(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("sexe"),
+                        rs.getString("mdp"),
+                        rs.getString("dateNaissance"),
+                        rs.getString("email"),
+                        rs.getString("image"),
+                        rs.getString("lieuEngagement"),
+                        rs.getString("specialite")
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return coachs;
+    }
+
+
+
+    public ArrayList<String> getAdressesSalles() {
+        ArrayList<String> adresses = new ArrayList<>();
+        String req = "SELECT addresseSalle FROM sallesportif";
+
+        try {
+            PreparedStatement pst = connection.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                adresses.add(rs.getString("addresseSalle"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return adresses;
+    }
+
+
+    public ArrayList<String> getSpecialites() {
+        ArrayList<String> specialites = new ArrayList<>();
+        String req = "SELECT nomActivity FROM activity";
+
+        try {
+            PreparedStatement pst = connection.prepareStatement(req);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                specialites.add(rs.getString("nomActivity"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return specialites;
+    }
+
+
 }

@@ -1,5 +1,4 @@
 package com.esprit.models;
-/////simbuilder
 
 public class activity {
     private int idActivity;
@@ -13,6 +12,7 @@ public class activity {
         IconActivity = iconAcitivity;
         this.categorieActivity = categorieAcitivity;
     }
+
 
     public String getNomActivity() {
         return nomActivity;

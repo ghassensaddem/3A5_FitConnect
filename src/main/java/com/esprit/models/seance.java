@@ -1,9 +1,11 @@
 package com.esprit.models;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
-import java.time.ZoneId;
-
 import java.time.LocalTime;
+
+
 
 
 public class seance {
@@ -35,7 +37,7 @@ public class seance {
         this.activite_id = activite_id;
     }
 
-    public int getId() {
+    public  int getId() {
         return id;
     }
 
@@ -43,9 +45,10 @@ public class seance {
         this.id = id;
     }
 
-    // ✅ Retourne java.sql.Date en convertissant LocalDate
-    public LocalDate getDate() {
-        return java.sql.Date.valueOf(date).toLocalDate();
+    // ✅ Retourne java.sql.Dat
+    // e en convertissant LocalDate
+    public Date getDate() {
+        return java.sql.Date.valueOf(date);  // Retourner directement LocalDate
     }
 
     public void setdate(LocalDate date) {
@@ -53,9 +56,11 @@ public class seance {
     }
 
 
-    public LocalTime getHoraire() {
-        return horaire;
+    public Time getHoraire() {
+        return java.sql.Time.valueOf(horaire);  // Retourner directement LocalTime
     }
+
+
 
     public void  sethoraire(LocalTime horaire) {
         this.horaire = horaire;
@@ -74,7 +79,7 @@ public class seance {
     public int getProgramme_id() {
         return programme_id;
     }
-    public void setprogramme_id(int programme_id) {
+    public void setProgramme_id(int programme_id) {
         this.programme_id = programme_id;
     }
 

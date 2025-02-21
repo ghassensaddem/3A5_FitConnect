@@ -9,7 +9,8 @@ import java.util.List;
 
 public class CategorieService {
 
-    private Connection connection = DataSource.getInstance().getConnection();
+
+    private static Connection connection = DataSource.getInstance().getConnection();
     public List<CategorieEquipement> getAllCategories() {
         List<CategorieEquipement> categories = new ArrayList<>();
         String req = "SELECT * FROM categorie_equipement";
@@ -88,4 +89,26 @@ public class CategorieService {
 
         return categories;
     }
+
+
+    public static String getCategorieNomById(int idCategorie) {
+        String categorieNom = "";
+        String req = "SELECT nom FROM categorie_equipement WHERE id = ?";
+
+        try {
+            PreparedStatement pst = connection.prepareStatement(req);
+            pst.setInt(1, idCategorie);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                categorieNom = rs.getString("nom");
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return categorieNom;
+    }
+
+
 }

@@ -10,7 +10,7 @@ public class Avis {
     private int seanceId;
 
     // Constructeur
-    public Avis(int id,  String commentaire, int note, int seanceId) {
+    public Avis(int id, String commentaire, int note, int seanceId) {
         this.id = id;
         this.commentaire = commentaire;
         this.note = note;

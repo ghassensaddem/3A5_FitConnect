@@ -6,6 +6,9 @@ public class CategorieEquipement {
     private String nom;
     private String description;
 
+    public CategorieEquipement() {
+    }
+
     public CategorieEquipement(int id, String nom, String description) {
         this.id = id;
         this.nom = nom;

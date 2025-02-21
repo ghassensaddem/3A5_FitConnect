@@ -13,13 +13,14 @@ public class EventService implements iService<Event> {
 
     @Override
     public void ajouter(Event event) {
-        String req = "INSERT INTO event (date, prixdupass, lieu, horaire) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO event (date, prixdupass, lieu, horaire , image) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setString(1, event.getDate());
             pst.setDouble(2, event.getPrixdupass());
             pst.setString(3, event.getLieu());
             pst.setString(4, event.getHoraire());
+            pst.setString(5, event.getImage());
             pst.executeUpdate();
             System.out.println("Événement ajouté");
         } catch (SQLException e) {
@@ -29,14 +30,15 @@ public class EventService implements iService<Event> {
 
     @Override
     public void modifier(Event event) {
-        String req = "UPDATE event SET date=?, prixdupass=?, lieu=?, horaire=? WHERE id=?";
+        String req = "UPDATE event SET date=?, prixdupass=?, lieu=?, horaire=?, image=? WHERE id=?";
         try {
             PreparedStatement pst = connection.prepareStatement(req);
             pst.setString(1, event.getDate());
             pst.setDouble(2, event.getPrixdupass());
             pst.setString(3, event.getLieu());
             pst.setString(4, event.getHoraire());
-            pst.setInt(5, event.getId());
+            pst.setString(5, event.getImage());
+            pst.setInt(6, event.getId());
             pst.executeUpdate();
             System.out.println("Événement modifié");
         } catch (SQLException e) {
@@ -65,7 +67,7 @@ public class EventService implements iService<Event> {
             PreparedStatement pst = connection.prepareStatement(req);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                events.add(new Event(rs.getInt("id"), rs.getString("date"), rs.getFloat("prixdupass"), rs.getString("lieu"), rs.getString("horaire")));
+                events.add(new Event(rs.getInt("id"), rs.getString("date"), rs.getFloat("prixdupass"), rs.getString("lieu"), rs.getString("horaire"), rs.getString("image")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

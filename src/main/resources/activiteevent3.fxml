@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="674.0" prefWidth="794.0" style="-fx-background-color: #F1F2F6;" stylesheets="@styles2/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.ModifierActiviteevent">
+
+    <!-- Conteneur du formulaire avec ombre -->
+    <VBox layoutX="310.0" layoutY="117.0" prefHeight="580.0" prefWidth="460.0" spacing="15.0" style="-fx-padding: 25px; -fx-background-color: white; -fx-border-radius: 0px; -fx-border-color: #053536;">
+
+        <!-- Effet d'ombre -->
+        <effect>
+            <DropShadow color="#888888" offsetX="5.0" offsetY="5.0" radius="15.0" />
+        </effect>
+        <Label text="ID" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="16.0" />
+            </font>
+
+        </Label>
+        <TextField fx:id="id" prefHeight="35.0" prefWidth="300.0" styleClass="input-field" />
+        <Label text="Horaire" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="16.0" />
+            </font>
+        </Label>
+        <TextField fx:id="hr" prefHeight="35.0" prefWidth="300.0" styleClass="input-field" />
+
+        <Label text="Nombre de participants" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="16.0" />
+            </font>
+        </Label>
+        <TextField fx:id="np" prefHeight="35.0" prefWidth="300.0" styleClass="input-field" />
+
+        <Label text="ID de l'événement" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="16.0" />
+            </font>
+        </Label>
+      <ChoiceBox fx:id="id1" prefHeight="49.0" prefWidth="321.0" styleClass="input-field" />
+
+        <Label text="ID de type de l'activité" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="16.0" />
+            </font>
+        </Label>
+      <ChoiceBox fx:id="id2" prefHeight="49.0" prefWidth="321.0" styleClass="input-field" />
+
+        <Button mnemonicParsing="false" onAction="#Validate2" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Modifier l'activité" />
+    </VBox>
+
+    <!-- Ajout du logo et des images de décoration -->
+    <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="195.0" fitWidth="286.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="191.0" fitWidth="286.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <Label layoutX="326.0" layoutY="19.0" prefHeight="69.0" prefWidth="432.0" styleClass="title" text="Modifier l'activité">
+        <font>
+            <Font name="System Bold Italic" size="26.0" />
+        </font>
+    </Label>
+    <AnchorPane>
+        <VBox prefHeight="580.0" prefWidth="236.0" styleClass="sidebar" AnchorPane.bottomAnchor="-30.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="-236.0" AnchorPane.topAnchor="0">
+
+            <ImageView fitHeight="140.0" fitWidth="130.0" layoutX="63.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@images/logo2.png" />
+                </image>
+            </ImageView>
+            <Button styleClass="my-button2" text="Home">
+                <graphic>
+
+                    <FontAwesomeIcon glyphName="HOME" size="1.4em" styleClass="font-awesome-icon" />
+
+
+                </graphic>
+            </Button>
+
+
+            <Button styleClass="my-button2" text="Activities">
+                <graphic>
+                    <FontAwesomeIcon glyphName="ANCHOR" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Salles">
+                <graphic>
+                    <FontAwesomeIcon glyphName="TROPHY" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Equipement">
+                <graphic>
+                    <FontAwesomeIcon glyphName="BELL" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button onAction="#goToAjouterEvent" styleClass="my-button2" text="Evennements">
+                <graphic>
+                    <FontAwesomeIcon glyphName="CALENDAR_ALT" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Competition">
+                <graphic>
+                    <FontAwesomeIcon glyphName="FLAG_CHECKERED" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Preferences">
+                <graphic>
+                    <FontAwesomeIcon glyphName="COG" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Notifications">
+                <graphic>
+                    <FontAwesomeIcon glyphName="BELL" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Theme">
+                <graphic>
+                    <FontAwesomeIcon glyphName="PAINT_BRUSH" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Language">
+                <graphic>
+                    <FontAwesomeIcon glyphName="GLOBE" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+        </VBox>
+    </AnchorPane>
+   <ImageView fitHeight="170.0" fitWidth="347.0" layoutX="-15.0" layoutY="623.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/theme.png" />
+      </image>
+   </ImageView>
+
+
+</AnchorPane>

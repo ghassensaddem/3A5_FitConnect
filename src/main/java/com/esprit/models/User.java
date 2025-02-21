@@ -9,9 +9,10 @@ public abstract sealed class User permits Client,Coach,Admin{
     private String mdp;
     private String DateNaissance;
     private String email;
+    private String image;
 
 
-    public User(int id, String nom, String prenom, String sexe, String mdp, String dateNaissance, String email) {
+    public User(int id, String nom, String prenom, String sexe, String mdp, String dateNaissance, String email, String image) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -19,6 +20,15 @@ public abstract sealed class User permits Client,Coach,Admin{
         this.mdp = mdp;
         DateNaissance = dateNaissance;
         this.email = email;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public User() {

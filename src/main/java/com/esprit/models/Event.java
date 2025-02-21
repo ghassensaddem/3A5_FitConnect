@@ -8,19 +8,30 @@ public class Event {
     private float prixdupass;
     private String lieu;
     private String horaire;
-    public Event(int id, String date, float prixdupass, String lieu, String horaire) {
+    private String image;
+    public Event(int id, String date, float prixdupass, String lieu, String horaire ,String image) {
         this.id = id;
         this.date = date;
         this.prixdupass = prixdupass;
         this.lieu = lieu;
         this.horaire = horaire;
+        this.image=image;
     }
 
-    public Event(String date, float prixdupass, String lieu, String horaire) {
+    public Event(String date, float prixdupass, String lieu, String horaire,String image) {
         this.date = date;
         this.prixdupass = prixdupass;
         this.lieu = lieu;
         this.horaire = horaire;
+        this.image=image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getId() {

@@ -1,5 +1,7 @@
 package com.esprit.models;
 
+import java.time.LocalDate;  // Importation de LocalDate
+
 public class Commentaire {
     private int id;
     private String author;
@@ -7,11 +9,11 @@ public class Commentaire {
     private int upvotes;
     private int downvotes;
     private int post_id;
-    private String date;
+    private LocalDate date;  // Modification du type en LocalDate
     private int client_id;
 
     // Constructeur pour recherche
-    public Commentaire(int id, String author, String contenu, int upvotes, int downvotes, int post_id, String date, int client_id) {
+    public Commentaire(int id, String author, String contenu, int upvotes, int downvotes, int post_id, LocalDate date, int client_id) {
         this.id = id;
         this.author = author;
         this.contenu = contenu;
@@ -23,7 +25,7 @@ public class Commentaire {
     }
 
     // Constructeur pour ajouter
-    public Commentaire(String author, String contenu, int upvotes, int downvotes, String date, int post_id, int client_id) {
+    public Commentaire(String author, String contenu, int upvotes, int downvotes, LocalDate date, int post_id, int client_id) {
         this.author = author;
         this.contenu = contenu;
         this.upvotes = upvotes;
@@ -33,15 +35,13 @@ public class Commentaire {
         this.client_id = client_id;
     }
 
-
-    //constructeur pour modification et suppression
+    // Constructeur pour modification et suppression
     public Commentaire(int id, String author, String contenu, int upvotes, int downvotes) {
         this.id = id;
         this.author = author;
         this.contenu = contenu;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
-
     }
 
     // Getters et setters pour chaque attribut
@@ -93,21 +93,21 @@ public class Commentaire {
         this.post_id = post_id;
     }
 
-    public String getDate() {
-        return date;
-    } // Getter pour date
+    public LocalDate getDate() {
+        return date;  // Getter pour date modifié
+    }
 
-    public void setDate(String date) {
-        this.date = date;
-    } // Setter pour date
+    public void setDate(LocalDate date) {
+        this.date = date;  // Setter pour date modifié
+    }
 
     public int getClientId() {
         return client_id;
-    } // Getter pour client_id
+    }
 
     public void setClientId(int client_id) {
         this.client_id = client_id;
-    } // Setter pour client_id
+    }
 
     @Override
     public String toString() {
@@ -118,8 +118,8 @@ public class Commentaire {
                 ", upvotes=" + upvotes +
                 ", downvotes=" + downvotes +
                 ", post_id=" + post_id +
-                ", date='" + date + '\'' +
-                ", client_id=" + client_id + // Afficher client_id
+                ", date=" + date +  // Affichage de la date comme LocalDate
+                ", client_id=" + client_id +
                 '}';
     }
 }

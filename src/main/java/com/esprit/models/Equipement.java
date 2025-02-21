@@ -1,4 +1,5 @@
 package com.esprit.models;
+import com.esprit.services.CategorieService;
 
 public class Equipement {
     private int id;
@@ -6,28 +7,37 @@ public class Equipement {
     private String description;
     private double prix;
     private int quantiteStock;
-    private int idCategorie;  // Référence à la catégorie par son ID
+    private int idCategorie;
+    private String image;// Référence à la catégorie par son ID
 
     // Constructeur avec ID
-    public Equipement(int id, String nom, String description, double prix, int quantiteStock, int idCategorie) {
+    public Equipement(int id, String nom, String description, double prix, int quantiteStock, int idCategorie, String image) {
         this.id = id;
         this.nom = nom;
         this.description = description;
         this.prix = prix;
         this.quantiteStock = quantiteStock;
         this.idCategorie = idCategorie;
+        this.image = image;
     }
 
     // Constructeur sans ID (utilisé avant insertion en BDD)
-    public Equipement(String nom, String description, double prix, int quantiteStock, int idCategorie) {
+    public Equipement(String nom, String description, double prix, int quantiteStock, int idCategorie,String image) {
         this.nom = nom;
         this.description = description;
         this.prix = prix;
         this.quantiteStock = quantiteStock;
         this.idCategorie = idCategorie;
+        this.image = image;
+    }
+    public String getImage() {
+        return image;
     }
 
-    // Getters et Setters
+    public void setImage(String image) {
+        this.image =image;
+    }
+
     public int getId() {
         return id;
     }
@@ -87,4 +97,11 @@ public class Equipement {
                 ", idCategorie=" + idCategorie +
                 '}';
     }
+    public String getCategorieNom() {
+        return CategorieService.getCategorieNomById(this.idCategorie);
+    }
+
+
+
+
 }

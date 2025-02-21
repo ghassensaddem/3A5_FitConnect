@@ -1,57 +1,81 @@
 package com.esprit.models;
 
-public class PlanningActivity {
-    private int idActivity;
-    private int idSalle;
-    private int capacityMax;
-    private int nombreInscription;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
+public class PlanningActivity {
+    private final IntegerProperty idActivity = new SimpleIntegerProperty();
+    private final IntegerProperty idSalle = new SimpleIntegerProperty();
+    private final IntegerProperty capacityMax = new SimpleIntegerProperty();
+    private final IntegerProperty nombreInscription = new SimpleIntegerProperty();
+
+    // Constructeur avec les propriétés
     public PlanningActivity(int idActivity, int idSalle, int capacityMax, int nombreInscription) {
-        this.idActivity = idActivity;
-        this.idSalle = idSalle;
-        this.capacityMax = capacityMax;
-        this.nombreInscription = nombreInscription;
+        this.idActivity.set(idActivity);
+        this.idSalle.set(idSalle);
+        this.capacityMax.set(capacityMax);
+        this.nombreInscription.set(nombreInscription);
     }
 
+    // Getter et Setter pour idActivity
     public int getIdActivity() {
-        return idActivity;
+        return idActivity.get();
     }
 
     public void setIdActivity(int idActivity) {
-        this.idActivity = idActivity;
+        this.idActivity.set(idActivity);
     }
 
+    public IntegerProperty idActivityProperty() {
+        return idActivity;
+    }
+
+    // Getter et Setter pour idSalle
     public int getIdSalle() {
-        return idSalle;
+        return idSalle.get();
     }
 
     public void setIdSalle(int idSalle) {
-        this.idSalle = idSalle;
+        this.idSalle.set(idSalle);
     }
 
+    public IntegerProperty idSalleProperty() {
+        return idSalle;
+    }
+
+    // Getter et Setter pour capacityMax
     public int getCapacityMax() {
-        return capacityMax;
+        return capacityMax.get();
     }
 
     public void setCapacityMax(int capacityMax) {
-        this.capacityMax = capacityMax;
+        this.capacityMax.set(capacityMax);
     }
 
+    public IntegerProperty capacityMaxProperty() {
+        return capacityMax;
+    }
+
+    // Getter et Setter pour nombreInscription
     public int getNombreInscription() {
-        return nombreInscription;
+        return nombreInscription.get();
     }
 
     public void setNombreInscription(int nombreInscription) {
-        this.nombreInscription = nombreInscription;
+        this.nombreInscription.set(nombreInscription);
+    }
+
+    public IntegerProperty nombreInscriptionProperty() {
+        return nombreInscription;
     }
 
     @Override
     public String toString() {
         return "PlanningActivity{" +
-                "idActivity=" + idActivity +
-                ", idSalle=" + idSalle +
-                ", capacityMax=" + capacityMax +
-                ", nombreInscription=" + nombreInscription +
+                "idActivity=" + idActivity.get() +
+                ", idSalle=" + idSalle.get() +
+                ", capacityMax=" + capacityMax.get() +
+                ", nombreInscription=" + nombreInscription.get() +
                 '}';
     }
 }
