@@ -28,6 +28,8 @@ public class ModifierCategorie {
         id.setText(String.valueOf(categorie.getId()));
         nom.setText(categorie.getNom()); // Remplir le champ nom
         description.setText(categorie.getDescription());
+
+        
         javafx.application.Platform.runLater(() -> nom.positionCaret(nom.getText().length()));// Placer le curseur à la fin sans sélectionner le texte
     }
     @FXML

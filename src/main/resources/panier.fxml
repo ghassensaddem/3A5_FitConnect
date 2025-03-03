@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox fx:id="root" spacing="10" xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="root" stylesheets="@styles/panierr.css"    fx:controller="com.esprit.controllers.PanierController"    >
+
+    <!-- Barre du haut -->
+    <HBox styleClass="header">
+        <Label text="Panier" styleClass="title"/>
+        <HBox spacing="10" styleClass="icons-container">
+            <!-- Icône pour effacer tout -->
+            <ImageView fitWidth="25" fitHeight="25">
+                <image>
+                    <Image url="@img/7820754-recycler-icone-ordures-icone-vecteur-logo-design-template-gratuit-vectoriel.jpg"/>
+                </image>
+            </ImageView>
+            <Label text="Effacer tout" styleClass="clear-label" fx:id="clearAllButton" onMouseClicked="#clearAllCommands"   />
+            <!-- Bouton pour fermer le panier -->
+            <Label text="X" styleClass="close-btn" fx:id="closeButton" onMouseClicked="#closeWindow" />
+        </HBox>
+    </HBox>
+
+    <!-- Conteneur des articles -->
+    <VBox fx:id="cartContainer" styleClass="cart-container" spacing="10">
+        <!-- Les articles seront ajoutés dynamiquement ici -->
+    </VBox>
+
+    <!-- Séparateur fin -->
+    <Separator styleClass="separator"/>
+
+    <!-- Sous-total -->
+    <HBox styleClass="subtotal-container">
+        <Label text="Sous-total:" styleClass="subtotal-label"/>
+        <Label fx:id="subtotalPrice" text="0 DT" styleClass="subtotal-price"/>
+    </HBox>
+
+    <!-- Message d'information -->
+    <Label text="Le prix final et les réductions seront déterminés au moment du traitement du paiement."
+           wrapText="true" styleClass="info-text"/>
+
+    <!-- Bouton de commande -->
+    <Button text="PASSER COMMANDE" styleClass="order-btn"    onMouseClicked="#passerCommande"      />
+</VBox>

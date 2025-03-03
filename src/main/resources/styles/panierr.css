@@ -1,0 +1,147 @@
+/* Style général */
+.root {
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-padding: 10;
+}
+
+/* Barre du haut */
+.header {
+    -fx-alignment: center-left;
+    -fx-spacing: 200;
+}
+
+.title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.icons-container {
+    -fx-alignment: center-right;
+    -fx-spacing: 5;
+}
+
+.clear-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666;
+    -fx-cursor: hand;
+}
+
+/* Conteneur principal du panier */
+.cart-container {
+    -fx-background-color: white;
+    -fx-padding: 15;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 2);
+}
+
+/* Articles */
+.cart-item {
+    -fx-alignment: center-left;
+}
+
+.item-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222;
+}
+
+.item-description {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666;
+}
+
+/* Gestion de la quantité */
+.quantity-container {
+    -fx-alignment: center-left;
+    -fx-padding: 5 0 0 0;
+}
+
+.quantity-btn {
+    -fx-background-color: #ddd;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-pref-width: 25;
+    -fx-pref-height: 25;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.quantity-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Prix */
+.price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Séparateur */
+.separator {
+    -fx-background-color: #ddd;
+    -fx-pref-height: 1px;
+}
+
+/* Sous-total */
+.subtotal-container {
+    -fx-padding: 10 0;
+    -fx-alignment: center-right;
+}
+
+.subtotal-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.subtotal-price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+/* Texte d'information */
+.info-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #777;
+    -fx-padding: 5 0;
+}
+
+.order-btn {
+    -fx-background-color: #8000ff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+    -fx-min-width: 200px; /* Largeur minimale pour éviter la troncature */
+    -fx-pref-width: 100%; /* Utilisez 100% si vous voulez qu'il occupe toute la largeur */
+    -fx-cursor: hand;
+    -fx-alignment: center; /* Centrer le texte dans le bouton */
+}
+
+.command-btn {
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-background-color: purple;
+    -fx-text-fill: white;
+}
+
+/* Icônes */
+.icon {
+    -fx-fit-width: 20px;
+    -fx-fit-height: 20px;
+}
+
+.close-btn {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-cursor: hand;
+}

@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -62,7 +63,7 @@
                                 <Insets left="30.0" right="30.0" />
                             </VBox.margin>
                             <children>
-                                <TextField prefHeight="40.0" prefWidth="235.0" promptText="Type here to search" styleClass="transparent" stylesheets="@styles/style.css">
+                                <TextField fx:id="searchField" prefHeight="40.0" prefWidth="235.0" promptText="Type here to search" styleClass="transparent" stylesheets="@styles/style.css">
                                     <HBox.margin>
                                         <Insets left="20.0" />
                                     </HBox.margin>
@@ -70,7 +71,7 @@
                                         <Font name="Cambria" size="18.0" />
                                     </font>
                                 </TextField>
-                                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="search-button" stylesheets="@styles/style.css" text="Search" textFill="WHITE" />
+
                             </children>
                             <styleClass>
                                 <String fx:value="search-box" />
@@ -170,7 +171,7 @@
                                 </HBox>
 
                                 <!-- Bouton "ADD TO CART" -->
-                                <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="270.0" styleClass="add-btn" stylesheets="@styles/style.css" text="ADD TO CART" textFill="#828282">
+                                <Button mnemonicParsing="false" onAction="#addToCart" prefHeight="50.0" prefWidth="270.0" styleClass="add-btn" stylesheets="@styles/style.css" text="ADD TO CART" textFill="#828282">
                                     <VBox.margin>
                                         <Insets bottom="20.0" top="30.0" />
                                     </VBox.margin>
@@ -208,33 +209,39 @@
                                 </Label>
                                 <Pane prefHeight="65.0" prefWidth="393.0" HBox.hgrow="ALWAYS">
                            <children>
-                                      <Label layoutX="374.0" layoutY="-11.0" prefHeight="62.0" prefWidth="100.0" text="My Account" textFill="#878787">
+                                      <Label layoutX="129.0" layoutY="-16.0" prefHeight="62.0" prefWidth="100.0" text="My Account" textFill="#878787">
                                           <font>
                                               <Font name="Cambria" size="18.0" />
                                           </font>
                                       </Label>
-                                      <ImageView fitHeight="50.0" fitWidth="55.0" layoutX="474.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                              <Image url="@img/ic_cart.png" />
-                                          </image>
-                                      </ImageView>
+                               <StackPane layoutX="474.0" layoutY="-5.0">
+                                   <ImageView fx:id="cartIcon" fitHeight="50.0" fitWidth="55.0" onMouseClicked="#openCart" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                           <Image url="@img/ic_cart.png" />
+                                       </image>
+                                   </ImageView>
+                                   <Label fx:id="badgeQuantite" style="-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 12;                   -fx-padding: 3px; -fx-background-radius: 50%; -fx-min-width: 20px;                   -fx-min-height: 20px; -fx-alignment: center; -fx-translate-x: 15px; -fx-translate-y: -15px;" text="0" />
+                               </StackPane>
+                              <Label layoutX="14.0" layoutY="2.0" onMouseClicked="#navigateToCommande" text="Commande" />
+
+
                            </children></Pane>
                             </children>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="142.0" prefWidth="685.0">
                             <children>
                                 <Pane prefHeight="84.0" prefWidth="96.0" />
                                 <Pane prefHeight="84.0" prefWidth="96.0" HBox.hgrow="ALWAYS" />
-                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="893.0" styleClass="shopping-online-card" stylesheets="@styles/style.css">
+                                <HBox alignment="CENTER" prefHeight="194.0" prefWidth="702.0" styleClass="shopping-online-card" stylesheets="@styles/style.css">
                                     <children>
-                                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="203.0">
+                                        <VBox alignment="CENTER" prefHeight="71.0" prefWidth="242.0">
                                             <children>
-                                                <Label prefHeight="29.0" prefWidth="190.0" text="Shopping online" textFill="#878787">
+                                                <Label prefHeight="41.0" prefWidth="190.0" text="Shopping online" textFill="#878787">
                                                     <font>
                                                         <Font name="Cambria Bold" size="18.0" />
                                                     </font>
                                                 </Label>
-                                                <Label prefHeight="20.0" prefWidth="207.0" text="get your shopping in same day" textFill="#878787">
+                                                <Label prefHeight="34.0" prefWidth="242.0" text="get your shopping in same day" textFill="#878787">
                                                     <font>
                                                         <Font name="Cambria" size="15.0" />
                                                     </font>

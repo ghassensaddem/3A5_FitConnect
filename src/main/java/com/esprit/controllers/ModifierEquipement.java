@@ -4,8 +4,10 @@ import com.esprit.models.Equipement;
 import com.esprit.models.CategorieEquipement;
 import com.esprit.services.EquipementService;
 import com.esprit.services.CategorieService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,6 +23,12 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class ModifierEquipement {
+    private void changeScene(ActionEvent event, String fxmlFile) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
     @FXML
     private TextField id;
@@ -290,5 +298,17 @@ public class ModifierEquipement {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    public void handleActivities(ActionEvent event) throws IOException {
+        changeScene(event, "/AffichageActivity.fxml");
+    }
+    @FXML
+    public void handleSalles(ActionEvent event) throws IOException {
+        changeScene(event, "/AffichageSalle.fxml");
+    }
+    @FXML
+    public void handleEvenement(ActionEvent event) throws IOException {
+        changeScene(event, "/event3.fxml");
     }
 }

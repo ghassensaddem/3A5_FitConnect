@@ -20,6 +20,7 @@ public class ItemController {
     @FXML
     private Label nameLabel;
 
+
     @FXML
     private Label price;
     private MyListener myListener;

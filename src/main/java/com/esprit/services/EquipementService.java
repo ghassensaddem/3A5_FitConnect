@@ -7,6 +7,7 @@ import com.esprit.utils.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EquipementService {
 
@@ -114,7 +115,70 @@ public class EquipementService {
 
         return equipements;
     }
+    public Equipement getEquipementById(int id) {
+        String req = "SELECT * FROM equipement WHERE id = ?";
+        try (PreparedStatement pst = connection.prepareStatement(req)) {
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
 
+            if (rs.next()) {
+                return new Equipement(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getDouble("prix"),
+                        rs.getInt("quantite_stock"),
+                        rs.getInt("categorie_id"),
+                        rs.getString("image")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération de l'équipement : " + e.getMessage());
+        }
+        return null; // Retourne null si aucun équipement n'est trouvé
+    }
+    // Méthode pour rechercher par nom
+    public List<Equipement> searchByName(String searchText) {
+        List<Equipement> equipements = rechercher(); // Récupérer tous les équipements
+        return equipements.stream()
+                .filter(equipement -> equipement.getNom().toLowerCase().contains(searchText.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    // Méthode pour trier par quantité
+    public List<Equipement> sortByQuantity() {
+        List<Equipement> equipements = rechercher(); // Récupérer tous les équipements
+        equipements.sort((e1, e2) -> Integer.compare(e2.getQuantiteStock(), e1.getQuantiteStock())); // Tri décroissant
+        return equipements;
+    }
+    public void mettreAJourQuantiteEquipement(int equipementId, int quantiteCommandee) {
+        // Récupérer l'équipement actuel
+        Equipement equipement = getEquipementById(equipementId);
+        if (equipement == null) {
+            System.err.println("Équipement non trouvé avec l'ID : " + equipementId);
+            return;
+        }
+
+        // Calculer la nouvelle quantité
+        int nouvelleQuantite = equipement.getQuantiteStock() - quantiteCommandee;
+
+        if (nouvelleQuantite <= 0) {
+            // Si la quantité est nulle ou négative, supprimer l'équipement
+            supprimer(equipement);
+            System.out.println("L'équipement " + equipement.getNom() + " a été supprimé car la quantité est épuisée.");
+        } else {
+            // Sinon, mettre à jour la quantité
+            String req = "UPDATE equipement SET quantite_stock = ? WHERE id = ?";
+            try (PreparedStatement pst = connection.prepareStatement(req)) {
+                pst.setInt(1, nouvelleQuantite);
+                pst.setInt(2, equipementId);
+                pst.executeUpdate();
+                System.out.println("Quantité de l'équipement mise à jour avec succès.");
+            } catch (SQLException e) {
+                System.err.println("Erreur lors de la mise à jour de la quantité de l'équipement : " + e.getMessage());
+            }
+        }
+    }
 
 
 

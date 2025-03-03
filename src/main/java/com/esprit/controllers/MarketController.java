@@ -1,5 +1,5 @@
 package com.esprit.controllers;
-
+import com.esprit.services.CommandeService;
 import com.esprit.models.CategorieEquipement;
 import com.esprit.models.Equipement;
 import com.esprit.services.CategorieService;
@@ -10,6 +10,8 @@ import com.esprit.tests.MainProgGUI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -19,15 +21,39 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
+import com.esprit.models.Commande;
+import com.esprit.services.CommandeService;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+
+
+
+
+
+
+
+
 
 public class MarketController implements Initializable {
+    @FXML
+    private TextField searchField; // TextField pour la recherche
+
+    @FXML
+    private Button searchButton; // Bouton pour la recherche
+    @FXML
+    private Label badgeQuantite;
+    private Equipement selectedEquipement;
     @FXML
     private Label quantityLabel;
 
@@ -50,11 +76,14 @@ public class MarketController implements Initializable {
 
     @FXML
     private GridPane grid;
+    public VBox getChosenFruitCard() {
+        return chosenFruitCard;
+    }
 
     private MyListener<Equipement> myListener;
     private MyListener<CategorieEquipement> myListener2;
     private int quantity = 0;
-
+    private CommandeService commandeService = new CommandeService();
     @FXML
     private ScrollPane scroll;
 
@@ -65,6 +94,8 @@ public class MarketController implements Initializable {
     private List<CategorieEquipement> categories = categorieService.rechercher();
 
     private void setChosenEquipement(Equipement equipement) {
+        this.selectedEquipement = equipement;
+
         fruitNameLable.setText(equipement.getNom());
         fruitDescriptionLabel.setText(equipement.getDescription());
         fruitPriceLabel.setText(MainProgGUI.CURRENCY + equipement.getPrix());
@@ -128,7 +159,6 @@ public class MarketController implements Initializable {
                     setChosenEquipement(equipement);
                 }
             };
-
         }
 
         int column = 0;
@@ -165,8 +195,12 @@ public class MarketController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.updateBadgeQuantite();
         this.afficher_categories();
         quantityLabel.setText(String.valueOf(quantity));
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            handleSearchByName(newValue);
+        });
     }
 
     @FXML
@@ -182,4 +216,126 @@ public class MarketController implements Initializable {
             quantityLabel.setText(String.valueOf(quantity));
         }
     }
+    @FXML
+    private void addToCart() {
+        if (selectedEquipement != null && quantity > 0) {
+            // Créer une nouvelle commande
+            Commande commande = new Commande(
+                    1, // Remplacez par l'ID du client connecté
+                    selectedEquipement.getId(), // ID de l'équipement
+                    "En attente", // État de la commande
+                    "Non payé", // Statut du paiement
+                    quantity // Quantité
+            );
+
+            // Ajouter la commande à la base de données
+            CommandeService commandeService = new CommandeService();
+            commandeService.ajouter(commande);
+            updateBadgeQuantite();
+
+            // Afficher un message de succès
+            System.out.println("Équipement ajouté au panier !");
+        } else {
+            System.out.println("Veuillez sélectionner un équipement et une quantité valide.");
+        }
+    }
+
+
+    @FXML
+    private void openCart() {
+        try {
+            // Charger le fichier FXML du panier
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/panier.fxml"));
+            Parent root = loader.load();
+            // Récupérer le contrôleur du panier
+            PanierController panierController = loader.getController();
+
+            // Passer l'instance du MarketController au PanierController
+            panierController.setMarketController(this);
+
+            // Créer une nouvelle scène
+            Scene scene = new Scene(root);
+
+            // Récupérer la fenêtre principale (market.fxml)
+            Stage primaryStage = (Stage) chosenFruitCard.getScene().getWindow(); // Remplace marketButton par un élément de ton interface
+
+            // Récupérer la position et la taille de la fenêtre principale
+            double primaryX = primaryStage.getX();
+            double primaryY = primaryStage.getY();
+            double primaryWidth = primaryStage.getWidth();
+            double primaryHeight = primaryStage.getHeight();
+
+            // Créer une nouvelle fenêtre (stage) pour le panier
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED); // Supprime la barre de titre et les boutons de contrôle
+            stage.setScene(scene);
+            stage.setTitle("Panier");
+            panierController.setPanierStage(stage);
+
+            // Définir la position du panier (à droite et au-dessus de market.fxml)
+            double panierWidth = 400; // Largeur de la fenêtre du panier (ajuste selon besoin)
+            double panierHeight = primaryHeight * 0.8; // Hauteur relative à la fenêtre principale
+
+            stage.setX(primaryX + primaryWidth - panierWidth); // Position à droite
+            stage.setY(primaryY + (primaryHeight - panierHeight) / 2); // Centré verticalement
+
+            // Définir la taille du panier
+            stage.setWidth(panierWidth);
+            stage.setHeight(panierHeight);
+
+            // Afficher la fenêtre
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Erreur lors du chargement de la page du panier : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public void updateBadgeQuantite() {
+        int totalQuantite = commandeService.getTotalQuantitePanier(1);
+        System.out.println("Quantité dans updateCartBadge() : " + totalQuantite);
+
+        if (totalQuantite > 0) {
+            badgeQuantite.setText(String.valueOf(totalQuantite));
+            badgeQuantite.setVisible(true);
+        } else {
+            badgeQuantite.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void navigateToCommande() {
+        try {
+            // Charger la nouvelle interface
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/commande.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir la scène actuelle
+            Scene scene = new Scene(root);
+
+            // Obtenir la Stage (fenêtre) actuelle
+            Stage stage = (Stage) chosenFruitCard.getScene().getWindow(); // Utilisez marketButton ici
+
+            // Changer la scène de la Stage
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors du chargement de la fenêtre commande.fxml");
+        }
+    }
+
+    // Méthode pour gérer la recherche par nom
+    private void handleSearchByName(String searchText) {
+        if (searchText != null && !searchText.isEmpty()) {
+
+            equipements = equipementService.searchByName(searchText);
+        }
+        updateEquipementsGrid();
+    }
+
+
+
+
+
+
 }

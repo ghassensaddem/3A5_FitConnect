@@ -101,7 +101,4 @@ public class Equipement {
         return CategorieService.getCategorieNomById(this.idCategorie);
     }
 
-
-
-
 }

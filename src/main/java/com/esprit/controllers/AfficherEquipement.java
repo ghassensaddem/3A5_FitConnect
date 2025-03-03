@@ -1,6 +1,10 @@
 package com.esprit.controllers;
 
+import com.esprit.models.CategorieEquipement;
+import com.esprit.models.Commande;
 import com.esprit.models.Equipement;
+import com.esprit.services.CategorieService;
+import com.esprit.services.CommandeService;
 import com.esprit.services.EquipementService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -12,13 +16,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -26,10 +30,28 @@ import javafx.util.Callback;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class AfficherEquipement implements Initializable {
+    private void changeScene(ActionEvent event, String fxmlFile) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    @FXML
+    private TextField searchField; // TextField pour la recherche
+
+    @FXML
+    private Button sortButton; // Bouton pour le tri
+    @FXML
+    private BorderPane borderPane;
+    private CategorieService categorieService = new CategorieService();
+    private EquipementService equipementService = new EquipementService();
+    private CommandeService commandeService = new CommandeService();
     @FXML
     private TableView<Equipement> equipementTable;
 
@@ -57,10 +79,11 @@ public class AfficherEquipement implements Initializable {
     @FXML
     private TableColumn<Equipement, Void> colActions;
 
-    private EquipementService equipementService = new EquipementService();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        borderPane.setCenter(buildPieChart());
         // Configurer les colonnes
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -97,6 +120,10 @@ public class AfficherEquipement implements Initializable {
 
         // Charger les équipements dans la TableView
         loadEquipements();
+        // Ajouter un écouteur pour la recherche dynamique
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            handleSearchByName(newValue);
+        });
     }
 
     public void loadEquipements() {
@@ -211,4 +238,102 @@ public class AfficherEquipement implements Initializable {
             e.printStackTrace();
         }
     }
+
+
+    private PieChart buildPieChart() {
+        List<Commande> commandes = commandeService.getAllCommandes();
+        // Map pour stocker la quantité vendue par catégorie
+        Map<Integer, Integer> quantiteParCategorie = new HashMap<>();
+
+        // Agréger les quantités vendues par catégorie
+        for (Commande commande : commandes) {
+            Equipement equipement = equipementService.getEquipementById(commande.getEquipementId());
+            int idCategorie = equipement.getIdCategorie();
+            quantiteParCategorie.put(idCategorie, quantiteParCategorie.getOrDefault(idCategorie, 0) + commande.getQuantite());
+        }
+
+        // Calculer le total des ventes
+        int totalVentes = quantiteParCategorie.values().stream().mapToInt(Integer::intValue).sum();
+
+        // Préparer les données pour le PieChart
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        for (Map.Entry<Integer, Integer> entry : quantiteParCategorie.entrySet()) {
+            int idCategorie = entry.getKey();
+            int quantiteVendue = entry.getValue();
+            double pourcentage = (quantiteVendue * 100.0) / totalVentes;
+            String Nom = categorieService.getCategorieNomById(idCategorie);
+            pieChartData.add(new PieChart.Data(Nom, pourcentage));
+        }
+
+        PieChart pieChart = new PieChart(pieChartData); //Creating a Pie chart
+        pieChart.setTitle("Products solds by Categorie"); //Setting the title of the Pie chart
+        pieChart.setClockwise(true); //setting the direction to arrange the data
+        pieChart.setLabelLineLength(50); //Setting the length of the label line
+        pieChart.setLabelsVisible(true); //Setting the labels of the pie chart visible
+        pieChart.setLegendVisible(true);
+        pieChart.setStartAngle(180);
+        return pieChart;
+
+    }
+    // Gestionnaire d'événement pour la recherche par nom
+    private void handleSearchByName(String searchText) {
+        try {
+            List<Equipement> equipements = equipementService.searchByName(searchText);
+            if (equipements != null && !equipements.isEmpty()) {
+                equipementTable.getItems().setAll(equipements);
+            } else {
+                equipementTable.getItems().clear(); // Effacer la TableView si aucun résultat
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la recherche par nom : " + e.getMessage());
+        }
+    }
+
+    // Gestionnaire d'événement pour le tri par quantité
+    @FXML
+    private void handleSortByQuantity(ActionEvent event) {
+        try {
+            List<Equipement> equipements = equipementService.sortByQuantity();
+            if (equipements != null && !equipements.isEmpty()) {
+                equipementTable.getItems().setAll(equipements);
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors du tri par quantité : " + e.getMessage());
+        }
+    }
+    @FXML
+    public void handleActivities(ActionEvent event) throws IOException {
+        changeScene(event, "/AffichageActivity.fxml");
+    }
+    @FXML
+    public void handleSalles(ActionEvent event) throws IOException {
+        changeScene(event, "/AffichageSalle.fxml");
+    }
+    @FXML
+    public void handleEvenement(ActionEvent event) throws IOException {
+        changeScene(event, "/event3.fxml");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -23,10 +23,10 @@
             </image>
         </ImageView>
         <Button styleClass="my-button2" text="Home" />
-        <Button styleClass="my-button2" text="Activities" />
-        <Button styleClass="my-button2" text="Salles" />
+        <Button styleClass="my-button2" text="Activities"  onAction="#handleActivities" />
+        <Button styleClass="my-button2" text="Salles" onAction="#handleSalles" />
         <Button styleClass="my-button2" text="Equipement" />
-        <Button styleClass="my-button2" text="Evennement" />
+        <Button styleClass="my-button2" text="Evennement"  onAction="#handleEvenement" />
         <Button styleClass="my-button2" text="Competition" />
         <Button styleClass="my-button2" text="Preferences" />
         <Button styleClass="my-button2" text="Notifications" />
