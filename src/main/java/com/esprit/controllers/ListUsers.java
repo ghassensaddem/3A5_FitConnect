@@ -3,12 +3,14 @@
 
 package com.esprit.controllers;
 
+import com.esprit.controllers.api.EventQRCodeGenerator;
 import com.esprit.models.Event;
 import com.esprit.models.activiteevent;
 import com.esprit.models.typeactivite;
 import com.esprit.services.EventService;
 import com.esprit.services.activiteEventService;
 import com.esprit.services.typeactiviteService;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,12 +18,31 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.ChoiceBox;
+
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,30 +50,116 @@ import java.util.Optional;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
+
+        // Pour la classe MediaPlayer
+import javafx.event.ActionEvent;               // Pour gérer les événements d'action dans ton contrôleur
+import javafx.fxml.FXML;                      // Pour l'annotation FXML
+import javafx.util.Duration;                  // Pour la durée des notifications
+import org.controlsfx.control.Notifications;  // Pour utiliser les notifications
+import javafx.geometry.Pos;                   // Pour définir la position des notifications
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class ListUsers {
-
+    @FXML
     public TextField txtSearch;
-
+    @FXML
+    private ChoiceBox<String> critere;
+    @FXML
+    private TextField searchField;
     @FXML
     private GridPane usersGrid;
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private Button btnplay;
+    @FXML
+    private Button btnplayy;
+    private void setupSearchListener() {
+        // Vérifier que l'EventService est bien initialisé
+        EventService eventService = new EventService();
+        if (eventService != null) { // Assure-toi que le service n'est pas nul
+            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && !newValue.trim().isEmpty()) { // Vérifier que le champ de recherche n'est pas vide
+                    // Rechercher les événements par nom
+                    ArrayList<Event> filteredEvents = eventService.rechercherParNom(newValue);
+
+                    if (filteredEvents != null) { // Vérifier que la liste des événements n'est pas nulle
+                        usersGrid.getChildren().clear(); // Vider la grille avant d'afficher les nouveaux résultats
+                        populateUsersGrid(filteredEvents); // Afficher les événements filtrés
+                    } else {
+                        // Gérer le cas où la recherche retourne une liste vide ou nulle
+                        usersGrid.getChildren().clear(); // On peut vider la grille si aucun événement n'est trouvé
+                        // Optionnel : Afficher un message ou un indicateur pour les résultats vides
+                    }
+                } else {
+                    // Gérer le cas où la recherche est vide
+                    usersGrid.getChildren().clear(); // Vider la grille si le champ est vide
+                }
+            });
+        } else {
+            // Gestion d'une erreur si l'EventService est nul (rare, mais au cas où)
+            System.out.println("Erreur: EventService non initialisé.");
+        }
+    }
+
 
     public void initialize() {
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);  // Barre de défilement verticale toujours visible
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);   // Pas de barre de défilement horizontale
-        scrollPane.setFitToWidth(true);  // Ajuste automatiquement la largeur du contenu à celle du ScrollPane
-        scrollPane.setFitToHeight(false);  // Ne pas ajuster la hauteur automatiquement (permet de scroller)
+        // Initialisation de la liste des événements
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(false);
 
-        EventService eventService = new EventService(); // Création d'une instance
-        ArrayList<Event> users = eventService.rechercher(); // Appel via l'instance
+        EventService eventService = new EventService();
+        ArrayList<Event> users = eventService.rechercher();
         usersGrid.getChildren().clear();
         populateUsersGrid(users);
+        initializeChoiceBox();
+
+        // Ajout de l'écouteur sur le champ de recherche
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            rechercherParNom(newValue);
+        });
+
+        // ✅ Ajout de l'écouteur de tri
+        setupChoiceBoxListener();
+    }
+    private void initializeChoiceBox() {
+        critere.getItems().addAll("Date", "Prix", "Lieu"); // Ajoutez les critères de tri
+        critere.getSelectionModel().selectFirst(); // Sélectionne le premier élément par défaut
+    }
+
+    private void setupChoiceBoxListener() {
+        EventService eventService = new EventService(); // Instance du service
+
+        critere.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            String tri = convertirCritere(newValue); // Convertir en colonne SQL
+            ArrayList<Event> sortedEvents = eventService.affichageAvecTri(tri); // Récupérer les événements triés
+
+            usersGrid.getChildren().clear(); // Vider la grille avant d'afficher les nouveaux résultats
+            populateUsersGrid(sortedEvents); // Afficher les événements triés
+        });
+    }
+
+    private String convertirCritere(String critere) {
+        switch (critere) {
+            case "Date":
+                return "date"; // Nom de la colonne dans la base de données
+            case "Prix":
+                return "prixdupass";
+            case "Lieu":
+                return "lieu";
+            default:
+                return "date"; // Par défaut, tri par date
+        }
     }
 
     private void populateUsersGrid(ArrayList<Event> users) {
-        int columns = 4;  // Nombre de colonnes souhaitées
+        int columns = 5;  // Nombre de colonnes souhaitées
         int column = 0;
         int row = 2; // Commencer à la ligne 2 pour laisser de la place aux labels
 
@@ -103,7 +210,6 @@ public class ListUsers {
         // Si vous avez déjà un ScrollPane, vous n'avez peut-être pas besoin de cette partie.
     }
 
-
     private VBox createUserCard(Event user) {
         VBox card = new VBox(10); // Espacement vertical entre les éléments
         card.setAlignment(Pos.CENTER);
@@ -111,14 +217,12 @@ public class ListUsers {
         card.setUserData(user);
 
         // 🎨 Ajout de l'effet d'ombre pour un meilleur design
-        // 🎨 Ajout de l'effet d'ombre pour un meilleur design
         DropShadow shadow = new DropShadow();
         shadow.setRadius(10); // Taille de l'ombre
         shadow.setOffsetX(5); // Déplacement horizontal
         shadow.setOffsetY(5); // Déplacement vertical
-        shadow.setColor(Color.rgb(0, 0, 0, 0.5)); // Couleur noire avec 30% d'opacité
-        card.setEffect(shadow); // Appliquer l'ombre à la carte
-
+        shadow.setColor(Color.rgb(0, 0, 0, 0.5)); // Couleur noire avec 50% d'opacité
+        card.setEffect(shadow);
 
         // 🔹 Forcer la taille de la carte
         card.setMinSize(250, 400);
@@ -159,21 +263,19 @@ public class ListUsers {
 
         // Création de l'effet d'ombre pour le label
         DropShadow labelShadow = new DropShadow();
-        labelShadow.setRadius(5);  // Rayon de l'ombre
-        labelShadow.setOffsetX(2);  // Décalage horizontal
-        labelShadow.setOffsetY(2);  // Décalage vertical
-        labelShadow.setColor(Color.rgb(0, 0, 0, 0.3));  // Couleur de l'ombre (noir transparent)
+        labelShadow.setRadius(5);
+        labelShadow.setOffsetX(2);
+        labelShadow.setOffsetY(2);
+        labelShadow.setColor(Color.rgb(0, 0, 0, 0.3));
 
-// Création du label avec les informations
+        // Création du label avec les informations
         Label infoLabel = new Label("🕒 Horaire: " + (user.getHoraire() != null ? user.getHoraire() : "N/A") +
                 "\n📍 Lieu: " + (user.getLieu() != null ? user.getLieu() : "N/A") +
                 "\n💰 Prix du Pass: " + (user.getPrixdupass() > 0 ? String.format("%.2f TND", user.getPrixdupass()) : "Gratuit"));
 
         infoLabel.getStyleClass().add("event-label");
-        infoLabel.setWrapText(true);  // Permet au texte de passer à la ligne
-        infoLabel.setFont(new Font(16));  // Taille de la police
-
-// Appliquer l'ombre au label
+        infoLabel.setWrapText(true);
+        infoLabel.setFont(new Font(16));
         infoLabel.setEffect(labelShadow);
 
         // ✅ Ajouter un espaceur pour forcer l'expansion de la carte
@@ -181,12 +283,41 @@ public class ListUsers {
         VBox.setVgrow(spacer, Priority.ALWAYS);
         VBox.setMargin(imageView, new Insets(0, 0, -10, 0));
 
+        // Menu contextuel pour le QR Code
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem addToCalendar = new MenuItem("📅 Ajouter au calendrier");
+        addToCalendar.setOnAction(e -> {
+            try {
+                addEventToCalendar(user);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (URISyntaxException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        contextMenu.getItems().add(addToCalendar);
+
+        card.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                contextMenu.show(card, event.getScreenX(), event.getScreenY());
+            } else if (event.getButton() == MouseButton.PRIMARY) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/list2.fxml"));
+                    Parent root = loader.load();
+                    List2 controller = loader.getController();
+                    controller.setEventId(user.getId());
+                    card.getScene().setRoot(root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         // 📦 Ajout des éléments avec un bon espacement
         card.getChildren().addAll(header, imageView, spacer, infoLabel);
 
         return card;
     }
-
 
     private void createGridWithUserCards(ArrayList<Event> users) {
         // Créer un GridPane
@@ -227,5 +358,86 @@ public class ListUsers {
 
         // Ajoutez gridPane à un conteneur parent si nécessaire (ex. root.getChildren().add(gridPane));
     }
+    private void rechercherParNom(String nom) {
+        usersGrid.getChildren().clear(); // Effacer l'ancien contenu de la grille
+
+        EventService eventService = new EventService(); // Créer une instance du service
+        ArrayList<Event> events = eventService.rechercherParNom(nom); // Récupérer les événements filtrés
+
+        populateUsersGrid(events); // Afficher les événements filtrés dans la grille
+    }
+
+   String path = "C:/Users/ghass/Documents/java/event/src/main/java/com/esprit/media/event.mp3";
+    Media media = new Media(new File(path).toURI().toString());
+    MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+    @FXML
+    private void pause(ActionEvent event) {
+
+        mediaPlayer.pause();
+        // Image img = new Image("fllogo.png");
+        Notifications notificationBuilder = Notifications.create()
+                .title("Musique")
+                .text("      Musique Arrêtée").hideAfter(Duration.seconds(5))
+                .position(Pos.BOTTOM_RIGHT);
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
+    }
+
+    @FXML
+    private void play(ActionEvent event) {
+
+        mediaPlayer.play();
+        //  Image img = new Image("C:\\Users\\Saleh\\Desktop\\GenesisTeam_MaktabtiApp\\DesktopApp\\src\\edu\\esprit\\gui\\images\\ticket.png");
+        Notifications notificationBuilder = Notifications.create()
+                .title("Musique")
+                .text("      Musique Jouée").hideAfter(Duration.seconds(5))
+                .position(Pos.BOTTOM_RIGHT);
+        notificationBuilder.darkStyle();
+        notificationBuilder.show();
+    }
+    private void addEventToCalendar(Event event) throws IOException, URISyntaxException {
+        // Crée un fichier ICS (format pour les événements de calendrier)
+        String fileName = "event_" + event.getId() + ".ics";
+        FileWriter writer = new FileWriter(fileName);
+
+        // Convertir la date (String -> LocalDate)
+        String eventDate = event.getDate(); // Format attendu: "2025-02-28"
+        LocalDate date = LocalDate.parse(eventDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        // Format pour la date ICS
+        String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+        writer.write("BEGIN:VCALENDAR\n");
+        writer.write("VERSION:2.0\n");
+        writer.write("BEGIN:VEVENT\n");
+        writer.write("UID:" + event.getId() + "@esprit.tn\n");
+        writer.write("DTSTAMP:" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss")) + "\n");
+        writer.write("DTSTART:" + formattedDate + "\n");
+        writer.write("SUMMARY: " + "événnement sportive" + "\n"); // Titre de l'événement
+        writer.write("DESCRIPTION:" + "événnement sportive qui vous intérésse" + "\n"); // Détails supplémentaires
+        writer.write("LOCATION:" + event.getLieu() + "\n");
+        writer.write("END:VEVENT\n");
+        writer.write("END:VCALENDAR\n");
+
+        writer.close();
+
+        // Ouvre le fichier ICS pour l'utilisateur
+        Desktop.getDesktop().open(new File(fileName));
+
+        // Ouvre le fichier dans Outlook (si configuré)
+        Desktop.getDesktop().mail(new URI("mailto:?subject=Nouvel%20événement&body=Veuillez%20ajouter%20cet%20événement%20à%20votre%20calendrier.&attachment=" + new File(fileName).toURI()));
+
+        // Notification pour confirmer l'ajout
+        Notifications.create()
+                .title("Calendrier")
+                .text("L'événement sportif a été ajouté au calendrier avec succès !")
+                .hideAfter(Duration.seconds(5))
+                .position(Pos.BOTTOM_RIGHT)
+                .darkStyle()
+                .show();
+    }
+
+
 
 }

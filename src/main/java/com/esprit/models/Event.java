@@ -9,6 +9,7 @@ public class Event {
     private String lieu;
     private String horaire;
     private String image;
+    private double revenu;
     public Event(int id, String date, float prixdupass, String lieu, String horaire ,String image) {
         this.id = id;
         this.date = date;
@@ -73,7 +74,13 @@ public class Event {
     public void setHoraire(String horaire) {
         this.horaire = horaire;
     }
+    public double getRevenu() {
+        return revenu;
+    }
 
+    public void setRevenu(double revenu) {
+        this.revenu = revenu;
+    }
     @Override
     public String toString() {
         return "Event{" +
@@ -97,4 +104,6 @@ public class Event {
     public int hashCode() {
         return Objects.hash(id, date, prixdupass, lieu, horaire);
     }
+
+
 }

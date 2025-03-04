@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
 <AnchorPane prefHeight="550.0" prefWidth="794.0" style="-fx-background-color: #F1F2F6;" stylesheets="@styles/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.TypeActivite2">
 
     <!-- Conteneur du formulaire avec ombre -->
@@ -21,12 +22,16 @@
         <effect>
             <DropShadow color="#888888" offsetX="5.0" offsetY="5.0" radius="15.0" />
         </effect>
-        <Label text="Id" underline="true">
+        <Label text="Id" underline="true" style="-fx-background-color: transparent; -fx-text-fill: rgba(0, 0, 0, 0);">
             <font>
-                <Font name="Bookman Old Style Bold Italic" size="16.0" />
+                <Font name="Bookman Old Style Bold Italic" size="16.0"  />
             </font>
         </Label>
-        <TextField fx:id="id" prefHeight="35.0" prefWidth="300.0" styleClass="input-field" />
+        <TextField fx:id="id" prefHeight="35.0" prefWidth="300.0"
+                   style="-fx-background-color: transparent;
+           -fx-border-color: transparent;
+           -fx-text-fill: transparent;" />
+
         <Label text="Titre" underline="true">
             <font>
                 <Font name="Bookman Old Style Bold Italic" size="16.0" />
@@ -41,9 +46,9 @@
         </Label>
         <TextArea fx:id="ds" prefHeight="35.0" prefWidth="300.0" styleClass="input-field" />
 
+        <HBox spacing="20"> <Button mnemonicParsing="false" onAction="#goToList3" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text="Types" />
+            <Button mnemonicParsing="false" onAction="#Validate" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Enregistrer" /></HBox>
 
-
-        <Button mnemonicParsing="false" onAction="#Validate" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Enregistrer le type" />
     </VBox>
 
     <!-- Ajout du logo et des images de décoration -->

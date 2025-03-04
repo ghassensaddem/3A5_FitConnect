@@ -73,7 +73,7 @@
 }
 
 .card {
-    -fx-background-color: #ffffff; /* Fond blanc */
+    -fx-background-color: #F1F2F6; /* Fond blanc */
     -fx-background-radius: 15px; /* Coins arrondis */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.1, 0, 5);
     -fx-padding: 15px;
@@ -136,7 +136,7 @@
 }
 
 .card {
-    -fx-background-color: #ffffff; /* Fond blanc */
+    -fx-background-color: #F1F2F6; /* Fond blanc */
     -fx-background-radius: 15px; /* Coins arrondis */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.1, 0, 5);
     -fx-pref-width: 250px;
@@ -217,7 +217,7 @@
     -fx-font-size: 16px;
     -fx-background-color: transparent;
     -fx-text-fill: #053536;
-    -fx-border-color: #053536;
+    -fx-border-color: transparent;
     -fx-border-radius: 15px;
     -fx-border-width: 2px;
     -fx-padding: 10px 20px;  /* Ajouter un peu de padding pour que le bouton soit plus large et plus agréable */

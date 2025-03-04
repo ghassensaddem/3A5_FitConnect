@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
 <AnchorPane prefHeight="674.0" prefWidth="794.0" style="-fx-background-color: #F1F2F6;" stylesheets="@styles/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.ModifierActiviteevent">
 
     <!-- Conteneur du formulaire avec ombre -->
@@ -21,13 +22,13 @@
         <effect>
             <DropShadow color="#888888" offsetX="5.0" offsetY="5.0" radius="15.0" />
         </effect>
-        <Label text="ID" underline="true">
+        <Label text="ID" underline="true" style="-fx-background-color: transparent; -fx-text-fill: rgba(0, 0, 0, 0);">
             <font>
                 <Font name="Bookman Old Style Bold Italic" size="16.0" />
             </font>
-
         </Label>
-        <TextField fx:id="id" prefHeight="35.0" prefWidth="300.0" styleClass="input-field" />
+
+        <TextField fx:id="id" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-text-fill: rgba(0, 0, 0, 0);" />
         <Label text="Horaire" underline="true">
             <font>
                 <Font name="Bookman Old Style Bold Italic" size="16.0" />
@@ -55,8 +56,10 @@
             </font>
         </Label>
       <ChoiceBox fx:id="id2" prefHeight="49.0" prefWidth="321.0" styleClass="input-field" />
+<HBox spacing="20"> <Button mnemonicParsing="false" onAction="#Validate2" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Modifier" />
+    <Button mnemonicParsing="false" onAction="#goToList3" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text="Acitivités" />
+</HBox>
 
-        <Button mnemonicParsing="false" onAction="#Validate2" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Modifier l'activité" />
     </VBox>
 
     <!-- Ajout du logo et des images de décoration -->

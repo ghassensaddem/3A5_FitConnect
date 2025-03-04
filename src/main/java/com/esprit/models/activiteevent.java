@@ -1,7 +1,5 @@
 package com.esprit.models;
 
-import javafx.scene.input.MouseButton;
-
 import java.util.Objects;
 
 public class activiteevent {
@@ -24,8 +22,10 @@ public class activiteevent {
         this.idTypeActivite = idTypeActivite;
     }
 
-
-
+    public activiteevent() {
+        this.horaire = horaire;
+        this.nbrparticipant = nbrparticipant;
+    }
 
     public int getIdTypeActivite() {
         return idTypeActivite;

@@ -31,12 +31,13 @@
         </effect>
 
         <!-- Champ ID -->
-        <Label text="ID" underline="true">
+        <Label text="ID" underline="true" style="-fx-background-color: transparent; -fx-text-fill: rgba(0, 0, 0, 0);">
             <font>
-                <Font name="Bookman Old Style Bold Italic" size="13.0" />
+                <Font name="Bookman Old Style Bold Italic" size="16.0" />
             </font>
         </Label>
-        <TextField fx:id="idField" prefHeight="26.0" prefWidth="220.0" styleClass="input-field" />
+
+        <TextField fx:id="idField" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-text-fill: rgba(0, 0, 0, 0);"/>
 
         <Label text="Date" underline="true">
             <font>
@@ -80,8 +81,6 @@
         <HBox spacing="20"> <!-- Espacement de 20px entre les enfants -->
             <Button mnemonicParsing="false" onAction="#Validate" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text="Modifier l'événement" />
             <Button mnemonicParsing="false" onAction="#goToList" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text=" liste des événements" />
-            <Button mnemonicParsing="false" onAction="#goToList2" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text=" liste des activités" />
-            <Button mnemonicParsing="false" onAction="#goToList3" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text=" liste des activités" />
         </HBox>
 
 

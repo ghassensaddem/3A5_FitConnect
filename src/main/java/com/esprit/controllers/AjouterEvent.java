@@ -2,6 +2,12 @@ package com.esprit.controllers;
 
 import com.esprit.models.Event;
 import com.esprit.services.EventService;
+import com.sothawo.mapjfx.Configuration;
+import com.sothawo.mapjfx.Coordinate;
+import com.sothawo.mapjfx.MapType;
+import com.sothawo.mapjfx.MapView;
+import com.sothawo.mapjfx.event.MapViewEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,8 +18,12 @@ import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.io.File;
 import java.io.IOException;
@@ -33,11 +43,15 @@ public class AjouterEvent {
     private TextField pdpPathField;
     @FXML
     private Label pdpIconLabel;
-
+    private Stage mapStage;
     public ImageView getPdpImageView() {
         return pdpImageView;
     }
-
+    /*@FXML
+    private void initialize() {
+        li.setOnMouseClicked(event -> showMap());
+    }
+*/
     public void setPdpImageView(ImageView pdpImageView) {
         this.pdpImageView = pdpImageView;
     }
@@ -130,17 +144,71 @@ public class AjouterEvent {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choisir une image");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg")
+                new FileChooser.ExtensionFilter("Images", ".png", ".jpg", "*.jpeg")
         );
 
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null) {
-            String imagePath = selectedFile.toURI().toString();
-            pdpPathField.setText(selectedFile.getAbsolutePath());
-            pdpImageView.setImage(new Image(pdpPathField.getText()));
-            pdpIconLabel.setVisible(false);
+            try {
+                // Définir le dossier de destination
+                String outputPath = "C:/xampp/htdocs/images/";
+
+                // Générer un nom de fichier unique avec l'extension d'origine
+                String fileExtension = selectedFile.getName().substring(selectedFile.getName().lastIndexOf("."));
+                String fileName = "client_" + System.currentTimeMillis() + fileExtension;
+                File destinationFile = new File(outputPath + fileName);
+
+                // Copier l'image sélectionnée dans le dossier cible
+                Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // Mettre à jour le champ pdpPathField avec le nouveau chemin
+                pdpPathField.setText("C:/xampp/htdocs/images/" + fileName);
+
+                // Afficher l'image copiée dans ImageView
+                pdpImageView.setImage(new Image(destinationFile.toURI().toString()));
+                pdpIconLabel.setVisible(false);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("❌ Erreur lors de la copie de l'image !");
+            }
         }
     }
+    @FXML
+    private void initialize() {
+        li.setOnMouseClicked(event -> openMap());
+    }
+
+    private void openMap() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/map.fxml"));
+            Parent root = loader.load();
+            Map mapController = loader.getController(); // Récupérer le contrôleur Map
+
+            // Créer une nouvelle fenêtre pour la carte
+            Stage mapStage = new Stage();
+            mapStage.setScene(new Scene(root));
+            mapStage.setTitle("Sélectionnez un emplacement");
+            mapStage.show();
+
+            // Ajouter un listener pour récupérer les coordonnées de la carte
+            mapController.getMapView().addEventHandler(MapViewEvent.MAP_CLICKED, e -> {
+                Coordinate coord = e.getCoordinate();
+                String locationName = mapController.getLocationName(coord.getLatitude(), coord.getLongitude());
+
+                // Retirer les virgules du nom du lieu
+                String cleanLocationName = locationName.replace(",", " ");
+
+                li.setText(cleanLocationName); // Afficher le nom du lieu sans virgules
+                mapStage.close(); // Fermer la carte après sélection
+            });
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

@@ -9,6 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -68,8 +69,10 @@
          <TextField fx:id="pdpPathField" disable="true" opacity="0.0" />
 
       </StackPane>
-      <Button mnemonicParsing="false" onAction="#Validate" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Enregistrer l'événement" />
-   </VBox>
+      <HBox spacing="20"><Button mnemonicParsing="false" onAction="#Validate" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Enregistrer " />
+         <Button mnemonicParsing="false" onAction="#goToAjouterEvent" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text=" Evénements" />
+      </HBox>
+      </VBox>
 
    <!-- Ajout du logo et des images de décoration -->
    <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
@@ -134,7 +137,7 @@
             </graphic>
          </Button>
 
-         <Button onAction="#goToAjouterEvent" styleClass="my-button2" text="Evennements">
+         <Button styleClass="my-button2" text="Evennements">
             <graphic>
                <FontAwesomeIcon glyphName="CALENDAR_ALT" size="1.4em" styleClass="font-awesome-icon" />
             </graphic>

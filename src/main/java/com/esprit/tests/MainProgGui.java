@@ -16,12 +16,14 @@ public class MainProgGui extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        // Charge le fichier FXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/list.fxml"));
+
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("PIDEV");
-        primaryStage.show();
 
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Carte Interactive");
+        primaryStage.show();
     }
 }

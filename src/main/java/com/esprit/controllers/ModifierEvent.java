@@ -116,6 +116,19 @@ public class ModifierEvent {
         pr.setText(String.valueOf(event.getPrixdupass()));
         li.setText(event.getLieu());
         ho.setText(event.getHoraire());
+        if (event.getImage() != null && !event.getImage().isEmpty()) {
+            File file = new File(event.getImage());
+            if (file.exists()) {
+                pdpImageView.setImage(new Image(file.toURI().toString()));
+            } else {
+                System.out.println("Image non trouvée, utilisation de l'image par défaut.");
+                pdpImageView.setImage(new Image(getClass().getResource("/images/default.png").toExternalForm()));
+            }
+        } else {
+            System.out.println("Aucun chemin d'image, utilisation de l'image par défaut.");
+            pdpImageView.setImage(new Image(getClass().getResource("/images/default.png").toExternalForm()));
+        }
+
 
         idField.setDisable(true); // Empêcher la modification de l'ID
     }

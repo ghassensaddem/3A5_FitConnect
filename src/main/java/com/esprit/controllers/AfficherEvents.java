@@ -1,4 +1,6 @@
 package com.esprit.controllers;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.qrcode.WriterException;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -6,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import com.esprit.models.Event;
 import com.esprit.services.EventService;
 import javafx.collections.FXCollections;
@@ -17,8 +18,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import com.esprit.models.PDF;
+import java.io.*;
+import java.util.ArrayList;
 
-import java.io.IOException;
+import org.apache.poi.hssf.usermodel.*;
+import com.esprit.controllers.api.SendSMS;
+import org.apache.poi.ss.usermodel.Workbook;
 
 public class AfficherEvents {
 
@@ -36,6 +42,8 @@ public class AfficherEvents {
     private TableColumn<Event, String> colHoraire;
     @FXML
     private TableColumn<Event, String> colImage;
+    @FXML
+    private Button btnexcel;
 
     private ObservableList<Event> data = FXCollections.observableArrayList();
     private EventService eventService = new EventService();
@@ -282,5 +290,134 @@ public class AfficherEvents {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void exportToPdf() {
+        EventService eventService = new EventService();
+        try {
+            ArrayList<Event> events = eventService.getEventsAvecRevenu();
+            // Récupérer les événements
+            PDF pdfGenerator = new PDF();
+            ArrayList<Event> eventsAvecRevenu = eventService.getEventsAvecRevenu();
+            pdfGenerator.GeneratePdf("Liste_Events", eventsAvecRevenu, eventService);
+            System.out.println("✅ PDF généré avec succès !");
+        } catch (DocumentException | IOException e) {
+            System.err.println("❌ Erreur lors de l'exportation du PDF: " + e.getMessage());
+        } catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void SMS(ActionEvent event) {
+        String result = SendSMS.sendWhatsAppMessage("+21629075314", "Hello depuis Twilio WhatsApp !");
+        System.out.println(result);
+
+    }
+    @FXML
+
+    private void excelfile(ActionEvent event) {
+        ArrayList<Event> data = new ArrayList<Event>(); // Utilisation de ArrayList<Event>
+
+        try {
+            // Chemin de destination du fichier Excel
+            String filename = "C:\\Users\\ghass\\Documents\\java\\event\\src\\main\\java\\com\\esprit\\excel\\DonnéeÉvénements.XLS";
+
+            // Crée une instance de HSSFWorkbook
+            HSSFWorkbook workbook = new HSSFWorkbook();
+
+            // Créer une feuille nommée "Event Details"
+            HSSFSheet sheet = workbook.createSheet("Event Details");
+
+            // Créer la première ligne (0) pour les en-têtes de colonnes
+            HSSFRow rowhead = sheet.createRow(0);
+            rowhead.createCell(0).setCellValue("Event ID");
+            rowhead.createCell(1).setCellValue("Date");
+            rowhead.createCell(2).setCellValue("Horaire");
+            rowhead.createCell(3).setCellValue("Lieu");
+            rowhead.createCell(4).setCellValue("Prix du pass");
+            rowhead.createCell(5).setCellValue("Image");
+            rowhead.createCell(6).setCellValue("Revenu Total (TND)"); // Nouvelle colonne pour le revenu
+
+            // Instancier EventService et récupérer les événements avec revenu
+            EventService eventService = new EventService();
+            ArrayList<Event> eventList = eventService.getEventsAvecRevenu(); // Utilisez getEventsAvecRevenu()
+            int rownum = 1;
+
+            // Ajouter les événements et les revenus dans le fichier Excel
+            for (Event eventItem : eventList) {
+                HSSFRow row = sheet.createRow(rownum++);
+                row.createCell(0).setCellValue(eventItem.getId());
+                row.createCell(1).setCellValue(eventItem.getDate());
+                row.createCell(2).setCellValue(eventItem.getHoraire());
+                row.createCell(3).setCellValue(eventItem.getLieu());
+                row.createCell(4).setCellValue(eventItem.getPrixdupass());
+
+                // Ajouter l'image si elle existe
+                String imagePath = eventItem.getImage();
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    // Vérification du chemin de l'image
+                    File imageFile = new File(imagePath);
+                    if (!imageFile.exists()) {
+                        System.out.println("Image not found at: " + imagePath);
+                        continue;
+                    }
+
+                    // Lire le fichier image en bytes
+                    FileInputStream imageStream = new FileInputStream(imageFile);
+                    byte[] imageBytes = imageStream.readAllBytes();
+                    imageStream.close();
+
+                    // Ajouter l'image dans le fichier Excel
+                    int pictureIndex = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG); // Assurez-vous d'utiliser le bon type d'image
+
+                    // Créer un ancrage pour la position de l'image
+                    HSSFPatriarch drawing = sheet.createDrawingPatriarch();
+                    HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 0, 0, (short) 5, rownum - 1, (short) 6, rownum); // Position de l'image
+                    drawing.createPicture(anchor, pictureIndex);
+                }
+
+                // Ajouter le revenu total à la nouvelle colonne
+                row.createCell(6).setCellValue(eventItem.getRevenu()); // Revenu total pour l'événement
+            }
+
+            // Écrire le fichier Excel sur le disque
+            FileOutputStream fileOut = new FileOutputStream(filename);
+            workbook.write(fileOut);
+
+            // Fermer le fichier
+            fileOut.close();
+            workbook.close();
+
+            // Message de confirmation
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "Excel File Has Been Generated Successfully", ButtonType.OK);
+            a.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void goToStat(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VoyageStat.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void goToemail_sender(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/email_sender.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
 

@@ -51,12 +51,12 @@
         </Label>
         <ChoiceBox fx:id="id2" prefHeight="35.0" prefWidth="300.0" styleClass="input-field" />
 
-        <Button mnemonicParsing="false" onAction="#Validate" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Enregistrer l'activité" />
+
         <HBox spacing="20"> <!-- Espacement de 20px entre les enfants -->
 
-            <Button mnemonicParsing="false" onAction="#goToList" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text=" liste des événements" />
+            <Button mnemonicParsing="false" onAction="#Validate" prefHeight="31.0" prefWidth="200.0" styleClass="my-button" text="Enregistrer l'activité" />
             <Button mnemonicParsing="false" onAction="#goToList2" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text=" liste des activités" />
-            <Button mnemonicParsing="false" onAction="#goToList3" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text=" liste des activités" />
+
         </HBox>
     </VBox>
 
