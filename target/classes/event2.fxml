@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<AnchorPane prefHeight="550.0" prefWidth="794.0" style="-fx-background-color: #F1F2F6;" stylesheets="@styles/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.ModifierEvent">
+   <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="580.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/theme.png" />
+      </image>
+   </ImageView>
+
+    <!-- Conteneur du formulaire avec ombre -->
+    <VBox layoutX="310.0" layoutY="97.0" prefHeight="494.0" prefWidth="478.0" spacing="8.0" style="-fx-padding: 15px; -fx-background-color: white; -fx-border-radius: 0px; -fx-border-color: #053536;">
+
+        <!-- Effet d'ombre -->
+        <effect>
+            <DropShadow color="#888888" offsetX="3.0" offsetY="3.0" radius="8.0" />
+        </effect>
+
+        <!-- Champ ID -->
+        <Label text="ID" underline="true" style="-fx-background-color: transparent; -fx-text-fill: rgba(0, 0, 0, 0);">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="16.0" />
+            </font>
+        </Label>
+
+        <TextField fx:id="idField" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-text-fill: rgba(0, 0, 0, 0);"/>
+
+        <Label text="Date" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="13.0" />
+            </font>
+        </Label>
+        <DatePicker fx:id="dt" prefHeight="26.0" prefWidth="220.0" styleClass="input-field" />
+
+        <Label text="Prix du ticket" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="pr" prefHeight="26.0" prefWidth="220.0" styleClass="input-field" />
+
+        <Label text="Lieu" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="li" prefHeight="26.0" prefWidth="220.0" styleClass="input-field" />
+
+        <Label text="Horaire" underline="true">
+            <font>
+                <Font name="Bookman Old Style Bold Italic" size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="ho" prefHeight="26.0" prefWidth="220.0" styleClass="input-field" />
+
+
+        <StackPane fx:id="pdpContainer" styleClass="pdpContainer">
+            <ImageView fx:id="pdpImageView" fitHeight="120" fitWidth="120" onMouseClicked="#choisirImage" style="-fx-cursor: hand;" styleClass="pdpImageView">
+                <image>
+                    <Image url="@images/logo2.png" />
+                </image>
+            </ImageView>
+            <Label fx:id="pdpIconLabel" style="-fx-text-fill: #888888; -fx-font-size: 24px; -fx-font-weight: bold;" text="📷" />
+            <TextField fx:id="pdpPathField" disable="true" opacity="0.0" />
+
+        </StackPane>
+        <HBox spacing="20"> <!-- Espacement de 20px entre les enfants -->
+            <Button mnemonicParsing="false" onAction="#Validate" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text="Modifier l'événement" />
+            <Button mnemonicParsing="false" onAction="#goToList" prefHeight="28.0" prefWidth="160.0" styleClass="my-button" text=" liste des événements" />
+        </HBox>
+
+
+    </VBox>
+
+
+    <!-- Ajout du logo et des images de décoration -->
+    <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="195.0" fitWidth="286.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <Label layoutX="318.0" layoutY="26.0" prefHeight="62.0" prefWidth="550.0" styleClass="title" text="Modifier l'événement">
+        <font>
+            <Font name="System Bold Italic" size="36.0" />
+        </font>
+    </Label>
+    <AnchorPane>
+        <VBox prefHeight="580.0" prefWidth="251.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="-236.0" AnchorPane.topAnchor="0">
+
+            <ImageView fitHeight="140.0" fitWidth="130.0" layoutX="63.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@images/logo2.png" />
+                </image>
+            </ImageView>
+            <Button styleClass="my-button2" text="Home">
+                <graphic>
+
+                    <FontAwesomeIcon glyphName="HOME" size="1.4em" styleClass="font-awesome-icon" />
+
+
+                </graphic>
+            </Button>
+
+
+            <Button styleClass="my-button2" text="Activities">
+                <graphic>
+                    <FontAwesomeIcon glyphName="ANCHOR" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Salles">
+                <graphic>
+                    <FontAwesomeIcon glyphName="TROPHY" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Equipement">
+                <graphic>
+                    <FontAwesomeIcon glyphName="BELL" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button onAction="#goToAjouterEvent" styleClass="my-button2" text="Evennements">
+                <graphic>
+                    <FontAwesomeIcon glyphName="CALENDAR_ALT" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Competition">
+                <graphic>
+                    <FontAwesomeIcon glyphName="FLAG_CHECKERED" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Preferences">
+                <graphic>
+                    <FontAwesomeIcon glyphName="COG" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Notifications">
+                <graphic>
+                    <FontAwesomeIcon glyphName="BELL" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Theme">
+                <graphic>
+                    <FontAwesomeIcon glyphName="PAINT_BRUSH" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+
+            <Button styleClass="my-button2" text="Language">
+                <graphic>
+                    <FontAwesomeIcon glyphName="GLOBE" size="1.4em" styleClass="font-awesome-icon" />
+                </graphic>
+            </Button>
+        </VBox>
+    </AnchorPane>
+
+
+</AnchorPane>
