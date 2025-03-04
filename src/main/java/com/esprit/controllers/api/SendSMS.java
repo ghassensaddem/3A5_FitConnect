@@ -13,7 +13,7 @@ public class SendSMS {
 
   /*  private static final String ACCOUNT_SID = "AC6843f215e4d4a66cf94d3aebf7d5de91";
     private static final String AUTH_TOKEN = "61f687bbef3bc267136b7ce64f25e2af";
-    private static final PhoneNumber FROM = new PhoneNumber("whatsapp:+14155238886");*/
+    private static final PhoneNumber FROM = new PhoneNumber("whatsapp:+14155238886");
 
     static {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
@@ -27,7 +27,7 @@ public class SendSMS {
         } catch (Exception e) {
             return "Erreur lors de l'envoi du message: " + e.getMessage();
         }
-    }
+    }*/
 }
 
 
