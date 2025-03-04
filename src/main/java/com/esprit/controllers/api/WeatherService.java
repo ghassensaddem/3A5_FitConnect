@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class WeatherService {
-    private final String API_KEY = "294172e55663c6d252179c242db11ad0"; // ⚠️ Pense à externaliser cette clé !
+    private final String API_KEY = ""; // ⚠️ Pense à externaliser cette clé !
     private final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 
     public JSONObject getWeather(String city) {

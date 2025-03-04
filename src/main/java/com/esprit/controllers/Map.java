@@ -35,7 +35,7 @@ public class Map {
     @FXML
     private ImageView weatherIcon;
 
-    private final String API_KEY = "294172e55663c6d252179c242db11ad0";
+    private final String API_KEY = "";
 
     private void showMap() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/map.fxml"));
