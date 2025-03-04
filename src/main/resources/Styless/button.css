@@ -1,0 +1,84 @@
+
+
+
+.my-button {
+    -fx-background-color: #053536;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 12px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+.my-button2 {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-spacing: 20px; /* Espace entre l'icône et le texte */
+    -fx-graphic-text-gap: 10px; /* Ajuste cet espace selon ton besoin */
+    -fx-alignment: center-left; /* Aligne le texte et l'icône à gauche */
+    -fx-padding: 13px 11px; /* Ajoute du padding pour un meilleur rendu */
+    -fx-translate-x: 5px;
+}
+
+.my-button2 .graphic {
+    -fx-padding: 0 1500px 0 0; /* Ajoute un espace entre l'icône et le texte */
+}
+
+
+.my-button:hover {
+    -fx-background-color: black;
+}
+.my-button2:hover {
+    -fx-background-color: white; /* Fond blanc au survol */
+    -fx-text-fill: black; /* Texte noir au survol */
+}
+
+.my-button2:hover .font-awesome-icon {
+    -fx-fill: black; /* Change la couleur de l'icône au survol */
+}
+/* Style des labels */
+.label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #053536;
+}
+.title {
+    -fx-font-size: 42px;
+    -fx-text-fill: #053536;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(5, 53, 54, 0.5), 10, 0, 3, 3);
+}
+
+/* Messages d'erreur et d'information */
+.error-message {
+    -fx-text-fill: #D32F2F;
+    -fx-font-size: 11px;
+    -fx-padding: 2px 0;
+}
+
+.info-message {
+    -fx-text-fill: #053536;
+    -fx-font-size: 11px;
+    -fx-padding: 2px 0;
+}
+.font-awesome-icon {
+    -fx-fill: white; /* Couleur par défaut */
+    -fx-font-size: 1.4em;
+    -fx-cursor: hand;
+    -fx-transition: fill 0.3s ease-in-out;
+    -fx-padding: 0 10px 0 0; /* Ajoute un espace à droite de l'icône */
+}
+
+
+.sidebar {
+    -fx-background-color: #053536;
+    -fx-pref-width: 100%; /* Assure que la largeur prend tout l’espace disponible */
+    -fx-pref-height: 100%;
+}
+
+.image-logo {
+    -fx-translate-x: 0px; /* Déplace l'image de 20 pixels vers la droite */
+}
+

@@ -1,0 +1,204 @@
+/* Styling for SignUp.fxml */
+
+/* Partie gauche (Bienvenue) */
+.left-container {
+    -fx-background-color: #053536;
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-padding: 50;
+    -fx-border-radius: 10;
+}
+
+.right-container {
+    -fx-alignment: center;
+    -fx-spacing: 15;
+    -fx-padding: 50;
+    -fx-border-radius: 10;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+
+.right-container2 {
+    -fx-spacing: 25;
+    -fx-padding: 50;
+    -fx-border-radius: 10;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+
+/* Titres */
+.title {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.pasCompte {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.Create {
+    -fx-font-size: 24px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+/* Textes secondaires */
+.subtext {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+
+.subtext2 {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-text-alignment: center;
+}
+
+/* Boutons */
+.sign-in-button {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 5, 0, 0, 2);
+}
+
+.sign-in-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Bouton de création de compte */
+.sign-up-button {
+    -fx-background-color: #053536;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 2);
+}
+
+.sign-up-button:hover {
+    -fx-background-color: #065e50;
+}
+
+.input-field {
+    -fx-pref-width: 250;
+    -fx-padding: 10;
+    -fx-border-width: 0 0 2px 0; /* Bordure seulement en bas */
+    -fx-border-color: #cccccc; /* Couleur de la bordure en bas */
+    -fx-background-color: transparent; /* Supprime l'arrière-plan si nécessaire */
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.input-field:focused {
+    -fx-border-color: #065e50;
+    -fx-border-width: 0 0 2px 0;
+}
+
+/* Effet de survol sur les images */
+.image-view:hover {
+    -fx-opacity: 0.8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 150, 136, 0.6), 12, 0.3, 0, 0);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-cursor: hand;
+}
+
+.image-logo:hover {
+    -fx-opacity: 0.9;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.5), 15, 0.4, 0, 0);
+}
+
+.card-image:hover {
+    -fx-opacity: 0.85;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.2, 0, 0);
+}
+
+/* Style des CheckBox */
+.check-box {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-padding: 5px 10px;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 3;
+    -fx-padding: 3;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #004d40; /* Vert foncé */
+    -fx-border-color: #004d40;
+}
+
+.activity-card {
+    -fx-background-color: #f8f8f8;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+    -fx-transition: background-color 0.3s ease-in-out;
+}
+
+.activity-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #053536;
+    -fx-text-alignment: center;
+}
+.activity-image {
+    -fx-fit-width: 160px;
+    -fx-fit-height: 140px;
+    -fx-preserve-ratio: true;
+    /* On empêche l'image de bouger lors du hover */
+}
+.activity-card:hover {
+    -fx-background-color: #053536; /* Vert */
+
+
+}
+.activity-card:hover .activity-title {
+    -fx-text-fill: white;
+}
+.activities-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #053536;
+    -fx-padding: 10px;
+}
+.salle-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.lire-plus-link {
+    -fx-font-size: 14px;
+    -fx-text-fill: #065e50;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.lire-plus-link:hover {
+    -fx-text-fill: #053536;
+}
+
+.salle-row {
+    -fx-padding: 5px;
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+
