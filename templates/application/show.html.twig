@@ -1,0 +1,30 @@
+
+
+{% block title %}Application{% endblock %}
+
+{% block body %}
+    <h1>Application</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ application.id }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ application.dateDebut ? application.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ application.dateFin ? application.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_application_index') }}">back to list</a>
+
+    <a href="{{ path('app_application_edit', {'id': application.id}) }}">edit</a>
+
+    {{ include('application/_delete_form.html.twig') }}
+{% endblock %}

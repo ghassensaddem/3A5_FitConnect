@@ -1,0 +1,15 @@
+{% block body %}
+<div class="container centered-form">
+    <div class="form-card"  >
+        <h2 class="text-center mb-4">Ajouter une seance</h2>
+
+      
+      {{ include('seance/_form.html.twig', {'button_label': 'Ajout'}) }}
+
+      <div class="text-center mt-3">
+          <a href="{{ path('app_seance_index') }}" class="btn btn-secondary">Back to list</a>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Fitconnect</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+        }
+        
+        /* Style de la navbar grise */
+        .sidebar {
+            width: 250px;
+            background: #5a5c69;
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1;
+        }
+        
+        .sidebar-brand {
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .nav-item {
+            padding: 0.5rem 1rem;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .sidebar-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 1rem 0;
+        }
+        
+        /* Contenu principal */
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            position: relative;
+        }
+        
+        .bg-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 250px;
+            right: 0;
+            height: 100vh;
+            background-image: url('img/istockphoto-1758416916-612x612.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 250px;
+            right: 0;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+        
+        .centered-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            padding: 20px;
+        }
+        
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(2px);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #5a5c69;
+        }
+        
+        .form-control-user {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-user {
+            background-color: #4e73df;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-user:hover {
+            background-color: #3a5ec0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar grise -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <img src="img/logo2.png" alt="FitConnect Logo" style="width: 40px; height: 40px;">
+            </div>
+            <div class="sidebar-brand-text mx-3">FitConnect</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Interface
+        </div>
+
+        <!-- Admin-->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#"  data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                
+                <span>Gestion Admin</span>
+            </a>
+        
+        </li>
+
+     <!-- Gestion produit -->
+<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+    aria-expanded="true" aria-controls="collapseUtilities">
+    <span>Gestion produit</span>
+</a>
+<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+    data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="utilities-color.html">type produit</a>
+        <a class="collapse-item" href="utilities-border.html">produit</a>
+    </div>
+</div>
+</li>
+
+<!-- Programme -->
+<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProgramme"
+    aria-expanded="true" aria-controls="collapseProgramme">
+    <span>Gestion programme</span>
+</a>
+<div id="collapseProgramme" class="collapse" aria-labelledby="headingProgramme" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="login.html">programme</a>
+        <a class="collapse-item" href="register.html">seance</a>
+        <a class="collapse-item" href="forgot-password.html">avis</a>
+        <a class="collapse-item" href="forgot-passdza.html">application</a>
+    </div>
+</div>
+</li>
+
+<!-- Evenement -->
+<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEvenement"
+    aria-expanded="true" aria-controls="collapseEvenement">
+    <span>Gestion Evenement</span>
+</a>
+<div id="collapseEvenement" class="collapse" aria-labelledby="headingEvenement" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="login.html">type evenement</a>
+        <a class="collapse-item" href="register.html">evenement</a>
+    </div>
+</div>
+</li>
+
+<!-- Activite -->
+<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseActivite"
+    aria-expanded="true" aria-controls="collapseActivite">
+    <span>Gestion Activite</span>
+</a>
+<div id="collapseActivite" class="collapse" aria-labelledby="headingActivite" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="login.html">categorie salle</a>
+        <a class="collapse-item" href="register.html">salle</a>
+        <a class="collapse-item" href="register.html">planning</a>
+        <a class="collapse-item" href="register.html">commentaire</a>
+    </div>
+</div>
+</li>
+
+
+<!--Forum-->
+<li class="nav-item">
+<a class="nav-link collapsed" href="#"  data-target="#collapseTwo"
+    aria-expanded="true" aria-controls="collapseTwo">
+    
+    <span>Gestion forum</span>
+</a>
+
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+        <!-- Sidebar Message -->
+        <div class="sidebar-card d-none d-lg-flex">
+            <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+            <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+            <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+        </div>
+
+    </ul>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <!-- Image de fond full screen -->
+        <div class="bg-fullscreen"></div>
+        <!-- Overlay sombre plus léger -->
+        <div class="overlay"></div>
+
+        <!-- Contenu principal avec formulaire -->
+        <div class="container centered-form">
+            <div class="form-container">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Ajouter type équipement</h1>
+                </div>
+                <form class="user">
+                    <div class="form-group">
+                        <label for="nomInput" class="form-label">Nom</label>
+                        <input type="text" class="form-control form-control-user"
+                            id="nomInput" placeholder="Entrez le nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="descriptionInput" class="form-label">Description</label>
+                        <textarea class="form-control form-control-user"
+                            id="descriptionInput" rows="4" placeholder="Entrez la description"></textarea>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-user px-4 py-2">
+                            Ajouter
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+</body>
+</html>
