@@ -1,0 +1,56 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Liste des Salles de Sport</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>Horaires</th>
+                        <th>Capacité</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for salle in sallesportifs %}
+                    <tr>
+                        <td>{{ salle.idSalle }}</td>
+                        <td>{{ salle.nomSalle }}</td>
+                        <td>{{ salle.addresseSalle|slice(0, 30) }}{% if salle.addresseSalle|length > 30 %}...{% endif %}</td>
+                        <td>{{ salle.horaireOuverture|date('H:i') }} - {{ salle.horaireFermeture|date('H:i') }}</td>
+                        <td>{{ salle.capacity }} pers.</td>
+                        <td class="d-flex">
+                            <a href="{{ path('app_sallesportif_show', {'idSalle': salle.idSalle}) }}" 
+                               class="btn btn-info btn-circle btn-sm mr-2"
+                               title="Voir détails">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{{ path('app_sallesportif_edit', {'idSalle': salle.idSalle}) }}" 
+                               class="btn btn-warning btn-circle btn-sm mr-2"
+                               title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form method="post" 
+                                  action="{{ path('app_sallesportif_delete', {'idSalle': salle.idSalle}) }}"
+                                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette salle?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ salle.idSalle) }}">
+                                <button class="btn btn-danger btn-circle btn-sm" title="Supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">Aucune salle trouvée</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

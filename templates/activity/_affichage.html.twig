@@ -1,0 +1,56 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Liste des Activités</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Icône</th>
+                        <th>Catégorie</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                    <tr>
+                        <td>{{ activity.idActivity }}</td>
+                        <td>{{ activity.nomActivity }}</td>
+                       <td>
+    {% if activity.iconActivity %}
+       
+        <img src="{{ asset('uploads/images/' ~ activity.iconActivity) }}" 
+             alt="Icône de {{ activity.nomActivity }}" 
+             style="max-height: 100px;"
+             onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'text-danger\'>Image manquante</span>';"
+             class="img-thumbnail">
+    {% else %}
+        <span class="text-muted">Aucune icône</span>
+    {% endif %}
+</td>
+                        <td>{{ activity.categorieActivity.nomCategorie }}</td>
+                        <td class="d-flex">
+                            <a href="{{ path('app_activity_edit', {'idActivity': activity.idActivity}) }}" class="btn btn-warning btn-sm mr-2">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form method="post" action="{{ path('app_activity_delete', {'idActivity': activity.idActivity}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette activité?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activity.idActivity) }}">
+                                <button class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">Aucune activité trouvée</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,148 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}{{ activity.nomActivity }}{% endblock %}
+
+{% block body %}
+<main>
+    <!-- Hero Start -->
+    <div class="slider-area2">
+        <div class="slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap hero-cap2 text-center pt-70">
+                        <h2>les salles disponibles pour </h2>
+                            <h2>{{ activity.nomActivity }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- Liste des salles -->
+    <div class="gallery-area section-padding30">
+        <div class="container">
+            <div class="row">
+                {% for salle in salles %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-30">
+                    <div class="box snake">
+                        <div class="gallery-img small-img" style="background-image: url({{ asset('uploads/images/' ~ activity.IconActivity) }}); background-size: cover; background-position: center;">
+                            <div class="overlay">
+                               <div class="overlay-content" style="text-align: left; padding: 20px;">
+                                    <h3 style="color: #fff; margin-bottom: 15px;">{{ salle.nomSalle }}</h3>
+                                    
+                                    <div class="salle-info" style="color: #eee; margin-bottom: 20px;">
+                                        <div class="salle-info-item" style="margin-bottom: 10px;">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span>{{ salle.addresseSalle }}</span>
+                                        </div>
+                                        <div class="salle-info-item" style="margin-bottom: 10px;">
+                                            <i class="fas fa-clock"></i>
+                                            <span>Ouvert de {{ salle.horaireOuverture|date('H:i') }} à {{ salle.horaireFermeture|date('H:i') }}</span>
+                                        </div>
+                                        <div class="salle-info-item" style="margin-bottom: 10px;">
+                                            <i class="fas fa-users"></i>
+                                            <span>Capacité: {{ salle.capacity }} personnes</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="salle-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                        <a href="{{ path('rate_salle', {'activityId': activity.idActivity, 'salleId': salle.idSalle}) }}" 
+                                           class="rating-btn" style="padding: 8px 15px; border-radius: 4px; background: #FFC107; color: white; text-decoration: none;">
+                                            <i class="fas fa-star"></i> Noter
+                                        </a>
+                                        <a href="{{ path('view_comments', {'activityId': activity.idActivity, 'salleId': salle.idSalle}) }}" 
+                                           class="comments-btn" style="padding: 8px 15px; border-radius: 4px; background: #fff; color: #333; text-decoration: none;">
+                                            <i class="fas fa-comments"></i> Commentaires
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-12">
+                    <div class="box snake">
+                        <div class="gallery-img small-img" style="background-color: #f8f9fa; min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                            <p style="color: #666; font-size: 18px;">Aucune salle trouvée pour cette activité.</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    .box {
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .gallery-img {
+        height: 300px;
+        position: relative;
+    }
+    
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .box:hover .overlay {
+        opacity: 1;
+    }
+    
+    .overlay-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 20px;
+        width: 100%;
+    }
+    
+    .rating-btn, .comments-btn {
+        transition: all 0.2s ease;
+    }
+    
+    .rating-btn:hover {
+        background: #ffb300 !important;
+    }
+    
+    .comments-btn:hover {
+        background: #e9ecef !important;
+    }
+    
+    @media (max-width: 768px) {
+        .gallery-img {
+            height: 250px;
+        }
+        
+        .salle-actions {
+            flex-direction: column;
+        }
+        
+        .rating-btn, .comments-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}

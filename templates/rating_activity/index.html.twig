@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FitConnect - Évaluations des Activités{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Gestion des Évaluations</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Exporter
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Liste</h6>
+                    <span class="badge badge-primary">{{ ratings|length }} évaluation(s)</span>
+                </div>
+                <div class="card-body">
+                    {% include 'rating_activity/_affichage.html.twig' with {'ratings': ratings} %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+<script>
+$(document).ready(function() {
+    $('#dataTable').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+        },
+        "columnDefs": [
+            { "orderable": false, "targets": [5] },
+            { "searchable": false, "targets": [5] }
+        ],
+        "order": [[3, "desc"]],
+        "responsive": true
+    });
+});
+</script>
+{% endblock %}

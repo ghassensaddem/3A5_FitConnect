@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FitConnect - Catégories d'Activités{% endblock %}
+
+{% block body %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Gestion des Catégories d'Activités</h1>
+        <a href="{{ path('app_categorie_new') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Ajouter une Catégorie
+        </a>
+    </div>
+
+    {% include 'categorie_activity/_affichage.html.twig' %}
+
+</div>
+<!-- /.container-fluid -->
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<!-- Page level plugins -->
+<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+<!-- Page level custom scripts -->
+<script>
+$(document).ready(function() {
+    $('#dataTable').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+        }
+    });
+});
+</script>
+{% endblock %}
