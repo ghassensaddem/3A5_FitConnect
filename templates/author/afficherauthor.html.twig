@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Auteurs{% endblock %}
+
+{% block body %}
+    <h1>Liste des Auteurs</h1>
+
+    {% if authors is empty %}
+        <p>Aucun auteur trouvé.</p>
+    {% else %}
+        <ul>
+            {% for author in authors %}
+                <li>
+                    <strong>id :</strong> {{ author.id }}<br>
+                    <strong>Nom :</strong> {{ author.username }}<br>
+                    <strong>Email :</strong> {{ author.email }}<br>
+                    
+                    <!-- Lien pour modifier l'auteur -->
+                    <a href="{{ path('app_edit', {'id': author.id}) }}" class="btn btn-primary">Modifier</a>
+
+                    <!-- Formulaire pour supprimer l'auteur -->
+                    <form action="{{ path('app_delete', {'id': author.id}) }}" method="post" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet auteur ?');">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                    <hr>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

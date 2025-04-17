@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Auteurs</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Lien vers votre fichier CSS -->
+</head>
+<body>
+    <h1>Liste des Auteurs</h1>
+    {% if authors is defined and authors|length > 0 %}
+    <p>Nombre total d'auteurs : {{ authors|length }}</p>
+    {# Calculer le total des livres #}
+        {% set totalBooks = 0 %}
+        {% for author in authors %}
+            {% set totalBooks = totalBooks + author.nb_books %}
+        {% endfor %}
+        
+        <p>Nombre total de livres : {{ totalBooks }}</p> <!-- Affiche le nombre total de livres -->
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Nombre de Livres</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+            <tr>
+                <td><img src="{{ author.picture }}" alt="{{ author.username }}" width="500"></td>
+                <td>{{ author.username|upper }}</td>
+                <td>{{ author.email }}</td>
+                <td>{{ author.nb_books }}</td>
+                <td><a href="{{ path('app_details', {'id': author.id}) }}">Détails</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    {% else %}
+        <p>Aucun auteur n'est disponible.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Posts</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Lien vers votre fichier CSS -->
+</head>
+<body>
+    <h1>Liste des Posts</h1>
+    {% if posts is defined and posts|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                    <th>Auteur</th>
+                    <th>Nombre de Commentaires</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+             
+                    <td>{{ post.contenu }}</td> <!-- Affichage du contenu -->
+                    <td>{{ post.author }}</td> <!-- Affichage de l'auteur -->
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun post n'est disponible.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,27 @@
+/* Style pour les boutons Like et Dislike */
+.vote-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* Pas de fond pour le bouton */
+    border: 1px solid #ccc; /* Bordure légère */
+    border-radius: 5px; /* Bordure arrondie comme les boutons Modifier/Supprimer */
+    padding: 5px 10px; /* Espacement léger */
+    cursor: pointer; /* Curseur de main pour indiquer que c'est cliquable */
+    transition: all 0.3s ease; /* Transition douce pour l'effet de hover */
+}
+
+.vote-button:hover {
+    background-color: #f0f0f0; /* Fond clair au survol */
+    border-color: #999; /* Changer la couleur de la bordure */
+}
+
+.vote-button img {
+    width: 15px;
+    height: 15px;
+    transition: opacity 0.3s ease;
+}
+
+.vote-button:hover img {
+    opacity: 0.8; /* Changer l'opacité de l'image au survol */
+}
