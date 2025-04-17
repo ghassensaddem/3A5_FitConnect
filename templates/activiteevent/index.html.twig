@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activiteevent index</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .table {
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .table th {
+            background-color: #f8f9fa;
+        }
+        .btn-new {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 4px;
+        }
+        .btn-new:hover {
+            background-color: #0b5ed7;
+            color: white;
+        }
+        /* Sidebar */
+/* public/css/custom.css */
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+}
+.nav-link {
+    color: #F1F2F6; /* Supprime !important pour permettre le hover */
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; 
+    margin-bottom: 12px;
+    font-size: 18px; 
+    transition: color 0.3s ease-in-out; /* Transition fluide */
+}
+
+.nav-link i {
+    margin-right: 14px; /* Ajuste selon tes préférences */
+    transition: color 0.3s ease-in-out; /* Transition fluide */
+}
+
+.nav-item {
+    border-radius: 5px; /* Coins arrondis */
+    transition: background-color 0.3s ease-in-out; /* Effet fluide */
+}
+
+.nav-item:hover {
+    background-color: #F1F2F6; /* Fond blanc au survol */
+}
+
+.nav-item:hover .nav-link {
+    color: black; /* Texte en noir au survol */
+}
+
+.nav-item:hover .nav-link i {
+    color: black; /* Icône en noir au survol */
+}
+
+
+.card-header {
+    font-size: 1.5rem;
+    background-color: #053536;
+}
+
+.card-footer {
+    background-color: #f1f1f1;
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    border-radius: 30px;
+}
+/* Réinitialisation de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Conteneur du formulaire */
+.form-container {
+    background-color: #F1F2F6;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #053536;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Champs de texte et DatePicker */
+.input-field {
+    background-color: white;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0px 3px 10px rgba(5, 53, 54, 0.5);
+}
+
+.input-field:focus {
+    border-color: #053536;
+    border-width: 2px;
+    outline: none;
+    box-shadow: none; /* Supprime l'effet bleu */
+}
+
+/* Style des boutons */
+.my-button {
+    background-color: #053536;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+   /* transition: background 0.3s;*/
+    border: none;
+}
+
+.my-button:hover {
+    background-color: black;
+}
+
+/* Style des boutons de sidebar */
+.my-button2 {
+    background-color: transparent;
+    color: white;
+    font-size: 14px;
+    text-align: left;
+    padding: 15px 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: none;
+  /*  transition: background 0.3s, color 0.3s;*/
+}
+
+.my-button2 i {
+    margin-right: 10px; /* Espace entre l'icône et le texte */
+}
+
+.my-button2:hover {
+    background-color: white;
+    color: black;
+}
+
+/* Style des labels */
+.label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #053536;
+}
+
+.title {
+    font-size: 42px;
+    color: #053536;
+    font-weight: bold;
+    text-shadow: 0px 3px 10px rgba(5, 53, 54, 0.5);
+}
+
+/* Messages d'erreur et d'information */
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                {% include '_sidebar.html.twig' %}
+            </nav>
+
+
+            <!-- Main Content -->
+         <div class="main-content" style="margin-left: 260px;">
+
+                <h1>Liste des Activités</h1>
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Horaire</th>
+                            <th>Nombre de participants</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for activiteevent in activiteevents %}
+                            <tr>
+                                <td>{{ activiteevent.id }}</td>
+                                <td>{{ activiteevent.horaire }}</td>
+                                <td>{{ activiteevent.nbrparticipant }}</td>
+                                <td>
+                                    <a href="{{ path('app_activiteevent_show', {'id': activiteevent.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                                    <a href="{{ path('app_activiteevent_edit', {'id': activiteevent.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center">Aucun enregistrement trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <a href="{{ path('app_activiteevent_new') }}" class="btn-new">Créer une nouvelle activité</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
