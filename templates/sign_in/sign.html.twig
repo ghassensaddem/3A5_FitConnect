@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('style4.css') }}">
+
+    <title>Sign in & Sign up Form</title>
+</head>
+<body>
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <form method="POST" action="{{ path('app_login') }}" class="sign-in-form">
+                    <h2 class="title">Connexion</h2>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        {{ form_widget(form1.email) }}
+                    </div>
+                    <div class="form-error">
+                        {{ form_errors(form1.email) }}
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        {{ form_widget(form1.mdp) }}
+                    </div>
+                    <div class="form-error">
+                        {{ form_errors(form1.mdp) }}
+                    </div>
+                    <input type="submit" value="Se connecter" class="btn solid" />
+                    <p class="social-text">Ou connectez-vous avec</p>
+                    <div class="social-media">
+                        <a href="{{ path('app_google_login') }}" class="social-icon">
+                            <img src="img/google.png" alt="Google logo" style="width: 30px; height: auto;">
+                        </a>
+                    </div>
+
+                    <a href="{{ path('app_forgot_password_request') }}" >Mot de passe oublié ?</a>
+                </form>
+
+
+                <form method="POST" action="{{ path('app_register') }}" enctype="multipart/form-data" class="sign-up-form">
+                    <h2 class="title">Inscription</h2>
+                    {{ form_start(form) }}
+
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="input-field">
+                                    <i class="fas fa-user"></i>
+                                    {{ form_widget(form.nom) }}
+                                   
+                                </div>
+                                <div class="form-error">
+                                    {{ form_errors(form.nom) }}
+                                </div>
+                            </td>
+                            
+                            <td>
+                                <div class="input-field">
+                                    <i class="fas fa-user"></i>
+                                    {{ form_widget(form.prenom) }}
+                                   
+                                </div>
+                                <div class="form-error">
+                                 {{ form_errors(form.prenom) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-field">
+                                    <i class="fas fa-envelope"></i>
+                                    {{ form_widget(form.email) }}
+                                   
+                                </div>
+                                <div class="form-error">
+                                     {{ form_errors(form.email) }}
+                                    <label for="email" class="error-message" style="display: {{ error is defined ? 'block' : 'none' }};">
+                                        {{ error is defined ? error : '' }} 
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="sexe-field">
+                                    <i class="fas fa-venus-mars"></i>
+                                    {{ form_widget(form.sexe) }}
+                                  
+                                </div>
+                                <div class="form-error">
+                                  {{ form_errors(form.sexe) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-field">
+                                    <i class="fas fa-lock"></i>
+                                    {{ form_widget(form.mdp) }}
+                                   
+                                </div>
+                                <div class="form-error">
+                                 {{ form_errors(form.mdp) }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-field">
+                                    <i class="fas fa-calendar"></i>
+                                    {{ form_widget(form.dateNaissance) }}
+                                    
+                                </div>
+                                <div class="form-error">
+                                {{ form_errors(form.dateNaissance) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-field">
+                                    <i class="fas fa-weight"></i>
+                                    {{ form_widget(form.poids) }}
+                                   
+                                </div>
+                                <div class="form-error">
+                                 {{ form_errors(form.poids) }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-field">
+                                    <i class="fas fa-ruler"></i>
+                                    {{ form_widget(form.taille) }}
+                                  
+                                </div>
+                                <div class="form-error">
+                                  {{ form_errors(form.taille) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="input-field">
+                                    <i class="fas fa-image"></i>
+                                    {{ form_widget(form.image) }}
+                                    
+                                </div>
+                                <div class="form-error">
+                                {{ form_errors(form.image) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;">
+                                <input type="submit" class="btn" value="S'inscrire" />
+                            </td>
+                        </tr>
+                    </table>
+
+                    {{ form_end(form) }}
+                </form>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>Pas encore inscrit ?</h3>
+                    <p>Rejoignez-nous dès maintenant et profitez de nos services !</p>
+                    <button class="btn transparent" id="sign-up-btn">S'inscrire</button>
+                </div>
+                <img src="img/logg.svg" class="image" alt="" />
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>Déjà membre ?</h3>
+                    <p>Connectez-vous pour accéder à votre compte.</p>
+                    <button class="btn transparent" id="sign-in-btn">Se connecter</button>
+                </div>
+                <img src="img/register2.svg" class="image" alt="" />
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+        {% if login == true %}
+        <script>
+        sign_up_btn.click();
+        </script>
+        {% endif %}
+
+</body>
+</html>

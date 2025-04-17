@@ -1,0 +1,524 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title> {%block title %} FitConnect {% endblock  %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assetsFront/assetsFront/img/favicon.ico')}}">
+{% block css %}
+	<!-- CSS here -->
+	<link rel="stylesheet" href="{{asset('assetsFront/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assetsFront/css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assetsFront/css/slicknav.css')}}">
+    <link rel="stylesheet" href="{{asset('assetsFront/css/flaticon.css')}}">
+    <link rel="stylesheet" href="{{asset('assetsFront/css/gijgo.css')}}">
+    <link rel="stylesheet" href="{{asset('assetsFront/css/animate.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assetsFront/css/animated-headline.css')}}">
+	<link rel="stylesheet" href="{{asset('assetsFront/css/magnific-popup.css')}}">
+	<link rel="stylesheet" href="{{asset('assetsFront/css/fontawesome-all.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assetsFront/css/themify-icons.css')}}">
+	<link rel="stylesheet" href="{{asset('assetsFront/css/slick.css')}}">
+	<link rel="stylesheet" href="{{asset('assetsFront/css/nice-select.css')}}">
+	<link rel="stylesheet" href="{{asset('assetsFront/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('User/styleProfil.css')}}">
+    
+    {% endblock %}
+</head>
+<style>
+    .logo img {
+        max-width: 80px; /* Taille maximale réduite */
+        height: auto;    /* Garde les proportions */
+        display: block;  /* Évite les espaces indésirables */
+    }
+    .cart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    margin-left: 15px;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Teko", sans-serif;
+    color:#053536 ;
+    margin-top: 0px;
+    font-style: normal;
+    font-weight: 500;
+    text-transform: normal;
+}
+p {
+    font-family: "Barlow", sans-serif;
+    color: #10285d;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.work_skills .work .heading, .work_skills .skills .heading {
+    position: relative;
+    font-size: large;
+    color: #053536;
+    text-transform: uppercase;
+    margin-bottom: var(--m-1-5);
+}
+.slider-area2 {
+    background-image: url(https://c4.wallpaperflare.com/wallpaper/199/924/33/muscle-muscle-bodybuilding-press-wallpaper-preview.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+/* Conteneur de la dropdown */
+.profile-dropdown {
+    position: relative;
+}
+
+/* Icône profil */
+.profile-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #053536;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.profile-icon:hover {
+    color: #0b8c73;
+}
+
+/* Menu déroulant caché par défaut */
+.profile-dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+/* Affiche le menu au survol */
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Chaque élément de menu */
+.dropdown-menu li {
+    list-style: none;
+}
+
+/* Lien personnalisé dans le menu */
+.logout-link {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333 !important;
+    font-family: 'Segoe UI', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-link:hover {
+    background-color: #0b8c73;
+    color: white;
+    border-radius: 4px;
+}
+
+</style>
+<body>
+    <!-- ? Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{{asset('assetsFront/img/logo/loder.png')}}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+  <header>
+    <!--? Header Start -->
+    <div class="header-area header-transparent">
+        <div class="main-header header-sticky">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <!-- Logo -->
+                    <div class="col-xl-2 col-lg-2 col-md-1">
+                        <div class="logo">
+                            <a href="index.html"><img src="{{asset('assetsFront/img/logo/logo2.png')}}" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-10">
+                        <div class="menu-main d-flex align-items-center justify-content-end">
+                            <!-- Main-menu -->
+                            <div class="main-menu f-right d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="about.html">Evenement</a></li>
+                                        <li><a href="services.html">Activity</a></li>
+                                        <li><a href="schedule.html">Programme</a></li>
+                                        <li><a href="gallery.html">Equipement</a></li>
+                                        <li><a href="blog.html">Forum</a></li>
+                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="#" class="cart-icon"><i class="fas fa-shopping-cart"></i></a></li>
+                                        <li class="profile-dropdown">
+                                            <a href="#" class="profile-icon">
+                                                <i class="fas fa-user"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{{ path('app_logout') }}" class="logout-link">Se déconnecter</a></li>
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </nav>
+                            </div>
+                            
+                        </div>
+                    </div>   
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>
+    {% block body %}
+    <main>
+        <div class="slider-area2">
+            <div class="slider-height2 d-flex align-items-center">
+               
+            </div>
+        
+
+
+
+
+            <div class="container-profile">
+
+        <!-- ===== ===== Header/Navbar ===== ===== -->
+        
+
+
+        <!-- ===== ===== User Main-Profile ===== ===== -->
+        <section class="userProfile card">
+            <div class="profile">
+                <figure>
+                    <img src="{{ asset(client.image | replace({'C:/xampp/htdocs/images/': 'uploads/'})) }}" alt="profile" width="250px" height="250px">
+                    <div class="overlay">
+                        <label for="upload-image" class="camera-icon">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                        <form action="{{ path('changeImage') }}" method="post" enctype="multipart/form-data" id="image-form">
+                            <input type="file" id="upload-image" name="image" accept="image/*" onchange="document.getElementById('image-form').submit();" hidden>
+                        </form>
+                    </div>
+                </figure>
+            </div>
+        </section>
+
+
+
+        <!-- ===== ===== Work & Skills Section ===== ===== -->
+        <section class="work_skills card">
+
+            <!-- ===== ===== Work Contaienr ===== ===== -->
+            <div class="work">
+                <h1 class="heading">work</h1>
+                <div class="primary">
+                    <h1>Spotify New York</h1>
+                    <span>Primary</span>
+                    <p>170 William Street <br> New York, NY 10038-212-315-51</p>
+                </div>
+
+                <div class="secondary">
+                    <h1>Metropolitan <br> Museum</h1>
+                    <span>Secondary</span>
+                    <p>S34 E 65th Street <br> New York, NY 10651-78 156-187-60</p>
+                </div>
+            </div>
+
+            <!-- ===== ===== Skills Contaienr ===== ===== -->
+            <div class="skills">
+                <h1 class="heading">Compétences Sportives</h1>
+                <ul>
+                    <li style="--i:0">Endurance</li>
+                    <li style="--i:1">Force</li>
+                    <li style="--i:2">Agilité</li>
+                    <li style="--i:3">Coordination</li>
+                </ul>
+            </div>
+
+
+             <div class="basic_info">
+                <h1 class="heading">Basic Information</h1>
+                <ul>
+                    <li class="birthday">
+                        <h1 class="label">Date Naissance: <span class="info">{{ client.dateNaissance|date('d F Y') }}</span>
+                     </h1>
+                        </li>
+
+                    <li class="sex">
+                        <h1 class="label">Genre: <span class="info">{{client.sexe}}</span> </h1>
+                        
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+
+
+        <!-- ===== ===== User Details Sections ===== ===== -->
+        <section class="userDetails card">
+            <div class="userName">
+                <h1 class="name">{{ client.nom ~ ' ' ~ client.prenom }}</h1>
+                <div class="map">
+                    <i class="ri-map-pin-fill ri"></i>
+                   
+                </div>
+                <p>Client</p>
+            </div>
+
+            <div class="rank">
+                <h1 class="heading">Fidelite</h1>
+                <span>8,6</span>
+                <div class="rating">
+                    <i class="ri-star-fill rate"></i>
+                    <i class="ri-star-fill rate"></i>
+                    <i class="ri-star-fill rate"></i>
+                    <i class="ri-star-fill rate"></i>
+                    <i class="ri-star-fill rate underrate"></i>
+                </div>
+            </div>
+
+            
+        </section>
+
+
+        <!-- ===== ===== Timeline & About Sections ===== ===== -->
+        <section class="timeline_about card">
+            <div class="tabs">
+                <ul>
+
+                    <li class="about active">
+                        <i class="ri-user-3-fill ri"></i>
+                        <span>A Propos</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="client-profile">
+    <h1 class="heading">Profil du Client</h1>
+    <form action="{{ path('app_profile') }}" method="post">
+        {{ form_start(form, {'attr': {'class': 'profile-form'}}) }}
+        
+        <ul>
+            <li class="name">
+               
+                {{ form_widget(form.nom) }}
+                <div class="form-error">
+                    {{ form_errors(form.nom) }}
+                </div>
+            </li>
+
+            <li class="prenom">
+               
+                {{ form_widget(form.prenom) }}
+                <div class="form-error">
+                    {{ form_errors(form.prenom) }}
+                </div>
+               
+            </li>
+
+            <li class="email">
+                {{ form_widget(form.email) }}
+                <div class="form-error">
+                    {{ form_errors(form.email) }}
+                </div>
+            </li>
+
+            <li class="password">
+               
+                {{ form_widget(form.mdp)}}
+            </li>
+              {{ form_row(form._token) }}
+        </ul>
+
+        <button type="submit" class="submit-profile">Mettre à jour</button>
+
+        {{ form_end(form, {'render_rest': false}) }}
+    </form>
+
+</div>
+            
+
+            {# <div class="basic_info">
+                <h1 class="heading">Basic Information</h1>
+                <ul>
+                    <li class="birthday">
+                        <h1 class="label">Date Naissance:</h1>
+                        <span class="info">{{client.dateNaissance}}</span>
+                    </li>
+
+                    <li class="sex">
+                        <h1 class="label">Genre:</h1>
+                        <span class="info">{{client.sexe}}</span>
+                    </li>
+                </ul>
+            </div> #}
+        </section>
+    </div>
+
+        </div>
+        
+    </main>
+    {% endblock %}
+
+    <footer>
+        <!--? Footer Start-->
+        <div class="footer-area section-bg" data-background="{{asset('assetsFront/img/gallery/section_bg03.png')}}">
+            <div class="container">
+                <div class="footer-top footer-padding">
+                    <!-- Footer Menu -->
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>COMPANY</h4>
+                                    <ul>
+                                        <li><a href="#">About Us</a></li>
+                                        <li><a href="#">Company</a></li>
+                                        <li><a href="#"> Press & Blog</a></li>
+                                        <li><a href="#"> Privacy Policy</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Open hour</h4>
+                                    <ul>
+                                        <li><a href="#">Monday 11am-7pm</a></li>
+                                        <li><a href="#"> Tuesday-Friday 11am-8pm</a></li>
+                                        <li><a href="#"> Saturday 10am-6pm</a></li>
+                                        <li><a href="#"> Sunday 11am-6pm</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>RESOURCES</h4>
+                                    <ul>
+                                        <li><a href="#">Home Insurance</a></li>
+                                        <li><a href="#">Travel Insurance</a></li>
+                                        <li><a href="#"> Car Insurance</a></li>
+                                        <li><a href="#"> Business Insurance</a></li>
+                                        <li><a href="#"> Heal Insurance</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <!-- logo -->
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src="{{asset('assetsFront/img/logo/logo2_footer.png')}}" alt=""></a>
+                                </div>
+                                <div class="footer-tittle">
+                                    <div class="footer-pera">
+                                        <p class="info1">GThe trade war currently ensuing between te US anfd several natxions around thdhe globe, most fiercely with.</p>
+                                    </div>
+                                </div>
+                                <!-- Footer Social -->
+                                <div class="footer-social ">
+                                    <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                    <a href=""><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fas fa-globe"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer Bottom -->
+                <div class="footer-bottom">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-lg-12">
+                            <div class="footer-copy-right text-center">
+                                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+    <!-- Scroll Up -->
+    <div id="back-top" >
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+
+    <!-- JS here -->
+    {% block js %}
+
+    <script src="{{asset('assetsFront/js/vendor/modernizr-3.5.0.min.js')}}"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="{{asset('assetsFront/js/vendor/jquery-1.12.4.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/popper.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/bootstrap.min.js')}}"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="{{asset('assetsFront/js/jquery.slicknav.min.js')}}"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="{{asset('assetsFront/js/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/slick.min.js')}}"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="{{asset('assetsFront/js/wow.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/animated.headline.js')}}"></script>
+    <script src="{{asset('assetsFront/js/jquery.magnific-popup.js')}}"></script>
+
+    <!-- Date Picker -->
+    <script src="{{asset('assetsFront/js/gijgo.min.js')}}"></script>
+    <!-- Nice-select, sticky -->
+    <script src="{{asset('assetsFront/js/jquery.nice-select.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/jquery.sticky.js')}}"></script>
+    
+    <!-- counter , waypoint,Hover Direction -->
+    <script src="{{asset('assetsFront/js/jquery.counterup.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/waypoints.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/jquery.countdown.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/hover-direction-snake.min.js')}}"></script>
+
+    <!-- contact js -->
+    <script src="{{asset('assetsFront/js/contact.js')}}"></script>
+    <script src="{{asset('assetsFront/js/jquery.form.js')}}"></script>
+    <script src="{{asset('assetsFront/js/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('assetsFront/js/mail-script.js')}}"></script>
+    <script src="{{asset('assetsFront/js/jquery.ajaxchimp.min.js')}}"></script>
+    
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="{{asset('assetsFront/js/plugins.js')}}"></script>
+    <script src="{{asset('assetsFront/js/main.js')}}"></script>
+    
+    {% endblock %}
+    
+    </body>
+</html>

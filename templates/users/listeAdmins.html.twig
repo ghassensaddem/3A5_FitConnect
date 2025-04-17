@@ -1,0 +1,838 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+}
+
+.profile-header h4 {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.profile-header span {
+    color: #777;
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.profile-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.profile-button:hover {
+    background-color: #0056b3;
+}
+
+.form-error {
+  color: red; /* Red text for error messages */
+  font-size: 12px; /* Optional: Change the size of the error text */
+  margin-top: 5px; /* Optional: Add some space above the error message */
+}
+
+
+</style>
+<style>
+
+
+
+/* ===== Carte et Conteneur Principal ===== */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 1200px;
+  overflow: hidden;
+}
+
+/* ===== En-tête de Carte ===== */
+.card-header {
+  padding: 20px;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: #fff;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Updated Search filters row */
+.filters-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 15px;
+}
+
+.filters-row .filter-item {
+  flex: 1;
+}
+
+/* Update search, export and add new buttons to be inline */
+.search-add-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.dt-search {
+  flex: 1;
+  margin: 0;
+}
+
+/* Dropdown styling for actions */
+.dropdown-menu {
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  background-color: #fff;
+  border: none;
+  border-radius: 0.375rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 1.2rem;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdown-item i {
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+/* Status styling */
+.badge {
+  padding: 0.4em 0.8em;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.badge.bg-label-success {
+  background-color: rgba(40, 167, 69, 0.15) !important;
+  color: #28a745;
+}
+
+.badge.bg-label-secondary {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+  color: #dc3545;
+}
+
+.badge.bg-label-warning {
+  background-color: rgba(255, 193, 7, 0.15) !important;
+  color: #ffc107;
+}
+
+/* Action icons color */
+.action-icon.bx-trash {
+  color: #dc3545;
+}
+
+.action-icon.bx-show {
+  color: #007bff;
+}
+
+.action-icon.bx-dots-vertical-rounded {
+  color: #6c757d;
+}
+
+.action-icon.bx-pencil {
+  color: #28a745;
+}
+
+.action-icon.bx-block {
+  color: #dc3545;
+}
+
+/* Role icons colors */
+.icon-base.bx-desktop {
+  color: #dc3545;
+}
+
+.icon-base.bx-user {
+  color: #28a745;
+}
+
+.icon-base.bx-crown {
+  color: #007bff;
+}
+
+.icon-base.bx-pie-chart-alt {
+  color: #17a2b8;
+}
+
+.icon-base.bx-edit {
+  color: #ffc107;
+}
+
+/* ===== Filtres de Recherche ===== */
+.d-flex.justify-content-between.align-items-center.row.pt-4.gap-md-0.g-6 {
+  padding: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #fff;
+  appearance: none;
+}
+
+/* ===== Tableaux ===== */
+.card-datatable {
+  padding: 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+table th {
+  background: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+}
+
+/* ===== Pagination ===== */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li button {
+  border: none;
+  background-color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination li button:hover,
+.pagination li.active button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* ===== Offcanvas (Panneau d'ajout utilisateur) ===== */
+.offcanvas {
+  background-color: #fff;
+  width: 400px;
+  border-left: 1px solid #eaeaea;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  transform: translateX(100%);
+  z-index: 1050;
+}
+
+.offcanvas.show {
+  transform: translateX(0);
+}
+
+.offcanvas-header {
+  padding: 20px;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.offcanvas-body {
+  padding: 20px;
+}
+
+/* ===== Formulaire ===== */
+form.add-new-user {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form.add-new-user input[type="text"],
+form.add-new-user input[type="email"],
+form.add-new-user select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ===== Boutons ===== */
+.btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-label-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* ===== Utilitaires ===== */
+.text-heading {
+  font-weight: 600;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.rounded-circle {
+  border-radius: 50%;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avatar-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* ===== Icônes Boxicons ===== */
+.icon-base {
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .card-header,
+  .d-flex.justify-content-between.align-items-center.row.pt-4.gap-md-0.g-6 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .offcanvas {
+    width: 100%;
+  }
+}
+
+/* Display the Actions column */
+.datatables-users td.actions-col {
+  display: table-cell;
+}
+
+/* Icons styling */
+.action-icon {
+  margin: 0 0px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.action-icon:hover {
+  color: #007bff;
+}
+
+.main--content {
+    margin-left: 150px; /* Ajustez cette valeur pour rapprocher le conteneur du sidebar */
+    padding: 20px; /* Ajoutez un padding pour l'espacement interne */
+    width: calc(100% - 260px); /* Ajustez la largeur pour qu'elle prenne le reste de l'espace */
+}
+
+th.dt-orderable-none {
+    text-align: center; /* Centre le texte dans l'en-tête */
+}
+
+
+
+.btn-add-user {
+    background-color: #007bff; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border: none; /* Supprime la bordure */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 8px 16px; /* Espacement interne */
+    font-size: 16px; /* Taille du texte */
+    font-weight: 500; /* Poids du texte */
+    height: 50px; /* Hauteur du bouton */
+    display: inline-flex; /* Aligne le contenu horizontalement */
+    align-items: center; /* Centre verticalement le contenu */
+    gap: 6px; /* Espacement entre l'icône et le texte */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Ombre */
+    transition: all 0.3s ease; /* Animation pour les interactions */
+}
+
+.btn-add-user:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15); /* Ombre au survol */
+    transform: translateY(-1px); /* Légère élévation au survol */
+}
+
+.btn-add-user:active {
+    background-color: #003f8a; /* Couleur de fond lors du clic */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Ombre réduite lors du clic */
+    transform: translateY(0); /* Réinitialise l'élévation */
+}
+
+.btn-add-user i {
+    font-size: 14px; /* Taille de l'icône */
+    color: #fff; /* Couleur de l'icône */
+}
+
+
+img {
+    position: static !important; /* Réinitialise la position */
+
+}
+
+
+
+
+
+
+
+</style>
+
+<div class="container">
+    
+<div>
+    <div class="card-header border-bottom">
+      <h5 class="card-title mb-0">Search Filters</h5>
+    </div>
+    
+    <!-- Regrouped filters in one line -->
+    <div class="filters-row">
+      <div class="filter-item user_role">
+        <select id="UserRole" class="select2 form-select text-capitalize">
+          <option value="">Select Role</option>
+          <option value="Admin">Admin</option>
+          <option value="Author">Author</option>
+          <option value="Editor">Editor</option>
+          <option value="Maintainer">Maintainer</option>
+          <option value="Subscriber">Subscriber</option>
+        </select>
+      </div>
+      <div class="filter-item user_plan">
+        <select id="UserPlan" class="select2 form-select text-capitalize">
+          <option value="">Select Plan</option>
+          <option value="Basic">Basic</option>
+          <option value="Company">Company</option>
+          <option value="Enterprise">Enterprise</option>
+          <option value="Team">Team</option>
+        </select>
+      </div>
+      <div class="filter-item user_status">
+        <select id="FilterTransaction" class="select2 form-select text-capitalize">
+          <option value="">Select Status</option>
+          <option value="Pending" class="text-capitalize">Pending</option>
+          <option value="Active" class="text-capitalize">Active</option>
+          <option value="Inactive" class="text-capitalize">Inactive</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="card-datatable">
+      <div id="DataTables_Table_0_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+        <div class="row mx-3 my-0 justify-content-between">
+          
+          
+          <!-- Regrouped search, export and add new buttons -->
+          <div class="search-add-group dt-layout-end col-md-auto ms-auto mt-0">
+            <div class="dt-search mb-md-6 mb-2">
+              <input type="search" class="form-control" id="dt-search-0" placeholder="Search User" aria-controls="DataTables_Table_0">
+              <label for="dt-search-0"></label>
+            </div>
+            <div class="dt-buttons btn-group flex-wrap d-flex gap-4 mb-md-0 mb-6"> 
+              <div class="btn-group">
+                <button class="btn buttons-collection btn-label-secondary dropdown-toggle" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false">
+                  <span class="d-flex align-items-center gap-2">
+                    <i class="icon-base bx bx-export icon-sm"></i> 
+                    <span class="d-none d-sm-inline-block">Export</span>
+                  </span>
+                </button>
+              </div> 
+              <button class="btn-add-user" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser">
+                <span>
+                  <i class="icon-base bx bx-plus icon-sm me-0 me-sm-2"></i>
+                  <span class="d-none d-sm-inline-block">Ajouter Admin</span>
+                </span>
+              </button> 
+            </div>
+          </div>
+        </div>
+        
+        <!-- Table content -->
+        <div class="justify-content-between dt-layout-table"><div class="d-md-flex justify-content-between align-items-center dt-layout-full table-responsive"><table class="datatables-users table border-top dataTable dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;"><colgroup><col data-dt-column="0" style="width: 10px;"><col data-dt-column="1" style="width: 58px;"><col data-dt-column="2" style="width: 350px;"><col data-dt-column="3" style="width: 200px;"><col data-dt-column="4" style="width: 210px;"><col data-dt-column="5" style="width: 0px;"><col data-dt-column="6" style="width: 0px;"></colgroup>
+        <thead>
+          <tr><th data-dt-column="0" class="control dt-orderable-none" rowspan="1" colspan="1" aria-label=""><span class="dt-column-title"></span><span class="dt-column-order"></span></th><th data-dt-column="1" rowspan="1" colspan="1" class="dt-select dt-orderable-none" aria-label="" style=""><span class="dt-column-title"></span><span class="dt-column-order"></span><input class="form-check-input" type="checkbox" aria-label="Select all rows"></th><th data-dt-column="2" rowspan="1" colspan="1" class="dt-orderable-asc dt-orderable-desc dt-ordering-desc" aria-sort="descending" aria-label="User: Activate to remove sorting" tabindex="0"><span class="dt-column-title" role="button">User</span><span class="dt-column-order"></span></th><th data-dt-column="3" rowspan="1" colspan="1" class="dt-orderable-asc dt-orderable-desc" aria-label="Role: Activate to sort" tabindex="0" style=""><span class="dt-column-title" role="button">Role</span><span class="dt-column-order"></span></th><span class="dt-column-order"></span></th><th data-dt-column="6" rowspan="1" colspan="1" class="dt-orderable-asc dt-orderable-desc" aria-label="Status: Activate to sort" tabindex="0" style=""><span class="dt-column-title" role="button">Status</span><span class="dt-column-order"></span></th><th data-dt-column="7" rowspan="1" colspan="1" class="dt-orderable-none action-col" aria-label="Actions"><span class="dt-column-title">Actions</span><span class="dt-column-order"></span></th></tr>
+        </thead><tbody>
+
+                {% for admin in admins %}
+                    <tr>
+                        <td class="control" tabindex="0"></td>
+                        <td class="dt-select" style="">
+                            <input aria-label="Select row" class="form-check-input" type="checkbox">
+                        </td>
+                        <td class="sorting_1">
+                            <div class="d-flex justify-content-start align-items-center user-name">
+                                <div class="avatar-wrapper">
+                                    <div class="avatar avatar-sm me-4">
+                                        <img src="{{ asset(admin.image | replace({'C:/xampp/htdocs/images/': 'uploads/'})) }}" alt="Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a  class="text-heading text-truncate">
+                                        <span class="fw-medium">{{ admin.nom ~ ' ' ~ admin.prenom }}</span>
+                                    </a>
+                                    <small>{{ admin.email }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="" style="">
+                            <span class="text-truncate d-flex align-items-center text-heading">
+                                <i class="icon-base bx bx-user text-success me-2"></i>{{ admin.sexe }}
+                            </span>
+                        </td>
+                        <td class="" style="">
+                            <span class="badge bg-label-{{ admin.role == 'supadmin' ? 'success' : 'secondary' }}" text-capitalized="">
+                                {{ admin.role }}
+                            </span>
+                        </td>
+                        <td class="actions-col">
+                            <div class="d-flex align-items-center">
+                                <a href="{{ path('deleteAdmin', {'id': admin.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');" class="btn btn-icon delete-record action-icon bx bx-trash"></a>
+                                <a href="{{ path('updateAdmin', {'id': admin.id}) }}" class="btn btn-icon action-icon bx bx-show"></a>
+                                <a href="javascript:;" class="btn btn-icon dropdown-toggle hide-arrow action-icon bx bx-dots-vertical-rounded" data-bs-toggle="dropdown"></a>
+                                <div class="dropdown-menu dropdown-menu-end m-0">
+                                    <a href="{{ path('setSupAdmin', {'id': admin.id}) }}" class="dropdown-item">
+                                        <i class="bx bx-pencil action-icon"></i> supadmin
+                                    </a>
+                                    <a href="{{ path('setAdmin', {'id': admin.id}) }}"  class="dropdown-item">
+                                        <i class="bx bx-block action-icon"></i> admin
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+       </div>
+    <!-- Offcanvas to add new user -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add User</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        <form action="{{ path('ListeAdmins') }}" method="post" enctype="multipart/form-data" class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm" novalidate="novalidate">
+        {{ form_start(form, {'attr': {'class': 'add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework', 'id': 'addNewUserForm', 'novalidate': 'novalidate'}}) }}
+
+        <div class="mb-6">
+            {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le nom', 'id': 'nom'}}) }}
+            <label id="nom-error" class="form-error" style="display: none;">Veuillez entrer un nom valide.</label>
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le prénom', 'id': 'prenom'}}) }}
+            <label id="prenom-error" class="form-error" style="display: none;">Veuillez entrer un prénom valide.</label>
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.sexe, 'Sexe', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.sexe, {'attr': {'class': 'form-select', 'id': 'sexe'}}) }}
+            <label id="sexe-error" class="form-error" style="display: none;">Veuillez sélectionner un sexe.</label>
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.mdp, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le mot de passe', 'id': 'mdp'}}) }}
+            <label id="mdp-error" class="form-error" style="display: none;">Le mot de passe doit contenir au moins 6 caractères.</label>
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.dateNaissance, 'Date de naissance', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.dateNaissance, {'attr': {'class': 'form-control', 'id': 'dateNaissance'}}) }}
+            <label id="dateNaissance-error" class="form-error" style="display: none;">Veuillez entrer une date de naissance valide.</label>
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez l\'email', 'id': 'email'}}) }}
+            <label id="email-error" class="form-error" style="display: none;">Veuillez entrer une adresse email valide.</label>
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.role, 'Rôle', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.role, {'attr': {'class': 'form-select', 'id': 'role'}}) }}
+            <label id="role-error" class="form-error" style="display: none;">Veuillez sélectionner un rôle.</label>
+        </div>
+
+        <div class="mb-6">
+            {{ form_label(form.image, 'Photo de profil', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.image, {'attr': {'class': 'form-control', 'id': 'image'}}) }}
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-3 data-submit">Submit</button>
+            <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Cancel</button>
+        </div>
+
+        {{ form_end(form) }}
+    </form>
+      </div>
+    </div>
+  </div>
+
+    
+</div>
+
+
+<script src="{{ asset('assets/js/main.js') }}" ></script>
+    <script>
+        document.querySelectorAll(".has-submenu > a").forEach(item => {
+            item.addEventListener("click", function (e) {
+                e.preventDefault();
+                let submenu = this.nextElementSibling;
+                submenu.classList.toggle("active");
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+    // Initialisation de Select2
+    const selectElements = document.querySelectorAll('.select2');
+    selectElements.forEach(select => {
+        $(select).select2();
+    });
+});
+
+
+    </script>
+
+
+<script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const form = document.getElementById('addNewUserForm');
+
+    if (!form) {
+        console.error("Le formulaire avec l'ID 'addNewUserForm' n'a pas été trouvé.");
+        return;
+    }
+
+    form.addEventListener('submit', function (e) {
+        let isValid = true;
+
+        // Validation du champ Nom
+        const nom = document.getElementById('admin_nom');
+        const nomError = document.getElementById('nom-error');
+        if (!nom || nom.value.trim() === '') {
+            nomError.style.display = 'block';
+            isValid = false;
+        } else {
+            nomError.style.display = 'none';
+        }
+
+        // Validation du champ Prénom
+        const prenom = document.getElementById('admin_prenom');
+        const prenomError = document.getElementById('prenom-error');
+        if (!prenom || prenom.value.trim() === '') {
+            prenomError.style.display = 'block';
+            isValid = false;
+        } else {
+            prenomError.style.display = 'none';
+        }
+
+        // Validation du champ Sexe
+        const sexe = document.getElementById('admin_sexe');
+        const sexeError = document.getElementById('sexe-error');
+        if (!sexe || sexe.value === '') {
+            sexeError.style.display = 'block';
+            isValid = false;
+        } else {
+            sexeError.style.display = 'none';
+        }
+
+        // Validation du champ Mot de passe
+        const mdp = document.getElementById('admin_mdp');
+        const mdpError = document.getElementById('mdp-error');
+        if (!mdp || mdp.value.length < 6) {
+            mdpError.style.display = 'block';
+            isValid = false;
+        } else {
+            mdpError.style.display = 'none';
+        }
+
+        // Validation du champ Date de naissance
+        const dateNaissance = document.getElementById('admin_dateNaissance');
+        const dateNaissanceError = document.getElementById('dateNaissance-error');
+        if (!dateNaissance || dateNaissance.value === '') {
+            dateNaissanceError.style.display = 'block';
+            isValid = false;
+        } else {
+            dateNaissanceError.style.display = 'none';
+        }
+
+        // Validation du champ Email
+        const email = document.getElementById('admin_email');
+        const emailError = document.getElementById('email-error');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email.value)) {
+            emailError.style.display = 'block';
+            isValid = false;
+        } else {
+            emailError.style.display = 'none';
+        }
+
+        // Validation du champ Rôle
+        const role = document.getElementById('admin_role');
+        const roleError = document.getElementById('role-error');
+        if (!role || role.value === '') {
+            roleError.style.display = 'block';
+            isValid = false;
+        } else {
+            roleError.style.display = 'none';
+        }
+
+        
+          
+
+        // Empêche la soumission si le formulaire n'est pas valide
+        if (!isValid) {
+            e.preventDefault();
+            console.log('Nom:', nom.value.trim());
+            console.log('Prénom:', prenom.value.trim());
+            console.log('Sexe:', sexe.value);
+            console.log('Mot de passe:', mdp.value);
+            console.log('Date de naissance:', dateNaissance.value);
+            console.log('Email:', email.value);
+            console.log('Rôle:', role.value);
+            console.log('Image:', image.files.length);
+        }
+          
+    });
+});
+</script>
+ 
+ 
+{% endblock %}
+
+
+
+

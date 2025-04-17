@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <!-- ===== ===== Custom Css ===== ===== -->
+    <link rel="stylesheet" href="User/styleProfil.css">
+    <link rel="stylesheet" href="User/responsive.css">
+
+    <!-- ===== ===== Remix Font Icons Cdn ===== ===== -->
+    <link rel="stylesheet" href="User/profile/fonts/remixicon.css">
+</head>
+
+<body>
+    <!-- ===== ===== Body Main-Background ===== ===== -->
+    <span class="main_bg"></span>
+
+
+    <!-- ===== ===== Main-Container ===== ===== -->
+    <div class="container">
+
+        <!-- ===== ===== Header/Navbar ===== ===== -->
+        
+
+
+        <!-- ===== ===== User Main-Profile ===== ===== -->
+        <section class="userProfile card">
+            <div class="profile">
+                <figure>
+                    <img src="{{ asset(client.image | replace({'C:/xampp/htdocs/images/': 'uploads/'})) }}" alt="profile" width="250px" height="250px">
+                    <div class="overlay">
+                        <label for="upload-image" class="camera-icon">
+                            <i class="ri-camera-fill"></i>
+                        </label>
+                        <form action="{{ path('changeImage') }}" method="post" enctype="multipart/form-data" id="image-form">
+                            <input type="file" id="upload-image" name="image" accept="image/*" onchange="document.getElementById('image-form').submit();" hidden>
+                        </form>
+                    </div>
+                </figure>
+            </div>
+        </section>
+
+
+
+        <!-- ===== ===== Work & Skills Section ===== ===== -->
+        <section class="work_skills card">
+
+            <!-- ===== ===== Work Contaienr ===== ===== -->
+            <div class="work">
+                <h1 class="heading">work</h1>
+                <div class="primary">
+                    <h1>Spotify New York</h1>
+                    <span>Primary</span>
+                    <p>170 William Street <br> New York, NY 10038-212-315-51</p>
+                </div>
+
+                <div class="secondary">
+                    <h1>Metropolitan <br> Museum</h1>
+                    <span>Secondary</span>
+                    <p>S34 E 65th Street <br> New York, NY 10651-78 156-187-60</p>
+                </div>
+            </div>
+
+            <!-- ===== ===== Skills Contaienr ===== ===== -->
+            <div class="skills">
+                <h1 class="heading">Compétences Sportives</h1>
+                <ul>
+                    <li style="--i:0">Endurance</li>
+                    <li style="--i:1">Force</li>
+                    <li style="--i:2">Agilité</li>
+                    <li style="--i:3">Coordination</li>
+                </ul>
+            </div>
+
+
+             <div class="basic_info">
+                <h1 class="heading">Basic Information</h1>
+                <ul>
+                    <li class="birthday">
+                        <h1 class="label">Date Naissance:</h1>
+                        <span class="info">{{client.dateNaissance}}</span>
+                    </li>
+
+                    <li class="sex">
+                        <h1 class="label">Genre:</h1>
+                        <span class="info">{{client.sexe}}</span>
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+
+
+        <!-- ===== ===== User Details Sections ===== ===== -->
+        <section class="userDetails card">
+            <div class="userName">
+                <h1 class="name">{{ client.nom ~ ' ' ~ client.prenom }}</h1>
+                <div class="map">
+                    <i class="ri-map-pin-fill ri"></i>
+                    <span>New York, NY</span>
+                </div>
+                <p>Client</p>
+            </div>
+
+            <div class="rank">
+                <h1 class="heading">Fidelite</h1>
+                <span>8,6</span>
+                <div class="rating">
+                    <i class="ri-star-fill rate"></i>
+                    <i class="ri-star-fill rate"></i>
+                    <i class="ri-star-fill rate"></i>
+                    <i class="ri-star-fill rate"></i>
+                    <i class="ri-star-fill rate underrate"></i>
+                </div>
+            </div>
+
+            <div class="btns">
+                <ul>
+                    <li class="sendMsg">
+                        <i class="ri-chat-4-fill ri"></i>
+                        <a href="#">Send Message</a>
+                    </li>
+
+                    <li class="sendMsg active">
+                        <i class="ri-check-fill ri"></i>
+                        <a href="#">Contacts</a>
+                    </li>
+
+                    <li class="sendMsg">
+                        <a href="#">Report User</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- ===== ===== Timeline & About Sections ===== ===== -->
+        <section class="timeline_about card">
+            <div class="tabs">
+                <ul>
+
+                    <li class="about active">
+                        <i class="ri-user-3-fill ri"></i>
+                        <span>A Propos</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="client-profile">
+    <h1 class="heading">Profil du Client</h1>
+    <form action="{{ path('app_profile') }}" method="post">
+        {{ form_start(form, {'attr': {'class': 'profile-form'}}) }}
+        
+        <ul>
+            <li class="name">
+               
+                {{ form_widget(form.nom) }}
+                <div class="form-error">
+                    {{ form_errors(form.nom) }}
+                </div>
+            </li>
+
+            <li class="prenom">
+               
+                {{ form_widget(form.prenom) }}
+                <div class="form-error">
+                    {{ form_errors(form.prenom) }}
+                </div>
+               
+            </li>
+
+            <li class="email">
+                {{ form_widget(form.email) }}
+                <div class="form-error">
+                    {{ form_errors(form.email) }}
+                </div>
+            </li>
+
+            <li class="password">
+               
+                {{ form_widget(form.mdp)}}
+            </li>
+              {{ form_row(form._token) }}
+        </ul>
+
+        <button type="submit" class="submit-profile">Mettre à jour</button>
+
+        {{ form_end(form, {'render_rest': false}) }}
+    </form>
+
+</div>
+            
+
+            {# <div class="basic_info">
+                <h1 class="heading">Basic Information</h1>
+                <ul>
+                    <li class="birthday">
+                        <h1 class="label">Date Naissance:</h1>
+                        <span class="info">{{client.dateNaissance}}</span>
+                    </li>
+
+                    <li class="sex">
+                        <h1 class="label">Genre:</h1>
+                        <span class="info">{{client.sexe}}</span>
+                    </li>
+                </ul>
+            </div> #}
+        </section>
+    </div>
+
+</body>
+
+</html>
