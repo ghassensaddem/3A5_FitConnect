@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'Événement{% endblock %}
+
+{% block body %}
+    <h1>Détails de l'Événement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>ID :</th>
+                <td>{{ event.id }}</td>
+            </tr>
+            <tr>
+                <th>Date :</th>
+                <td>{{ event.date|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Prix du Pass :</th>
+                <td>{{ event.prixdupass }}</td>
+            </tr>
+            <tr>
+                <th>Lieu :</th>
+                <td>{{ event.lieu }}</td>
+            </tr>
+            <tr>
+                <th>Horaire :</th>
+                <td>{{ event.horaire }}</td>
+            </tr>
+            <tr>
+                <th>Image :</th>
+                <td>
+                    {% if event.image %}
+                        {% if event.image %}
+    <img src="{{ asset(event.image) }}" alt="Image de l'événement" width="200">
+{% else %}
+    <p>Aucune image disponible</p>
+{% endif %}
+
+                    {% else %}
+                        Aucune image
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_event_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="btn btn-warning">Modifier</a>
+
+    {{ include('event/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Typeactivite index{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Liste des Typeactivités</h1>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for typeactivite in typeactivites %}
+            <tr>
+                <td>{{ typeactivite.id }}</td>
+                <td>{{ typeactivite.title }}</td>
+                <td>{{ typeactivite.description }}</td>
+                <td>
+                    <a href="{{ path('app_typeactivite_show', {'id': typeactivite.id}) }}" class="btn btn-info btn-sm">Afficher</a>
+                    <a href="{{ path('app_typeactivite_edit', {'id': typeactivite.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center">Aucun type d'activité trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_typeactivite_new') }}" class="btn btn-success">Créer un nouveau type d'activité</a>
+{% endblock %}
