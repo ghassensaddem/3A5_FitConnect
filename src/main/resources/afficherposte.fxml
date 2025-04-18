@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+
+
+<AnchorPane prefHeight="600.0" prefWidth="794.0" style="-fx-background-color: #F1F2F6;"
+            stylesheets="@Styles/button.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.esprit.controllers.AfficherPost">
+
+    <!-- Conteneur principal des posts avec ScrollPane -->
+    <ScrollPane layoutX="200.0" layoutY="120.0" prefWidth="594.0" prefHeight="400.0" fitToWidth="true" fitToHeight="true">
+        <content>
+            <VBox fx:id="postVBox" spacing="10.0" style="-fx-padding: 20px;">
+                <!-- Les posts seront ajoutés dynamiquement ici -->
+            </VBox>
+        </content>
+    </ScrollPane>
+
+
+
+    <!-- Bouton Ajouter un post -->
+    <Button fx:id="btnAddPost" layoutX="650.0" layoutY="80.0" text="Ajouter un Post"
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" onAction="#addPost" />
+
+
+    <!-- Titre de la page -->
+    <Label layoutX="250.0" layoutY="50.0" prefHeight="40.0" prefWidth="500.0"
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #053536;"
+           text="Forum" />
+
+    <!-- Side Bar -->
+    <AnchorPane layoutX="0.0" layoutY="0.0" prefWidth="200.0" prefHeight="600.0">
+        <VBox styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <ImageView fitHeight="140.0" fitWidth="130.0" layoutX="35.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@images/logo2.png" />
+                </image>
+            </ImageView>
+            <Button styleClass="my-button2" text="Home" />
+            <Button styleClass="my-button2" text="Activities" />
+            <Button styleClass="my-button2" text="Salles" />
+            <Button styleClass="my-button2" text="Equipement" />
+            <Button styleClass="my-button2" text="Evennement" />
+            <Button styleClass="my-button2" text="Competition" />
+            <Button styleClass="my-button2" text="Preferences" />
+            <Button styleClass="my-button2" text="Notifications" />
+            <Button styleClass="my-button2" text="Theme" />
+            <Button styleClass="my-button2" text="Language" />
+        </VBox>
+    </AnchorPane>
+
+</AnchorPane>
