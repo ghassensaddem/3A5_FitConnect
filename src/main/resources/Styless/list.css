@@ -1,0 +1,104 @@
+/* --- Style général du GridPane --- */
+#usersGrid {
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+    -fx-padding: 20;
+}
+
+/* --- Style de la "carte" utilisateur --- */
+.user-card {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-alignment: center;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 4);
+}
+
+/* --- Style de l'image dans la carte utilisateur --- */
+.user-card ImageView {
+    -fx-fit-height: 80;
+    -fx-fit-width: 80;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 3);
+    /* Pour afficher une image ronde, on peut appliquer un clip dans le contrôleur */
+}
+
+/* --- Style du Label (nom/prénom) --- */
+.user-card Label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+/* --- Style des boutons de la carte utilisateur --- */
+.user-card Button {
+    -fx-background-color: #053536;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 5 15 5 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 0, 1);
+    -fx-border-width: 0;
+}
+
+.user-card Button:hover {
+    -fx-background-color: #065e50;
+}
+
+/* --- Style pour le ScrollPane (pour enlever le fond par défaut) --- */
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+
+.top-bar {
+    -fx-background-color: #053536;
+    -fx-padding: 10px;
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+}
+
+
+/* Bouton d'ajout */
+.btn-ajout {
+    -fx-background-color: #065F46;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+.btn-ajout:hover {
+    -fx-background-color: #0A7D5E;
+    -fx-cursor: hand;
+}
+
+/* Boutons Clients / Coachs */
+.chip {
+    -fx-background-color: white;  /* Fond blanc */
+    -fx-border-color: #065F46;    /* Bordure verte */
+    -fx-text-fill: #065F46;       /* Texte vert */
+    -fx-border-radius: 20px;      /* Plus arrondi */
+    -fx-background-radius: 20px;
+    -fx-padding: 6px 15px;
+    -fx-cursor: hand;
+}
+.chip:selected {
+    -fx-background-color: #065F46; /* Garde la couleur verte quand sélectionné */
+    -fx-text-fill: white;
+}
+
+
+/* Champ de recherche */
+.text-field {
+    -fx-border-color: #065F46;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 6px;
+}
+.text-field:focused {
+    -fx-border-color: #0A7D5E;
+}

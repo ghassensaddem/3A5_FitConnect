@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane prefHeight="836.0" prefWidth="941.0" stylesheets="@Styles/style.css,@Styles/button.css,@Styles/Profile.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.Profile">
+    <HBox>
+        <children>
+            <VBox prefHeight="854.0" prefWidth="168.0" styleClass="sidebar">
+
+                <ImageView fitHeight="162.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                    <image>
+                        <Image url="@Styles/logo.png" />
+                    </image>
+                </ImageView>
+                <Button styleClass="my-button2" text="Home">
+                    <graphic>
+
+                        <FontAwesomeIcon glyphName="HOME" size="1.4em" styleClass="font-awesome-icon" />
+
+
+                    </graphic>
+                </Button>
+
+
+                <Button styleClass="my-button2" text="Activities" onAction="#activities">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="ANCHOR" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+
+                <Button styleClass="my-button2" text="Programme" onAction="#programme">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="TROPHY" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+
+                <Button styleClass="my-button2" text="Equipement" onAction="#equipement">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="BELL" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+
+                <Button styleClass="my-button2" text="Evennement" onAction="#evennement">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="CALENDAR_ALT" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+
+                <Button styleClass="my-button2" text="forum" onAction="#forum">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="FLAG_CHECKERED" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+
+                <Button styleClass="my-button2" text="Preferences">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="COG" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+
+                <Button styleClass="my-button2" text="Notifications">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="BELL" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+
+                <Button styleClass="my-button2" text="Theme">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="PAINT_BRUSH" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+
+                <Button styleClass="my-button2" text="Language">
+                    <graphic>
+                        <FontAwesomeIcon glyphName="GLOBE" size="1.4em" styleClass="font-awesome-icon" />
+                    </graphic>
+                </Button>
+            </VBox>
+
+
+
+
+                <VBox alignment="TOP_LEFT" prefHeight="634.0" prefWidth="183.0" spacing="15" styleClass="sidebarInformation">
+                    <Button styleClass="btn-active" text="Mon Profile" />
+                    <Button styleClass="btn-secondary" text="Mes Programmes" />
+                    <Button onAction="#SupprimerCompte" styleClass="btn-danger" text="Supprimer le compte" />
+
+                    <Button onAction="#deconnexion" styleClass="btn-danger" text="Se deconnecter" />
+                </VBox>
+
+                  <!-- Contenu principal -->
+
+                      <VBox prefHeight="954.0" prefWidth="590.0" spacing="20" style="-fx-background-color: white;" styleClass="main-content">
+
+                          <!-- Section Titre -->
+                    <Label styleClass="title" text="My Profile" />
+
+                          <!-- Carte Profil -->
+                    <VBox spacing="15" styleClass="profile-card">
+                        <HBox spacing="20">
+                            <ImageView fx:id="image" fitHeight="80" fitWidth="80" onMouseClicked="#choisirImage" style="-fx-cursor: hand;">
+                                <Image url="@Styles/logo.png" />
+                                <clip>
+                                    <Circle centerX="40" centerY="40" radius="40" />
+                                </clip>
+                            </ImageView>
+
+                            <VBox spacing="5">
+                                <Label fx:id="nomPrenom" styleClass="profile-name" text="Rafqur Rahman" />
+                                <Label styleClass="profile-role" text="Team Manager" />
+                                <Label styleClass="profile-location" text="Leeds, United Kingdom" />
+                            </VBox>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button opacity="0.0" styleClass="btn-edit" text="                 " visible="false" />
+                        </HBox>
+                    </VBox>
+
+                    <VBox spacing="15" styleClass="info-card">
+                        <Label styleClass="info-title" text="Information Personelle" />
+                        <GridPane hgap="10" vgap="10">
+                            <Label styleClass="info-label" text="Nom" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="nom" styleClass="info-value" text="Rafqur" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+                                  <Label styleClass="info-label" text="Prenom" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <TextField fx:id="prenom" styleClass="info-value" text="Rahman" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                  <Label styleClass="info-label" text="Email" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <TextField fx:id="email" styleClass="info-value" text="rafqurahman@gmail.com" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+                                  <Label styleClass="info-label" text="Mot De Passe" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                <TextField fx:id="mdp" promptText="Mot de passe" styleClass="info-value" />
+
+                                <Button fx:id="toggleMdp" styleClass="toggle-button">
+                                    <graphic>
+                                        <ImageView fx:id="toggleIcon" fitHeight="20" fitWidth="20">
+                                            <Image url="@Styles/logo.png" />
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </HBox>
+
+                            <Label styleClass="info-label" text="Date Naissance" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                            <DatePicker fx:id="DateNaissance" promptText="14/02/2004" styleClass="date-picker" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
+                        </GridPane>
+                        <HBox alignment="CENTER_RIGHT">
+                            <Button onAction="#MettreAjourProfle" styleClass="btn-edit" text="Sauvegarder" />
+                        </HBox>
+                    </VBox>
+
+
+                      </VBox>
+         <VBox alignment="CENTER" spacing="20" style="-fx-background-color: white;">
+            <children>
+               <Label styleClass="info-title" text="Avancement du Poids sur 12 Mois" />
+               <LineChart fx:id="poidsChart" styleClass="poids-chart">
+                    <xAxis>
+                        <CategoryAxis styleClass="poids-chart-axis-label" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis styleClass="poids-chart-axis" />
+                    </yAxis>
+               </LineChart>
+
+            </children>
+         </VBox>
+
+        </children>
+    </HBox>
+
+</AnchorPane>

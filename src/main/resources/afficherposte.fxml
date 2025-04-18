@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextField?>
+<?import java.net.URL?>
+<AnchorPane prefHeight="600.0" prefWidth="794.0" style="-fx-background-color: #F1F2F6;"
+            stylesheets="@stylesF/button.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.esprit.controllers.AfficherPost">
+
+
+
+
+
+
+
+    <!-- Conteneur principal des posts avec ScrollPane -->
+    <ScrollPane layoutX="200.0" layoutY="120.0" prefWidth="594.0" prefHeight="400.0" fitToWidth="true" fitToHeight="true">
+        <content>
+            <VBox fx:id="postVBox" spacing="10.0" style="-fx-padding: 20px;">
+                <!-- Les posts seront ajoutés dynamiquement ici -->
+            </VBox>
+        </content>
+    </ScrollPane>
+
+    <!-- Titre de la page -->
+    <Label layoutX="250.0" layoutY="30.0" prefHeight="40.0" prefWidth="500.0"
+           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #053536;"
+           text="Forum" />
+
+    <!-- Champ de recherche et bouton de recherche -->
+    <TextField fx:id="searchField" promptText="Rechercher par auteur" layoutX="250.0" layoutY="80.0" prefWidth="200.0"/>
+    <Button fx:id="searchButton" text="Rechercher" layoutX="460.0" layoutY="70.0" onAction="#searchPosts"  styleClass="button-custom"/>
+
+    <!-- Bouton Ajouter un post -->
+    <Button fx:id="btnAddPost" layoutX="650.0" layoutY="25.0" text="Ajouter Post" styleClass="button-custom"
+
+            onAction="#addPost" />
+
+
+    <!-- Bouton Trier par date -->
+    <Button fx:id="btnSortByDate" layoutX="650.0" layoutY="75.0" text="Trier par date"  styleClass="button-custom"
+            onAction="#trier" />
+
+    <!-- Bouton ouvrir chatbot avec une image plus large -->
+    <Button fx:id="btnchatbot" layoutX="750.0" layoutY="540.0" styleClass="image-button" onAction="#ouvrirchatbot">
+        <graphic>
+            <ImageView fitHeight="60.0" fitWidth="200.0" preserveRatio="true">
+                <image>
+                    <Image url="@images/chatbot.png" /> <!-- Chemin de l'image -->
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <!-- Side Bar -->
+    <AnchorPane layoutX="0.0" layoutY="0.0" prefWidth="200.0" prefHeight="600.0">
+        <VBox styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <ImageView fitHeight="140.0" fitWidth="130.0" layoutX="35.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@images/logo2.png" />
+                </image>
+            </ImageView>
+            <Button styleClass="my-button2" text="Profile" onAction="#profile" />
+            <Button styleClass="my-button2" text="Activities" onAction="#activities"/>
+            <Button styleClass="my-button2" text="Programme" onAction="#programme"/>
+            <Button styleClass="my-button2" text="Equipement" onAction="#equipement"/>
+            <Button styleClass="my-button2" text="Evennement" onAction="#evennement"/>
+            <Button styleClass="my-button2" text="Forum" onAction="#forum"/>
+            <Button styleClass="my-button2" text="Preferences" />
+            <Button styleClass="my-button2" text="Notifications" />
+            <Button styleClass="my-button2" text="Theme" />
+            <Button styleClass="my-button2" text="Language" />
+        </VBox>
+    </AnchorPane>
+
+</AnchorPane>

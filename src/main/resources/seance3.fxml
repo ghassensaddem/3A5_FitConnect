@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import com.calendarfx.view.CalendarView?>
+
+<AnchorPane prefHeight="620.0" prefWidth="917.0" style="-fx-background-color: #F1F2F6;" stylesheets="@stylesP/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.AfficherSeance">
+
+    <VBox layoutX="278.0" layoutY="94.0" prefHeight="518.0" prefWidth="639.0" spacing="15.0" style="-fx-padding: 25px; -fx-background-color: white; -fx-border-radius: 0px; -fx-border-color: #053536;">
+        <effect>
+            <DropShadow color="#888888" offsetX="5.0" offsetY="5.0" radius="15.0" />
+        </effect>
+        <children>
+            <CalendarView fx:id="calendarView" prefHeight="400.0" prefWidth="586.0" />
+        </children>
+    </VBox>
+
+    <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="162.0" fitWidth="286.0" layoutY="-17.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="200.0" fitWidth="286.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <ImageView fitHeight="162.0" fitWidth="286.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+
+    <Label layoutX="356.0" layoutY="14.0" prefHeight="62.0" prefWidth="498.0" styleClass="title" text="Affichage des Séances" />
+
+    <AnchorPane>
+        <VBox styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ImageView fitHeight="140.0" fitWidth="130.0" layoutX="63.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@images/logo2.png" />
+                </image>
+            </ImageView>
+            <Button styleClass="my-button2" text="Home" />
+            <Button onAction="#allerVersAjouterSeance" styleClass="my-button2" text="seances" />
+            <Button onAction="#allerVersAjouterProgramme" styleClass="my-button2" text="programmes" />
+            <Button onAction="#allerVersAjouterApplication" styleClass="my-button2" text="applications" />
+            <Button onAction="#allerVersAjouterAvis" styleClass="my-button2" text="avis" />
+            <Button styleClass="my-button2" text="Competition" />
+            <Button styleClass="my-button2" text="Preferences" />
+            <Button styleClass="my-button2" text="Notifications" />
+            <Button styleClass="my-button2" text="Theme" />
+            <Button styleClass="my-button2" text="Language" />
+        </VBox>
+    </AnchorPane>
+    <ImageView fitHeight="162.0" fitWidth="286.0" layoutY="518.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@images/theme.png" />
+        </image>
+    </ImageView>
+    <Button fx:id="btnHistorique" layoutX="828.0" layoutY="96.0" onAction="#afficherHistorique" text="Historique" />
+</AnchorPane>

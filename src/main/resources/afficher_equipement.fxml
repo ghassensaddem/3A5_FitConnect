@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="681.0" prefWidth="982.0" style="-fx-background-color: #F1F2F6;" stylesheets="@Styles/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.AfficherEquipement">
+
+
+    <!-- Conteneur du formulaire avec ombre -->
+    <VBox layoutX="186.0" layoutY="136.0" prefHeight="384.0" prefWidth="476.0" spacing="15.0" style="-fx-padding: 25px; -fx-background-color: white; -fx-border-radius: 10px; -fx-border-color: #053536; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);">
+        <HBox spacing="10.0">
+            <Label text="Search by Nom:" />
+            <TextField fx:id="searchField" promptText="Search by Nom" />
+        </HBox>
+        <Button fx:id="sortButton" onAction="#handleSortByQuantity" text="Trier par quantité" />
+
+        <TableView fx:id="equipementTable" prefHeight="350.0" prefWidth="460.0" style="-fx-background-radius: 10px;">
+            <columns>
+                <!-- Colonne pour l'ID -->
+                <TableColumn fx:id="colId" prefWidth="80.0" style="-fx-alignment: CENTER;" text="ID" />
+                <!-- Colonne pour le nom -->
+                <TableColumn fx:id="colNom" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Nom" />
+                <!-- Colonne pour la description -->
+                <TableColumn fx:id="colDescription" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Description" />
+                <!-- Colonne pour le prix -->
+                <TableColumn fx:id="colPrix" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Prix" />
+                <!-- Colonne pour la quantité en stock -->
+                <TableColumn fx:id="colQuantiteStock" prefWidth="120.0" style="-fx-alignment: CENTER;" text="Quantité en stock" />
+                <!-- Colonne pour la catégorie -->
+                <TableColumn fx:id="colCategorie" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Catégorie" />
+                <!-- Colonne pour l'image -->
+                <TableColumn fx:id="colImage" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Image" />
+                <!-- Colonne pour les boutons (Modifier et Supprimer) -->
+                <TableColumn fx:id="colActions" text="Actions" />
+            </columns>
+        </TableView>
+    </VBox>
+
+    <Label layoutX="286.0" layoutY="42.0" prefHeight="62.0" prefWidth="498.0" styleClass="title" text="Affichage équipements">
+        <font>
+            <Font name="System Bold Italic" size="36.0" />
+        </font>
+    </Label>
+
+    <AnchorPane>
+        <VBox prefHeight="681.0" prefWidth="189.0" styleClass="sidebar" AnchorPane.bottomAnchor="-299.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="-135.0" AnchorPane.topAnchor="0">
+            <ImageView fitHeight="140.0" fitWidth="233.0" layoutX="63.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@images/logo2.png" />
+                </image>
+            </ImageView>
+            <Button styleClass="my-button2" text="Home" onAction="#home"/>
+            <Button styleClass="my-button2" text="Activities" onAction="#activities" />
+            <Button styleClass="my-button2" text="Programme" onAction="#programme"/>
+            <Button styleClass="my-button2" text="Equipement" onAction="#equipement"/>
+            <Button styleClass="my-button2" text="Evennement" onAction="#evennement"/>
+            <Button styleClass="my-button2" text="Competition" />
+            <Button styleClass="my-button2" text="Preferences" />
+            <Button styleClass="my-button2" text="Notifications" />
+            <Button styleClass="my-button2" text="Theme" />
+            <Button styleClass="my-button2" text="Language" />
+        </VBox>
+    </AnchorPane>
+   <Button layoutX="804.0" layoutY="104.0" mnemonicParsing="false" onAction="#naviguer" text="Ajouter Equipement" />
+   <BorderPane fx:id="borderPane" layoutX="667.0" layoutY="140.0" prefHeight="400.0" prefWidth="274.0" />
+</AnchorPane>

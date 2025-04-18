@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" stylesheets="Styless/DetailsSalleActivity.css,Styless/button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.DetailsSalleActivity">
+
+    <left>
+        <VBox styleClass="sidebar">
+            <ImageView fitHeight="121.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@images/logo.png" />
+                </image>
+            </ImageView>
+
+            <Button styleClass="my-button2" text="Home" />
+            <Button styleClass="my-button2" text="Activities" />
+            <Button styleClass="my-button2" text="Salles" />
+            <Button styleClass="my-button2" text="Equipement" />
+            <Button styleClass="my-button2" text="Evennement" />
+            <Button styleClass="my-button2" text="Competition" />
+            <Button styleClass="my-button2" text="Preferences" />
+            <Button styleClass="my-button2" text="Notifications" />
+            <Button styleClass="my-button2" text="Theme" />
+            <Button styleClass="my-button2" text="Language" />
+        </VBox>
+    </left>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="50">
+            <!-- Section icône retour -->
+            <HBox alignment="CENTER_LEFT" spacing="50">
+                <ImageView fx:id="backButton" fitHeight="40" fitWidth="40" onMouseClicked="#goBackToActivities" preserveRatio="true">
+                    <image>
+                        <Image url="@images/back_arrow.png" />
+                    </image>
+                </ImageView>
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="25">
+                <ImageView fx:id="imgActivity" fitHeight="300" fitWidth="300" preserveRatio="true" styleClass="activity-image" />
+                <VBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="details-title" text="Détails de la Salle et de l'Activité" />
+                    <HBox spacing="8">
+                        <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/activity.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="lblNomActivity" styleClass="details-label" text="Nom de l'Activité: " />
+                    </HBox>
+                    <HBox spacing="8">
+                        <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/room.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="lblNomSalle" styleClass="details-label" text="Nom de la Salle: " />
+                    </HBox>
+                    <HBox spacing="8">
+                        <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/capacity.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="lblCapacityMax" styleClass="details-label" text="Capacité Maximale: " />
+                    </HBox>
+                    <HBox spacing="8">
+                        <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/inscription.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="lblNombreInscription" styleClass="details-label" text="Nombre d'Inscriptions: " />
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- Section des commentaires et notation -->
+            <VBox alignment="TOP_LEFT" spacing="8">
+                <Label styleClass="details-title" text="Commentez ici ..." />
+
+                <!-- Notez votre expérience -->
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-alignment: center; -fx-text-alignment: center;" text="Notez votre expérience :" />
+
+                <!-- Notation avec étoiles -->
+                <HBox alignment="CENTER" spacing="3">
+                    <ImageView fx:id="star1" fitHeight="28" fitWidth="28" onMouseClicked="#setRating1" />
+                    <ImageView fx:id="star2" fitHeight="28" fitWidth="28" onMouseClicked="#setRating2" />
+                    <ImageView fx:id="star3" fitHeight="28" fitWidth="28" onMouseClicked="#setRating3" />
+                    <ImageView fx:id="star4" fitHeight="28" fitWidth="28" onMouseClicked="#setRating4" />
+                    <ImageView fx:id="star5" fitHeight="28" fitWidth="28" onMouseClicked="#setRating5" />
+                    <ImageView fx:id="star6" fitHeight="28" fitWidth="28" onMouseClicked="#setRating6" />
+                </HBox>
+
+                <!-- Section de vérification par SMS -->
+                <VBox spacing="10">
+                    <HBox spacing="10">
+                        <TextField fx:id="codeVerificationInput" prefWidth="200" promptText="Entrez le code de vérification" />
+                        <Button onAction="#envoyerCodeVerification" text="Envoyer le code" />
+                    </HBox>
+                </VBox>
+
+                <!-- Section des commentaires -->
+                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="250">
+                    <VBox fx:id="commentsContainer" spacing="6" />
+                </ScrollPane>
+
+                <!-- Input commentaire + boutons -->
+                <HBox spacing="15">
+                    <TextField fx:id="commentInput" prefHeight="40" prefWidth="750" promptText="Commentez ici..." />
+                    <Button fx:id="btnSubmitComment" onAction="#verifierEtAjouterCommentaire" text="Envoyer" />
+                    <Button fx:id="btnRecordVoice" onAction="#enregistrerCommentaireVocal" text="🎤" />
+                    <Button fx:id="btnTranslate" onAction="#traduireCommentaire" text="Traduire" />
+                </HBox>
+
+                <Label fx:id="errorLabel" styleClass="error-label" text="" />
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

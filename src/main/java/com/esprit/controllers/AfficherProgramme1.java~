@@ -1,0 +1,186 @@
+package com.esprit.controllers;
+
+import com.esprit.models.Client;
+import com.esprit.models.Programme;
+import com.esprit.services.ClientService;
+import com.esprit.services.ProgrammeService;
+import com.esprit.tests.MainProg;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+public class AfficherProgramme1 {
+
+    @FXML
+    private GridPane usersGrid;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private ComboBox<String> sortComboBox;
+
+    @FXML
+    private Button sortButton;
+
+    private final ProgrammeService programmeService = new ProgrammeService();
+
+    int ClienID=880;
+
+    @FXML
+    public void initialize() {
+        loadProgrammes();
+        searchButton.setOnAction(e -> searchProgrammes());
+        sortComboBox.setItems(FXCollections.observableArrayList("Prix Croissant", "Prix Décroissant"));
+        sortButton.setOnAction(e -> handleSort());  // Associer l'action du bouton au tri
+        if(MainProg.idClient!=0)
+            ClienID=MainProg.idClient;
+    }
+
+    @FXML
+    private void handleSort() {
+        // Récupérer le critère de tri sélectionné
+        String selectedOption = sortComboBox.getValue();
+        List<Programme> programmes = programmeService.rechercher();
+
+        if (selectedOption != null) {
+            if (selectedOption.equals("Prix Croissant")) {
+                programmes = programmes.stream()
+                        .sorted((p1, p2) -> Double.compare(p1.getPrix(), p2.getPrix())) // Tri croissant
+                        .collect(Collectors.toList());
+            } else if (selectedOption.equals("Prix Décroissant")) {
+                programmes = programmes.stream()
+                        .sorted((p1, p2) -> Double.compare(p2.getPrix(), p1.getPrix())) // Tri décroissant
+                        .collect(Collectors.toList());
+            }
+        }
+        displayProgrammes(programmes);  // Afficher les programmes triés
+    }
+
+
+    private void displayProgrammes(List<Programme> programmes) {
+        usersGrid.getChildren().clear();
+        int columns = 3;
+        int row = 0;
+        int col = 0;
+
+        for (Programme programme : programmes) {
+            VBox descriptionBox = createDescriptionBox(programme.getDescription(), programme.getPrix(), programme.getLieu(), programme.getId());
+            usersGrid.add(descriptionBox, col, row);
+            col++;
+            if (col == columns) {
+                col = 0;
+                row++;
+            }
+        }
+    }
+
+    private VBox createDescriptionBox(String description, double price, String lieu, int programmeId) {
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+        box.setSpacing(10);
+        box.setStyle("-fx-padding: 15; "
+                + "-fx-border-radius: 15; "
+                + "-fx-border-color: #ddd; "
+                + "-fx-background-color: #689D71;"
+                + "-fx-border-width: 2; "
+                + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 5, 5);");
+
+        Label descriptionLabel = new Label(description);
+        descriptionLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+
+        Label priceLabel = new Label("Prix: " + price + " DT");
+        priceLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+
+        Label lieuLabel = new Label("Lieu: " + lieu);
+        lieuLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+
+        box.setOnMouseClicked(event -> afficherSeances(programmeId));
+
+        box.getChildren().addAll(descriptionLabel, priceLabel, lieuLabel);
+        return box;
+    }
+
+    private void afficherSeances(int programmeId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listeSeance.fxml"));
+            Parent root = loader.load();
+            AfficherSeance1 controller = loader.getController();
+            controller.setProgrammeId(programmeId);
+            ClientService clientService = new ClientService();
+            Client client = clientService.rechercherParId(ClienID);
+            client.setId_prog(genererCodeAleatoire());
+            clientService.karwi(client);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Séances du programme");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadProgrammes() {
+        usersGrid.getChildren().clear();
+        List<Programme> programmes = programmeService.rechercher();
+        // Pas de tri ici
+        displayProgrammes(programmes);
+    }
+
+
+    private void searchProgrammes() {
+        String keyword = searchField.getText().trim().toLowerCase();
+        List<Programme> allProgrammes = programmeService.rechercher();
+
+        // Filtrer les programmes selon le mot-clé
+        List<Programme> filteredProgrammes = allProgrammes.stream()
+                .filter(p -> p.getDescription().toLowerCase().contains(keyword))
+                .collect(Collectors.toList());
+
+        // Appliquer le tri (géré par handleSort)
+        displayProgrammes(filteredProgrammes);  // Afficher après filtrage
+    }
+
+
+    public static int genererCodeAleatoire() {
+        return (int) (Math.random() * 9000) + 1000; // Retourne un nombre entre 1000 et 9999
+    }
+
+    public void home(ActionEvent event) throws IOException {
+        NAVIGATOR.changeScene(event, "/listUsers.fxml");
+    }
+
+    public void activities(ActionEvent event) throws IOException {
+        NAVIGATOR.changeScene(event, "/AffichageActivity.fxml");
+    }
+
+    public void programme(ActionEvent event) throws IOException {
+        NAVIGATOR.changeScene(event, "/programme.fxml");
+    }
+
+    public void equipement(ActionEvent event) throws IOException {
+        NAVIGATOR.changeScene(event, "/afficher_equipement.fxml");
+    }
+
+    public void evennement(ActionEvent event) throws IOException {
+        NAVIGATOR.changeScene(event, "/event3.fxml");
+    }
+}

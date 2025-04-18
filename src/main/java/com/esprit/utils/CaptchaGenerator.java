@@ -1,0 +1,46 @@
+package com.esprit.utils;
+
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.google.code.kaptcha.util.Config;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.ByteArrayInputStream;
+import java.util.Properties;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+
+public class CaptchaGenerator {
+    private DefaultKaptcha kaptcha;
+    private String captchaText;
+
+    public CaptchaGenerator() {
+        Properties properties = new Properties();
+        properties.put("kaptcha.textproducer.char.length", "5"); // Longueur du CAPTCHA
+        properties.put("kaptcha.textproducer.font.color", "black"); // Couleur du texte
+        properties.put("kaptcha.background.clear.from", "white"); // Fond blanc
+        properties.put("kaptcha.obscurificator.impl", "com.google.code.kaptcha.impl.WaterRipple"); // Effet d’ondulation
+
+        Config config = new Config(properties);
+        kaptcha = new DefaultKaptcha();
+        kaptcha.setConfig(config);
+    }
+
+    public ImageView generateCaptcha() throws Exception {
+        this.captchaText = kaptcha.createText();
+        BufferedImage image = kaptcha.createImage(this.captchaText);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", outputStream);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+
+        ImageView captchaView = new ImageView(new Image(inputStream));
+        captchaView.setFitWidth(150);
+        captchaView.setFitHeight(50);
+        return captchaView;
+    }
+    public String getCaptchaText() {
+        return captchaText;
+    }
+}

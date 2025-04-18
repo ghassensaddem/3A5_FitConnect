@@ -1,0 +1,73 @@
+/* Conteneur principal */
+.details-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+    -fx-alignment: center-left;
+}
+
+/* Titre principal */
+.details-title {
+    -fx-font-size: 28px;
+    -fx-text-fill: #053536;
+    -fx-font-weight: bold;
+    -fx-padding-bottom: 10px;
+}
+
+/* Image de l'activité */
+.details-image {
+    -fx-fit-width: 300px;
+    -fx-fit-height: 300px;
+    -fx-preserve-ratio: true;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+
+/* Style général des labels */
+.details-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+/* Label du nom de la salle */
+
+/* Nom de la salle en vert foncé */
+.details-nom-salle {
+    -fx-font-size: 18px;
+    -fx-text-fill: #053536;
+    -fx-font-weight: bold;
+}
+
+
+/* Conteneur des infos (nom, capacité, etc.) */
+.info-container {
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+/* Espacement entre l’image et les infos */
+.image-info-container {
+    -fx-spacing: 30px;
+    -fx-alignment: center-left;
+}
+/* Conteneur pour chaque ligne d'information */
+.hbox-info {
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+/* Style des labels */
+.details-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+/* Nom de la salle en vert foncé */
+.details-nom-salle {
+    -fx-font-size: 18px;
+    -fx-text-fill: #053536;
+    -fx-font-weight: bold;
+}
+

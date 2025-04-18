@@ -1,0 +1,102 @@
+.root {
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 10px;
+}
+
+.confirmation-box {
+    -fx-background-color: #d4edda;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-margin: 0 0 10px 0; /* Réduire la marge en bas */
+}
+
+.confirmation-label {
+    -fx-text-fill: #155724;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.order-info {
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+    -fx-margin: 0 0 10px 0; /* Réduire la marge en bas */
+}
+
+.info-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+}
+
+.info-value {
+    -fx-text-fill: #555;
+    -fx-font-size: 14px;
+}
+
+.articles-container {
+    -fx-padding: 10px;
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-pref-height: 300px; /* Augmenter la hauteur du TableView */
+}
+
+.articles-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 0;
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-pref-height: 250px; /* Augmenter la hauteur du TableView */
+}
+.table-column {
+    -fx-alignment: CENTER;
+    -fx-pref-width: 150px; /* Ajuster la largeur des colonnes */
+}
+
+.continue-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-margin: 10px 0; /* Ajouter une marge pour le bouton */
+}
+
+.continue-button:hover {
+    -fx-background-color: #45a049;
+}
+
+.total-box {
+    -fx-padding: 10px;
+    -fx-background-color: #333;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center-right;
+}
+
+.total-label {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.total-value {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding-left: 10px;
+}

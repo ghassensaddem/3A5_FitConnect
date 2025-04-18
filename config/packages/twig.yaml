@@ -1,6 +1,0 @@
-twig:
-    default_path: '%kernel.project_dir%/templates'
-    
-    # Configuration globale pour les formulaires
-    form_themes:
-        - 'bootstrap_5_layout.html.twig'

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Say voice="alice" language="fr-FR">
+        Bonjour, nous vous rappelons qu'il est important de respecter les conditions d'utilisation de notre site.
+        Veuillez envoyer des commentaires respectueux envers les autres membres de l'application.
+        Merci de répondre après le bip sonore.
+    </Say>
+    <Record maxLength="30" action="https://ton-serveur.com/reponse" />
+</Response>

@@ -1,0 +1,19 @@
+/* Style pour le TextField */
+.text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #053536;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Style pour le bouton de tri */
+.button {
+    -fx-background-color: #053536;
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #075E5E; /* Changement de couleur au survol */
+}
+

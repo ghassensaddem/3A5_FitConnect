@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.HistoriqueController">
+    <TableView fx:id="tableView">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" />
+            <TableColumn fx:id="colAction" text="Action" />
+            <TableColumn fx:id="colEntite" text="Entité" />
+            <TableColumn fx:id="colDate" text="Date" />
+            <TableColumn fx:id="colDetails" text="Détails" />
+        </columns>
+    </TableView>
+    <Button fx:id="btnActualiser" text="Actualiser" />
+</VBox>

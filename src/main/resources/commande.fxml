@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefWidth="1200" stylesheets="@Styles/commande.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.esprit.controllers.CommandeController">
+
+    <!-- Flèche de retour -->
+    <Label layoutX="20" layoutY="20" onMouseClicked="#onBackArrowClicked"
+           prefHeight="35.0" prefWidth="60.0"
+           style="-fx-font-size: 40; -fx-text-fill: black; -fx-cursor: hand;"
+           text="←" textFill="#0b0f0b"/>
+
+    <VBox alignment="TOP_CENTER" spacing="10" style="-fx-padding: 10;">
+        <!-- Informations de commande -->
+        <GridPane styleClass="order-info">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
+
+            <Label styleClass="info-title" text="DATE DE COMMANDE :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label fx:id="dateCommandeLabel" styleClass="info-value" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label styleClass="info-title" text="CLIENT EMAIL :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label fx:id="clientEmailLabel" styleClass="info-value" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label styleClass="info-title" text="TOTAL :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label fx:id="totalLabel" styleClass="info-value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label styleClass="info-title" text="DATE PRÉVUE DE LIVRAISON :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <Label fx:id="dateLivraisonLabel" styleClass="info-value" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        </GridPane>
+
+        <!-- Liste des articles commandés -->
+        <VBox styleClass="articles-container">
+            <Label styleClass="articles-title" text="Articles commandés" />
+            <TableView fx:id="articlesTable" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="produitColumn" prefWidth="250" text="Produit">
+                        <cellValueFactory><PropertyValueFactory property="produit" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="descriptionColumn" prefWidth="350" text="Description">
+                        <cellValueFactory><PropertyValueFactory property="description" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="prixColumn" prefWidth="150" text="Prix">
+                        <cellValueFactory><PropertyValueFactory property="prix" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="quantiteColumn" prefWidth="150" text="Quantité">
+                        <cellValueFactory><PropertyValueFactory property="quantite" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="totalColumn" prefWidth="150" text="Total">
+                        <cellValueFactory><PropertyValueFactory property="total" /></cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- Total général -->
+        <HBox styleClass="total-box" alignment="CENTER">
+            <Label styleClass="total-label" text="Total:" />
+            <Label fx:id="grandTotalLabel" styleClass="total-value" />
+        </HBox>
+
+        <!-- Bouton Continuer vos achats -->
+        <Button onAction="#onContinueShopping" styleClass="continue-button" text="Payer" />
+        <!-- Bouton Générer PDF -->
+        <Button onAction="#onGeneratePDF" styleClass="continue-button" text="Generate PDF" />
+
+    </VBox>
+</AnchorPane>

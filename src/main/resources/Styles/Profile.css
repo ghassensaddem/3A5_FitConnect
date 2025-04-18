@@ -1,0 +1,174 @@
+/* Style général */
+.main-content {
+    -fx-padding: 30;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Barre latérale */
+.sidebarInformation {
+    -fx-background-color: #F8F9FA;
+    -fx-padding: 20;
+}
+
+.sidebarInformation Button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7A7A7A;
+}
+
+.btn-active {
+    -fx-background-color: #E3E9FF;
+    -fx-text-fill: #1E40AF;
+    -fx-font-weight: bold;
+}
+
+/* Style du bouton "Mes Programmes" */
+.btn-secondary {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1E293B;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #F1F5F9;
+    -fx-text-fill: #1E40AF;
+    -fx-border-color: #1E40AF;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Style du bouton "Supprimer le compte" */
+.btn-danger {
+    -fx-text-fill: #E63946;
+    -fx-font-weight: bold;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #FFE5E5;
+    -fx-text-fill: #B91C1C;
+    -fx-border-color: #B91C1C;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Carte Profil */
+.profile-card {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 20;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 10;
+}
+
+.profile-name {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.profile-role, .profile-location {
+    -fx-text-fill: #7A7A7A;
+}
+
+/* Informations personnelles */
+.info-card {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 20;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 10;
+}
+
+.info-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.info-label {
+    -fx-text-fill: #7A7A7A;
+}
+
+.info-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #053536;
+    -fx-text-alignment: center-left;
+}
+
+.info-value:focused {
+    -fx-background-color: white;
+    -fx-border-color: #053536;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+}
+
+
+.btn-edit {
+    -fx-background-color: #065F46; /* Vert foncé */
+    -fx-border-color: #065F46;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Effet au survol */
+.btn-edit:hover {
+    -fx-background-color: #0A7D5E; /* Vert plus clair */
+    -fx-border-color: #0A7D5E;
+}
+
+/* Effet lorsqu'on clique */
+.btn-edit:pressed {
+    -fx-background-color: #053536; /* Vert encore plus foncé */
+    -fx-border-color: #053536;
+}
+
+
+
+/* Style du bouton du DatePicker */
+.date-picker .arrow-button {
+    -fx-background-color: #053536;
+    -fx-background-radius: 5px;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #065f4b;
+}
+
+/* Style du texte dans le champ */
+.date-picker .text-field {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #053536;
+}
+
+/* Style du calendrier */
+.date-picker-popup {
+    -fx-background-color: white;
+    -fx-border-color: #053536;
+    -fx-border-width: 1px;
+}
+
+
+/* Style du bouton toggle */
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 5px;
+}
+
+.toggle-button:hover {
+    -fx-opacity: 0.8;
+}

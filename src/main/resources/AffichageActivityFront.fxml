@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0"
+            stylesheets="Styless/activities.css,Styless/button.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.esprit.controllers.AffichageActivityFront">
+
+    <!-- Sidebar à gauche -->
+    <left>
+        <VBox styleClass="sidebar">
+            <ImageView fitHeight="121.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" styleClass="image-logo">
+                <image>
+                    <Image url="@Styless/logo.png" />
+                </image>
+            </ImageView>
+
+            <Button styleClass="my-button2" text="Profile" onAction="#profile" />
+            <Button styleClass="my-button2" text="Activities" onAction="#activities"/>
+            <Button styleClass="my-button2" text="Programme" onAction="#programme"/>
+            <Button styleClass="my-button2" text="Equipement" onAction="#equipement"/>
+            <Button styleClass="my-button2" text="Evennement" onAction="#evennement"/>
+            <Button styleClass="my-button2" text="Forum" onAction="#forum"/>
+            <Button styleClass="my-button2" text="Preferences" />
+            <Button styleClass="my-button2" text="Notifications" />
+            <Button styleClass="my-button2" text="Theme" />
+            <Button styleClass="my-button2" text="Language" />
+        </VBox>
+    </left>
+
+    <!-- Contenu principal -->
+    <center>
+        <VBox spacing="10" alignment="TOP_CENTER" style="-fx-padding: 10;">
+            <!-- Section d'en-tête -->
+            <VBox styleClass="header-section" alignment="CENTER">
+                <HBox alignment="CENTER_RIGHT" spacing="20" style="-fx-padding: 10; -fx-alignment: center-right;">
+                    <Label fx:id="headerLabel" text="Welcome to our activities" styleClass="header-title"/>
+                    <Label text="Filter by Category:" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                    <ComboBox fx:id="categoryComboBox" promptText="Select Category"/>
+
+                    <!-- Champ de recherche -->
+                    <Label text="Rechercher :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                    <TextField fx:id="searchField" promptText="Nom de l'activité"/>
+
+                    <!-- Tri par nom -->
+                    <Label text="Trier par :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                    <ComboBox fx:id="sortComboBox" promptText="Nom"/>
+                </HBox>
+            </VBox>
+
+            <!-- Section d'information -->
+            <VBox styleClass="info-section" alignment="CENTER">
+                <Label text="Découvrez les activités de Micro Dev ! Sélectionnez une activité pour voir plus. \ud83d\udccc"
+                       styleClass="info-text"/>
+            </VBox>
+
+            <!-- Liste des activités -->
+            <ScrollPane fitToWidth="true" styleClass="scroll-pane" prefHeight="400.0">
+                <GridPane fx:id="gridPaneActivities" hgap="20" vgap="20">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                    </columnConstraints>
+
+                    <rowConstraints>
+                        <RowConstraints minHeight="150" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="150" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="150" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="150" vgrow="ALWAYS" />
+                    </rowConstraints>
+                </GridPane>
+            </ScrollPane>
+
+            <!-- Section des salles avec localisation -->
+            <VBox fx:id="salleContainer" spacing="20" alignment="CENTER" visible="false" managed="false">
+                <Label text="Salles Disponibles" styleClass="salles-title"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

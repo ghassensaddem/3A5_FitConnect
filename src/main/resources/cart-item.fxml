@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox fx:id="cartItem" spacing="10" styleClass="cart-item" xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.esprit.controllers.CartItemController" stylesheets="@Styles/cart.css">
+    <!-- Image de l'article -->
+    <ImageView fx:id="itemImage" fitWidth="120" fitHeight="70">
+        <image>
+            <Image url="@images/amen.png"/>
+        </image>
+    </ImageView>
+
+    <!-- Détails de l'article -->
+    <VBox>
+        <Label fx:id="itemTitle" styleClass="item-title"/>
+        <Label fx:id="itemDescription" styleClass="item-description"/>
+        <HBox spacing="5" styleClass="quantity-container">
+            <Button text="–" styleClass="quantity-btn" onAction="#decreaseQuantity"/>
+            <Label fx:id="quantityLabel"  styleClass="quantity-label"/>
+            <Button text="+" styleClass="quantity-btn" onAction="#increaseQuantity"/>
+        </HBox>
+    </VBox>
+
+    <!-- Prix de l'article -->
+    <Label fx:id="itemPrice" styleClass="price"/>
+    <!-- Icône "poubelle" pour supprimer l'article -->
+    <ImageView fx:id="deleteButton" fitWidth="20" fitHeight="20" onMouseClicked="#deleteItem">
+        <image>
+            <Image url="@images/zebla.png"/> <!-- Chemin de l'icône "poubelle" -->
+        </image>
+    </ImageView>
+</HBox>
