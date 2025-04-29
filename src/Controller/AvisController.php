@@ -16,29 +16,52 @@ use Symfony\Component\Security\Core\Security; // n'oublie pas d'ajouter ce use s
 use Symfony\Component\Validator\Validator\ValidatorInterface; // <-- Add this use statement
 
 
-
-
 #[Route('/avis')]
 final class AvisController extends AbstractController
 {
-    #[Route(name: 'app_avis_index', methods: ['GET'])]
-    public function index(AvisRepository $avisRepository): Response
-{
-    $avis = $avisRepository->findAll();
-    $somme = 0;
-    $nombre = count($avis);
+    #[Route('/seance/{id}', name: 'app_avis_index', methods: ['GET'])]
+    public function index(int $id, AvisRepository $avisRepository, EntityManagerInterface $entityManager): Response
+    {
+        // Trouver la séance par son ID
+        $seance = $entityManager->getRepository(Seance::class)->find($id);
+        
+        if (!$seance) {
+            throw $this->createNotFoundException('Séance non trouvée.');
+        }
+    
+        // Récupérer les avis associés à cette séance
+        $avis = $avisRepository->findBy(['seanceid' => $seance]);
 
-    foreach ($avis as $avi) {
-        $somme += $avi->getNote();
+        // Initialiser la variable pour la moyenne
+        $moyenne = null;
+        $message = '';
+
+        if (count($avis) > 0) {
+            // Calculer la moyenne des notes pour cette séance
+            $somme = 0;
+            $nombre = count($avis);
+        
+            foreach ($avis as $avi) {
+                $somme += $avi->getNote();
+            }
+        
+            $moyenne = $nombre > 0 ? $somme / $nombre : 0;
+        } else {
+            // Si aucun avis n'est disponible, afficher un message
+            $message = 'Pas d\'avis disponible';
+        }
+    
+        return $this->render('avis/index.html.twig', [
+            'avis' => $avis,
+            'moyenne' => $moyenne,
+            'seance' => $seance,
+            'message' => $message, // Passer le message dans la vue
+        ]);
     }
 
-    $moyenne = $nombre > 0 ? $somme / $nombre : 0;
 
-    return $this->render('avis/index.html.twig', [
-        'avis' => $avis,
-        'moyenne' => $moyenne,
-    ]);
-}
+
+
 
     #[Route('/back', name: 'app_avis_back_index', methods: ['GET'])]
     public function backIndex(AvisRepository $avisRepository): Response
@@ -85,7 +108,8 @@ final class AvisController extends AbstractController
             $entityManager->persist($avi);
             $entityManager->flush();
     
-            return $this->redirectToRoute('app_avis_index');
+            return $this->redirectToRoute('app_avis_index', ['id' => $seanceId]);
+
         }
     
         return $this->render('avis/new.html.twig', [
@@ -112,7 +136,8 @@ public function edit(Request $request, Avis $avi, EntityManagerInterface $entity
 
     if ($form->isSubmitted() && $form->isValid()) {
         $entityManager->flush();
-        return $this->redirectToRoute('app_avis_index');
+        return $this->redirectToRoute('app_avis_index', ['id' => $avi->getSeanceid()->getId()]);
+
     }
 
     return $this->render('avis/edit.html.twig', [
@@ -130,14 +155,32 @@ public function delete(Request $request, Avis $avi, EntityManagerInterface $enti
     if (!$client instanceof Client) {
         $client = $entityManager->getRepository(Client::class)->find(1);
     }
-    
+
+    // Récupérer le paramètre source de l'URL (s'il existe)
+    $source = $request->query->get('source');
 
     if ($this->isCsrfTokenValid('delete' . $avi->getId(), $request->request->get('_token'))) {
+        // Ajouter un historique pour la suppression
+        $historique = new \App\Entity\Historique();
+        $historique->setAction('suppression');
+        $historique->setEntite('avis');
+        $historique->setDate(new \DateTime());
+        $historique->setDetails('Suppression de l\'avis : ' . $avi->getId());
+        $entityManager->persist($historique);
+        $entityManager->flush();
+
+        // Suppression de l'avis
         $entityManager->remove($avi);
         $entityManager->flush();
     }
 
-    return $this->redirectToRoute('app_avis_index');
+    // Redirection en fonction de la source
+    if ($source === 'back') {
+        return $this->redirectToRoute('app_avis_back_index');
+    }
+
+    // Sinon, rediriger vers l'index des avis de la séance
+    return $this->redirectToRoute('app_avis_index', ['id' => $avi->getSeanceid()->getId()]);
 }
 
     

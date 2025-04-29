@@ -379,7 +379,21 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Programme</h1>
-                        
+             
+    <div class="mb-3">
+    <span class="text-muted small mr-2">Trier par prix :</span>
+    <div class="btn-group btn-group-sm" role="group" aria-label="Tri par prix">
+        <a href="{{ path('app_programme_index', {'ordre': 'asc'}) }}" class="btn btn-outline-primary">
+            <i class="fas fa-sort-amount-up-alt"></i> Croissant
+        </a>
+        <a href="{{ path('app_programme_index', {'ordre': 'desc'}) }}" class="btn btn-outline-primary">
+            <i class="fas fa-sort-amount-down-alt"></i> Décroissant
+        </a>
+    </div>
+</div>
+
+
+
                     </div>
 
                     <!-- Content Row -->
@@ -387,7 +401,9 @@
 
                         
 
-                        
+                     <a href="{{ path('app_historique_index') }}" class="btn btn-info">Voir l'historique</a>
+
+
 
                         
                         <!-- Pending Requests Card Example -->
@@ -435,7 +451,7 @@
                  <td>
             <!-- Bouton Edit -->
             <a href="{{ path('app_programme_edit', {'id': programme.id}) }}" class="btn btn-primary btn-sm">Edit</a>
-
+ 
             <!-- Formulaire Delete -->
             <form action="{{ path('app_programme_delete', {'id': programme.id}) }}" method="post" style="display:inline;">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ programme.id) }}">
@@ -458,45 +474,69 @@
                         </div>
 
                         <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Prix du programme</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> >100
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> <100
-                                        </span>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Statistiques Prix Programme -->
+<div class="col-xl-4 col-lg-5">
+    <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Prix du programme</h6>
+            <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                     aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Actions :</div>
+                    <a class="dropdown-item" href="#">Exporter</a>
+                    <a class="dropdown-item" href="#">Voir détails</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="chart-pie pt-4 pb-2">
+                <canvas id="myPieChart"></canvas>
+            </div>
+            <div class="mt-4 text-center small">
+                <span class="mr-2">
+                    <i class="fas fa-circle text-primary"></i> > 100
+                </span>
+                <span class="mr-2">
+                    <i class="fas fa-circle text-success"></i> ≤ 100
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myPieChart').getContext('2d');
+    const myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['> 100', '≤ 100'],
+            datasets: [{
+                data: [{{ superieur }}, {{ inferieur }}],
+                backgroundColor: ['#4e73df', '#1cc88a'],
+                hoverBackgroundColor: ['#2e59d9', '#17a673'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+</script>
+
 
                     <!-- Content Row -->
                     <div class="row">

@@ -1,0 +1,44 @@
+body {
+    background-color: lightgray;
+}
+
+#calendar {
+    max-width: 900px;
+    margin: 40px auto;
+    height: 600px; /* ← cette ligne est TRÈS importante */
+  }
+
+  .fc-event-title {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* Style pour l'heure de l'événement */
+  .fc-event-time {
+    display: block; /* force à être sur une nouvelle ligne */
+    font-size: 12px;
+    color: #666; /* gris clair */
+    margin-top: 2px;
+  }
+
+  .context-menu {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    padding: 10px;
+  }
+  
+  .context-menu button {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .context-menu button:hover {
+    background-color: #f0f0f0;
+  }
+  

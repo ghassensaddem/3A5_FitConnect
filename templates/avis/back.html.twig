@@ -385,7 +385,8 @@
                     <!-- Content Row -->
                     <div class="row">
 
-                        
+                         <a href="{{ path('app_historique_index') }}" class="btn btn-info">Voir l'historique</a>
+
 
                         
 
@@ -436,11 +437,13 @@
         <!-- Colonne actions avec bouton Delete -->
         <td>
             <!-- Formulaire Delete -->
-            <form action="{{ path('app_avis_delete', {'id': avi.id}) }}" method="post" style="display:inline;">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avi.id) }}">
-                  <input type="hidden" name="returnTo" value="{{ app.request.uri }}">
-                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet avis ?')">Delete</button>
-            </form>
+           <form action="{{ path('app_avis_delete', { 'id': avi.id, 'source': 'back' }) }}" method="post" style="display:inline;">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avi.id) }}">
+    <button type="submit" class="btn btn-danger btn-sm" style="min-width: 100px; text-align: center; padding-right: 10px; margin-left: auto; background-color: #006400;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet avis ?');">
+        Supprimer
+    </button>
+</form>
+
         </td>
     </tr>
 {% endfor %}

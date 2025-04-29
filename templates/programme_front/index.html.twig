@@ -105,6 +105,17 @@
             </div>
         </div>
         <!-- Hero End -->
+<!-- 🔍 Barre de recherche sans bouton -->
+<form method="get" action="{{ path('app_programme_front') }}" class="mb-4 d-flex justify-content-start" style="margin-top: 20px;">
+    <div class="input-group" style="max-width: 350px;">
+        <input type="text" name="search" value="{{ search }}" class="form-control shadow-sm" placeholder="🔍 Rechercher un programme..." aria-label="Rechercher">
+        <button type="submit" class="btn btn-outline-primary btn-sm" style="height: 30px; padding: 5px 10px; "
+>Rechercher</button>
+    </div>
+</form>
+
+
+
 
         <!--? Date Tabs Start -->
         <section class="date-tabs section-padding30">
@@ -114,11 +125,12 @@
                     <div class="col-lg-11">
                         <div class="properties__button">
                             <!-- Nav Button  -->                                            
-                            <nav>      
+                            <nav>   
+                     
                               <div class="tab-pane fade show active" id="nav-nav-Sport" role="tabpanel" aria-labelledby="nav-Sports">
 
 
- <div class="row">
+ <div class="row" >
   {% for programme in programmes %}
     <div class="col-12 col-md-4 mb-4">
       <!-- Programme card -->
@@ -158,6 +170,10 @@
                 <div class="card-body">
                   <p><strong>Date:</strong> {{ seance.date|date('Y-m-d') }}</p>
                   <p><strong>Horaire:</strong> {{ seance.horaire|date('H:i') }}</p>
+                   
+            <a href="{{ path('app_seance_details', {id: seance.id}) }}">
+            <img src="{{ path('app_qrcode_seance', {id: seance.id}) }}" alt="QR Code">
+        </a>
               <div class="mt-3 d-flex justify-content-between w-100">
   <a href="{{ path('app_avis_new', { 'id': seance.id }) }}" class="btn  btn-sm mx-2 text-start " style="background-color: #006400; color: white;">
     Ajouter un avis
@@ -276,7 +292,83 @@ h3 {
                     </div>
                 </div>
             </div>
-        </section>
+       
+
+      <!-- Bouton pour télécharger le fichier QR code -->
+<!-- Bouton pour télécharger le fichier QR code -->
+<!-- Bouton pour télécharger le fichier QR code -->
+<input type="file" id="qr-file-input" accept="image/*" style="display:none">
+<button id="scan-qr-button" style="font-size: 20px; padding: 15px 30px; background-color: green; color: white; border: none; border-radius: 10px; cursor: pointer; display: block; margin: 0 auto; transition: background-color 0.3s ease;">
+    Scanner QR Code
+</button>
+
+<!-- Effet de survol sur le bouton -->
+<script>
+    document.getElementById('scan-qr-button').addEventListener('mouseover', function() {
+        this.style.backgroundColor = 'darkgreen'; // Couleur plus foncée au survol
+    });
+
+    document.getElementById('scan-qr-button').addEventListener('mouseout', function() {
+        this.style.backgroundColor = 'green'; // Rétablir la couleur verte
+    });
+</script>
+
+
+<!-- Zone pour afficher le résultat (URL du QR code) -->
+<div id="result"></div>
+
+<!-- Script pour traiter le fichier téléchargé -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+<script>
+    const scanButton = document.getElementById('scan-qr-button');
+    const qrFileInput = document.getElementById('qr-file-input');
+    const resultDiv = document.getElementById('result');
+
+    // Lorsqu'on clique sur le bouton, on déclenche l'input de fichier
+    scanButton.addEventListener('click', function() {
+        qrFileInput.click();  // Ouvre la fenêtre de sélection de fichier
+    });
+
+    // Lorsque l'utilisateur sélectionne un fichier, on le lit
+    qrFileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];  // Fichier sélectionné par l'utilisateur
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Créer un canvas pour extraire l'image du QR code
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img, 0, 0, img.width, img.height);
+
+                    // Lire le QR code avec jsQR
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+                    if (code) {
+                        // Afficher l'URL du QR code scanné
+                        resultDiv.innerText = `QR Code scanné: ${code.data}`;
+                        window.location.href = code.data;  // Rediriger vers l'URL du QR code
+                    } else {
+                        resultDiv.innerText = 'Aucun QR Code trouvé dans l\'image.';
+                    }
+                };
+                img.src = e.target.result;  // Charger l'image dans l'élément img
+            };
+
+            // Lire le fichier image en tant que URL de données
+            reader.readAsDataURL(file);
+        }
+    });
+    
+</script>
+ </section>
+
         <!-- Date Tabs End -->
     </main>
 
@@ -382,6 +474,7 @@ h3 {
         });
 
         app.mount('#app');
+        
     </script>
 
     <!-- JS here -->

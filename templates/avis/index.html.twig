@@ -120,74 +120,68 @@
      
             
             
-            <!-- Moyenne à gauche -->
-            
-                <h5 class="mb-0 display-4">
-                    🌟 <strong>Moyenne des notes :</strong> {{ moyenne|round(0, 'floor') }}/10
-                </h5>
-            
-            
-            <!-- Titre centré -->
-           
-          <h4 class="text-center display-3 mb-4" style="position: relative; top: -150px;">
+<!-- Affichage du message ou de la moyenne des notes -->
+{% if message %}
+    <p class="display-4 text-center">{{ message }}</p> <!-- Message avec taille de texte plus grande -->
+{% else %}
+    <h5 class="mb-0 display-4">
+        🌟 <strong>Moyenne des notes :</strong> {{ moyenne|round(0, 'floor') }}/10
+    </h5>
+{% endif %}
+
+<!-- Titre centré -->
+<h4 class="text-center display-3 mb-4" style="position: relative; top: -150px;">
     📋 Voici les avis et évaluations des séances passées !
 </h4>
 
-           
-        <!-- Heading & Nav Button -->
-        <div class="row justify-content-center mb-10">
-            <div class="col-lg-11">
-                <div class="properties__button">
-                    <!-- Nav Button -->                                            
-                    <nav>      
-                        <div class="tab-pane fade show active" id="nav-nav-Sport" role="tabpanel" aria-labelledby="nav-Sports">
-                           <div class="row">
+<!-- Affichage des avis -->
+<div class="row justify-content-center mb-10">
+    <div class="col-lg-11">
+        <div class="properties__button">
+            <!-- Nav Button -->                                            
+            <nav>      
+                <div class="tab-pane fade show active" id="nav-nav-Sport" role="tabpanel" aria-labelledby="nav-Sports">
+                    <div class="row">
+                        {% for avi in avis %}
+                            <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                                <div class="card shadow-sm h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title display-6" style="font-size: 1.5rem;">
+                                            <strong>Commentaire :</strong> {{ avi.commentaire }}
+                                        </h5>
+                                        <h6 class="card-subtitle display-6" style="font-size: 1.5rem;">
+                                            <strong>Note :</strong> {{ avi.note }}/10
+                                        </h6>
+                                        <div class="mt-3 d-flex w-100">
+                                            <div class="mt-3 d-flex justify-content-between" style="width: 100%;">
+                                                <a href="{{ path('app_avis_edit', { 'id': avi.id }) }}"
+                                                   class="btn btn-primary btn-sm"
+                                                   style="min-width: 100px; text-align: center; padding-left: 10px; background-color: #006400;">
+                                                    Modifier
+                                                </a>
 
-                               {% for avi in avis %}
-                                   <div class="col-12 col-sm-6 col-lg-4 mb-4">
-                                       <div class="card shadow-sm h-100">
-                                           <div class="card-body">
-                                               <h5 class="card-title display-6" style="font-size: 1.5rem;">
-                                                   <strong>Commentaire :</strong> {{ avi.commentaire }}
-                                               </h5>
-                                               <h6 class="card-subtitle display-6" style="font-size: 1.5rem;">
-                                                   <strong>Note :</strong> {{ avi.note }}/10
-                                               </h6>
-                                          <div class="mt-3 d-flex w-100">
-  <div class="mt-3 d-flex justify-content-between" style="width: 100%;">
-    <a href="{{ path('app_avis_edit', { 'id': avi.id }) }}"
-       class="btn btn-primary btn-sm"
-       style="min-width: 100px; text-align: center; padding-left: 10px; background-color: #006400;">
-        Modifier
-    </a>
-
-   <form action="{{ path('app_avis_delete', { 'id': avi.id }) }}" method="post" style="display:inline;">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avi.id) }}">
-    <button type="submit"
-            class="btn btn-danger btn-sm"
-            style="min-width: 100px; text-align: center; padding-right: 10px; margin-left: auto; background-color: #006400;"
-            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet avis ?');">
-        Supprimer
-    </button>
-</form>
-
-</div>
-
-
-</div>
-
-
-                                           </div>                   
-                                       </div>
-                                   </div>
-                               {% endfor %}
-                           </div>
-                        </div>
-                    </nav>
+                                                <form action="{{ path('app_avis_delete', { 'id': avi.id }) }}" method="post" style="display:inline;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avi.id) }}">
+                                                    <button type="submit"
+                                                            class="btn btn-danger btn-sm"
+                                                            style="min-width: 100px; text-align: center; padding-right: 10px; margin-left: auto; background-color: #006400;"
+                                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet avis ?');">
+                                                        Supprimer
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>                   
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            </nav>
         </div>
     </div>
+</div>
+
 </section>
 
 

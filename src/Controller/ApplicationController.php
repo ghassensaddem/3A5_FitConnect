@@ -32,7 +32,15 @@ final class ApplicationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($application);
             $entityManager->flush();
-
+    
+            $historique = new \App\Entity\Historique();
+            $historique->setAction('ajout');
+            $historique->setEntite('application');
+            $historique->setDate(new \DateTime());
+            $historique->setDetails('Ajout du application : ' . $application->getId());
+    
+            $entityManager->persist($historique);
+            $entityManager->flush();
             return $this->redirectToRoute('app_application_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -58,7 +66,15 @@ final class ApplicationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+          
+            $historique = new \App\Entity\Historique();
+            $historique->setAction('modification');
+            $historique->setEntite('application');
+            $historique->setDate(new \DateTime());
+            $historique->setDetails('Modification du application : ' . $application->getId());
+    
+            $entityManager->persist($historique);
+            $entityManager->flush();
             return $this->redirectToRoute('app_application_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -72,8 +88,17 @@ final class ApplicationController extends AbstractController
     public function delete(Request $request, Application $application, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$application->getId(), $request->getPayload()->getString('_token'))) {
+          
+            $historique = new \App\Entity\Historique();
+            $historique->setAction('suppression');
+            $historique->setEntite('application');
+            $historique->setDate(new \DateTime());
+            $historique->setDetails(' Suppression du application : ' . $application->getId());
+    
+            $entityManager->persist($historique);
             $entityManager->remove($application);
             $entityManager->flush();
+         
         }
 
         return $this->redirectToRoute('app_application_index', [], Response::HTTP_SEE_OTHER);
