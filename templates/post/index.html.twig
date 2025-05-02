@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion Forum{% endblock %}
+
+{% block body %}
+ <!-- Begin Page Content -->
+                <div class="container-fluid">
+                  <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Forum</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div>
+
+            
+
+                 
+                                   
+                                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Tables des Postes</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Auteur</th>
+            <th>Contenu</th>
+            <th>Upvotes</th>
+            <th>Downvotes</th>
+            <th>Image</th>
+            <th>Client</th>
+            <th>Commentaires</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+        <tr>
+            <td>{{ post.id }}</td>
+            <td>{{ post.date|date('Y-m-d') }}</td>
+            <td>{{ post.author }}</td>
+            <td>{{ post.contenu|length > 50 ? post.contenu|slice(0, 50) ~ '...' : post.contenu }}</td>
+            <td>{{ post.upvotes }}</td>
+            <td>{{ post.downvotes }}</td>
+            <td>
+                {% if post.image %}
+                    <img src="{{ asset('uploads/images/' ~ post.image) }}" alt="Post image" style="max-width: 100px;">
+                {% else %}
+                    Pas d'image
+                {% endif %}
+            </td>
+            <td>{{ post.client.id }}</td>
+            <td>
+            <a href="{{ path('app_post_comments', {'id': post.id}) }}" class="btn btn-info">Afficher</a>
+        </td>
+            <td>
+      <a href="{{ path('app_delete', {'id': post.id}) }}" 
+                                   class="btn btn-sm btn-danger shadow-sm mb-1"
+                                   title="Supprimer"
+                                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet post ?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie Chart -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Contribution des Clients</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4 pb-2">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                    <div class="mt-4 text-center small">
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-primary"></i> Direct
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i> Social
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> Referral
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Content Column -->
+                        <div class="col-lg-6 mb-4">
+
+                            
+
+                            
+                        </div>
+
+                        <div class="col-lg-6 mb-4">
+
+                            
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% block body %}
+<div class="container centered-form">
+    <div class="form-card"  >
+        <h2 class="text-center mb-4">Modifier une application</h2>
+
+      
+      {{ include('application/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+      <div class="text-center mt-3">
+          <a href="{{ path('app_application_index') }}" class="btn btn-secondary">Back to list</a>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

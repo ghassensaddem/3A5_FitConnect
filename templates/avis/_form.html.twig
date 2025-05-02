@@ -1,0 +1,108 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Avis{% endblock %}
+
+{% block body %}
+ <main>
+        <!--? Hero Start -->
+        <div class="slider-area2">
+            <div class="slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap hero-cap2 text-center pt-70">
+                                <h2 class="avis-title">Avis</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero End -->
+
+        <!--? Date Tabs Start -->
+     <section class="date-tabs section-padding30">
+    <div class="container">
+        <!-- Heading & Nav Button -->
+        <div class="row justify-content-center mb-10">
+            <div class="col-lg-11">
+                <div class="properties__button">
+                    <!-- Nav Button -->                                            
+                   <section class="date-tabs section-padding30">
+    <div class="container">
+        <!-- Heading & Nav Button -->
+        <div class="row justify-content-center mb-10">
+            <div class="col-lg-11">
+                <div class="properties__button">
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+<div class="form-group mb-3">
+    {{ form_row(form.commentaire) }}
+    
+</div>
+
+<div class="form-group mb-3">
+    {{ form_row(form.note) }}
+</div>
+
+<div class="text-center mt-4">
+    <button type="submit" class="btn px-4" style="background-color: #006400; color: white;">{{ button_label }}</button>
+</div>
+
+{{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+  
+           <head>
+   <style>
+
+    .agrandie {
+    font-size: 24px;
+    padding: 15px 20px;
+    height: 80px;
+    width: 400px;
+}
+
+textarea.agrandie {
+    height: 120px;
+}
+ /* Pour ajuster uniquement la taille du texte des labels */
+        label {
+            font-size: 30px;
+            margin-right: 10px;
+        }
+.form-group {
+    display: flex;
+    flex-direction: row;  /* Le label et le champ de formulaire sont côte à côte */
+    align-items: center;  /* Aligne les éléments verticalement */
+}
+        /* Pour ajuster la taille du texte des champs de formulaire sans modifier la taille du champ */
+       input.form-control, textarea.form-control {
+    font-size: 24px;       /* Pour agrandir le texte */
+    padding: 15px 20px;    /* Pour agrandir l'intérieur du champ */
+    height: 60px;          /* Hauteur du champ */
+    width: 400px;          /* Largeur du champ (ajuste selon ton besoin) */
+}
+        input.form-control::placeholder, textarea.form-control::placeholder {
+    font-size: 30px; /* Augmente la taille du texte dans les placeholders */
+}
+.label-grand {
+    font-size: 40px;
+}
+    </style>
+</head>
+    </main>
+
+
+{% endblock %}

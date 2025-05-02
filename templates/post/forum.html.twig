@@ -1,0 +1,164 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block body %}
+  <main>
+    <!--? Hero Start -->
+    <div class="slider-area2">
+        <div class="slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap hero-cap2 pt-70 text-center">
+                            <h2>Forum</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+    <!--? Blog Area Start-->
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+                        {% for post in posts %}
+                        <article class="blog_item">
+                            <div class="blog_item_img">
+                                {# Vérification de l'image du post et affichage dynamique #}
+                                {% if post.image %}
+                                    <img class="card-img rounded-0" src="{{ asset('uploads/images/' ~ post.image) }}" alt="Image du post">
+                                {% else %}
+                                    <img class="card-img rounded-0" src="{{ asset('img/blog/single_blog_3.png') }}" alt="Image par défaut">
+                                {% endif %}
+    
+                                <a class="blog_item_date">
+                                    <h3>{{ post.date|date('d') }}</h3>
+                                    <p>{{ post.date|date('M') }}</p>
+                                </a>
+                            </div>
+
+                            <div class="blog_details">
+                                <a class="d-inline-block">
+                                    <p>{{ post.contenu|length > 150 ? post.contenu|slice(0, 150) ~ '...' : post.contenu }}</p>
+                                </a>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <ul class="blog-info-link d-flex">
+                                        <li><a href="#"><i class="fa fa-user"></i> {{ post.author }}</a></li>
+                                        <li>
+                                            <a href="{{ path('app_post_comments_front', { 'id': post.id }) }}">
+                                                <i class="fa fa-comments"></i> {{ post.commentaires|length }} Commentaires
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    
+                                    <div class="d-flex">
+                                        {% if post.client.id == client_id %}
+    {# Formulaire de suppression du post #}
+    <form action="{{ path('app_delete_front', { 'id': post.id }) }}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">
+            Supprimer
+        </button>
+    </form>
+
+    {# Formulaire pour redirection vers la modification du post #}
+    <form action="{{ path('app_post_edit', { 'id': post.id }) }}" method="get" style="display:inline; margin-left: 8px;">
+        <button type="submit" class="btn btn-danger">
+            Modifier
+        </button>
+    </form>
+{% endif %}
+
+                                    </div>
+                                </div>
+
+                               {# Boutons Like et Dislike avec le nombre de votes et hover ajouté #}
+<div class="d-flex" style="margin-top: 10px;">
+    <!-- Bouton Upvote -->
+    <button type="button" class="vote-button" onclick="upvotePost({{ post.id }})">
+        <img src="{{ asset('img/upvote.png') }}" alt="Upvote" style="width: 15px; height: 15px;">
+    </button>
+    <span style="margin-left: 8px;" id="upvotes-{{ post.id }}">{{ post.upvotes }}</span> <!-- Affichage du nombre d'upvotes -->
+
+    <!-- Bouton Downvote -->
+    <button type="button" class="vote-button" onclick="downvotePost({{ post.id }})" style="margin-left: 15px;">
+        <img src="{{ asset('img/downvote.png') }}" alt="Downvote" style="width: 15px; height: 15px;">
+    </button>
+    <span style="margin-left: 8px;" id="downvotes-{{ post.id }}">{{ post.downvotes }}</span> <!-- Affichage du nombre de downvotes -->
+</div>
+
+
+
+
+
+                            </div>
+                        </article>
+                        {% else %}
+                        <p>Aucun post trouvé.</p>
+                        {% endfor %}
+                        
+                        <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a href="#" class="page-link" aria-label="Previous">
+                                        <i class="ti-angle-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">1</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link" aria-label="Next">
+                                        <i class="ti-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+                        <aside class="single_sidebar_widget search_widget">
+                            <form action="#">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder='Search Keyword'
+                                               onfocus="this.placeholder = ''"
+                                               onblur="this.placeholder = 'Search Keyword'">
+                                        <div class="input-group-append">
+                                            <button class="btns" type="button"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+                            </form>
+                        </aside>
+
+                        <aside class="single_sidebar_widget newsletter_widget">
+                            <form method="POST" action="{{ path('app_post_add') }}">
+                                <div class="form-group">
+                                    {# Formulaire pour ajouter un post #}
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">
+                                    Ajouter Post
+                                </button>
+                            </form>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Area End -->
+</main>
+{% endblock %}
+

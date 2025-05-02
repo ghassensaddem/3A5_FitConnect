@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Commandes{% endblock %}
+
+{% block body %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Heading -->
+    
+
+    <!-- Data Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des Commandes</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Prenom</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Etat</th>
+                            <th>StatusPaiement</th>
+                            <th>Equipement</th>
+                            <th>quantite</th>
+                            <th>DateCreation</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commande in commandes %}
+                        <tr>
+                            <td class="text-center">
+                                {% if commande.client.image %}
+                                    <img src="{{ asset('uploads/images/' ~ commande.client.image) }}" 
+                                         alt="" 
+                                         class="img-thumbnail" 
+                                         style="max-width: 80px; max-height: 80px;"
+                                         data-toggle="tooltip" 
+                                         data-placement="top" 
+                                         title="{{ commande.client.nom }}">
+                                {% else %}
+                                    <span class="text-muted">Aucune image</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ commande.client.prenom }}</td>
+                            <td>{{commande.client.nom}}</td>
+                            <td>{{commande.client.email}}</td>
+                            <td>{{ commande.etat}}</td>
+                            <td>{{ commande.statutPaiement }}</td>
+                             <td class="text-center">
+                                {% if commande.equipement.image %}
+                                    <img src="{{ asset('uploads/images/' ~ commande.equipement.image) }}" 
+                                         alt="" 
+                                         class="img-thumbnail" 
+                                         style="max-width: 80px; max-height: 80px;"
+                                         data-toggle="tooltip" 
+                                         data-placement="top" 
+                                         title="{{ commande.equipement.image }}">
+                                {% else %}
+                                    <span class="text-muted">Aucune image</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ commande.quantite}}</td>
+                            <td>{{ commande.dateCreation ? commande.dateCreation|date('Y-m-d') : '' }}</td>
+                            <td class="text-nowrap">
+                            
+                                <a href="{{ path('delete_commande', {'id': commande.id}) }}" 
+                                   class="btn btn-sm btn-danger shadow-sm mb-1"
+                                   title="Supprimer"
+                                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet commande ?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+   
+<!-- Pie Chart Dynamique SEULEMENT -->
+<div class="col-xl-4 col-lg-5">
+    <div class="card shadow mb-4">
+        <!-- Card Header -->
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Répartition des ventes du commandes par catégorie</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="chart-pie pt-4 pb-2">
+                <canvas id="ventesChart"></canvas> <!-- ID modifié -->
+            </div>
+            <div class="mt-4 text-center small">
+                {% for item in chartData %}
+                    <span class="mr-2">
+                        <i class="fas fa-circle" style="color: {{ item.color }}"></i> 
+                        {{ item.label }} ({{ item.quantite }})
+                    </span>
+                    {% if not loop.last %}|{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('ventesChart').getContext('2d'); <!-- ID modifié -->
+    
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {{ chartData|map(item => item.label)|json_encode|raw }},
+            datasets: [{
+                data: {{ chartData|map(item => item.value)|json_encode|raw }},
+                backgroundColor: {{ chartData|map(item => item.color)|json_encode|raw }},
+                hoverBorderColor: "rgba(234, 236, 244, 1)"
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const quantities = {{ chartData|map(item => item.quantite)|json_encode|raw }};
+                            return `${context.label}: ${context.raw}% (${quantities[context.dataIndex]} ventes)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+// Activer les tooltips Bootstrap
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
+// Confirmation avant suppression
+document.querySelectorAll('.btn-danger').forEach(button => {
+    button.addEventListener('click', function(e) {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer cet commande ?')) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+{% endblock %}

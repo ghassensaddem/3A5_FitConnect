@@ -1,0 +1,50 @@
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Activité</th>
+                <th>Salle</th>
+                <th>Note</th>
+                <th>Avis</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rating in ratings %}
+            <tr>
+                <td>
+                    {% if rating.client.image %}
+                    <img src="{{ asset('uploads/images/' ~ rating.client.image) }}" 
+                         class="rounded-circle mr-2" width="30" height="30"
+                         alt="{{ rating.client.nom }}">
+                    {% endif %}
+                    {{ rating.client.nom }} {{ rating.client.prenom }}
+                </td>
+                <td>{{ rating.activity.nomActivity }}</td>
+                <td>{{ rating.salle.nomSalle }}</td>
+                <td>
+                    {% for i in 1..5 %}
+                        <i class="fas fa-star{{ i > rating.ratingStars ? '-empty' : '' }} text-warning"></i>
+                    {% endfor %}
+                    ({{ rating.ratingStars }}/5)
+                </td>
+                <td>{{ rating.review|default('Aucun avis')|slice(0, 50) }}{% if rating.review|length > 50 %}...{% endif %}</td>
+                <td class="text-center">
+                    <a href="{{ path('admin_ratings_show', {
+                        'idActivity': rating.activity.idActivity,
+                        'idSalle': rating.salle.idSalle,
+                        'idClient': rating.client.id
+                    }) }}" class="btn btn-info btn-sm">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center">Aucune évaluation</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

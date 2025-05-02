@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une Salle de Sport{% endblock %}
+
+{% block body %}
+<div class="main-content">
+    <div class="bg-fullscreen"></div>
+    <div class="overlay"></div>
+
+    <div class="container centered-form">
+        <div class="form-container">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Ajouter une Salle de Sport</h1>
+            </div>
+            {{ form_start(form, {'attr': {'class': 'user'}}) }}
+                <div class="form-group">
+                    {{ form_label(form.nomSalle, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nomSalle, {'attr': {'class': 'form-control form-control-user'}}) }}
+                </div>
+                
+               <div class="form-group">
+                {{ form_label(form.addresseSalle) }}
+                {{ form_widget(form.addresseSalle, {
+                   'attr': {
+                   'class': 'form-control form-control-user select2'
+                   }
+                 }) }}
+    {{ form_errors(form.addresseSalle) }}
+</div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.horaireOuverture, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.horaireOuverture, {'attr': {'class': 'form-control form-control-user'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.horaireFermeture, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.horaireFermeture, {'attr': {'class': 'form-control form-control-user'}}) }}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.capacity, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.capacity, {'attr': {'class': 'form-control form-control-user'}}) }}
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-user px-4 py-2">
+                        <i class="fas fa-save mr-2"></i> Enregistrer
+                    </button>
+                    <a href="{{ path('app_sallesportif_index') }}" class="btn btn-secondary btn-user px-4 py-2 ml-2">
+                        <i class="fas fa-arrow-left mr-2"></i> Retour
+                    </a>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+<style>
+    .centered-form {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 100px auto;
+    }
+    .form-container {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .bg-fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('{{ asset("images/gym-bg.jpg") }}') no-repeat center center;
+        background-size: cover;
+        z-index: -2;
+    }
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: -1;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,210 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Equipement Specific{% endblock %}
+
+{% block body %}
+<div class="slider-area2">
+    <div class="slider-height2 d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap hero-cap2 text-center pt-70">
+                        <h2>Our Equipement</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="about-area section-padding30">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12">
+                <div class="about-img">
+                    <img src="{{ asset('uploads/images/' ~ equipement.image) }}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="about-caption">
+                    <div class="section-tittle section-tittle3 mb-35">
+                        <span>{{ equipement.nom }}</span>
+                        <h2>{{ equipement.description }}</h2>
+                    </div>
+                    <p class="pera-top">{{ equipement.prix|number_format(0, '.', '') }} DT</p>
+                    
+                    <div class="add-to-cart-container">
+                        <input type="hidden" name="equipement_id" value="{{ equipement.id }}">
+                        <input type="hidden" name="quantity" id="quantity-value" value="1">
+                        
+                        <!-- Quantity Controls -->
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 25px;">
+                            <button type="button" 
+                                    class="genric-btn danger minus-btn" 
+                                    style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #ff5e57; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease;"
+                                    onmouseover="this.style.background='#e74c3c'; this.style.transform='scale(1.05)'; this.style.boxShadow='0 2px 5px rgba(0, 0, 0, 0.2)';"
+                                    onmouseout="this.style.background='#ff5e57'; this.style.transform='scale(1)'; this.style.boxShadow='none';"
+                                    onmousedown="this.style.transform='scale(0.98)'"
+                                    onmouseup="this.style.transform='scale(1.05)'">
+                                <i class="ti-minus"></i>
+                            </button>
+                            <input type="number" 
+                                   style="width: 70px; height: 40px; text-align: center; font-size: 18px; border: 2px solid #ff5e57; border-radius: 5px; background-color: #f8f9fa;"
+                                   value="1" 
+                                   min="1" 
+                                   max="{{ equipement.quantiteStock }}" 
+                                   readonly
+                                   id="quantity-input">
+                            <button type="button" 
+                                    class="genric-btn danger plus-btn" 
+                                    style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #ff5e57; color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s ease;"
+                                    onmouseover="this.style.background='#e74c3c'; this.style.transform='scale(1.05)'; this.style.boxShadow='0 2px 5px rgba(0, 0, 0, 0.2)';"
+                                    onmouseout="this.style.background='#ff5e57'; this.style.transform='scale(1)'; this.style.boxShadow='none';"
+                                    onmousedown="this.style.transform='scale(0.98)'"
+                                    onmouseup="this.style.transform='scale(1.05)'">
+                                <i class="ti-plus"></i>
+                            </button>
+                        </div>
+                        
+                        <button onclick="addToCart({{ equipement.id }}, document.getElementById('quantity-input').value)"
+                                id="add-to-cart-btn" 
+                                class="btn header-btn"
+                                style="transition: all 0.3s ease;"
+                                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.1)';"
+                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            Add To Cart
+                        </button>
+                    </div>
+
+                    <div id="cart-message" style="display: none; margin-top: 15px; padding: 10px 15px; border-radius: 4px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion des boutons +/-
+    const minusBtn = document.querySelector('.minus-btn');
+    const plusBtn = document.querySelector('.plus-btn');
+    const quantityInput = document.getElementById('quantity-input');
+    const quantityHidden = document.getElementById('quantity-value');
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    const maxQuantity = {{ equipement.quantiteStock }};
+
+    minusBtn.addEventListener('click', function() {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+            quantityHidden.value = quantityInput.value;
+        }
+    });
+
+    plusBtn.addEventListener('click', function() {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue < maxQuantity) {
+            quantityInput.value = currentValue + 1;
+            quantityHidden.value = quantityInput.value;
+        } else {
+            showCartMessage('Quantité maximale atteinte!', 'error');
+        }
+    });
+
+    // Gestion de l'ajout au panier
+   addToCartBtn.addEventListener('click', async function() {
+    const equipementId = document.querySelector('input[name="equipement_id"]').value;
+    const quantity = quantityInput.value;
+    
+    if (quantity < 1) {
+        showCartMessage('Veuillez sélectionner une quantité valide', 'error');
+        return;
+    }
+
+    // Sauvegarde l'état original du bouton
+    const originalBackground = addToCartBtn.style.backgroundColor;
+    const originalCursor = addToCartBtn.style.cursor;
+    addToCartBtn.disabled = true;
+
+    try {
+        const response = await fetch('{{ path("app_add_to_cart") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: `equipement_id=${equipementId}&quantity=${quantity}`
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+            showCartMessage(data.message, 'success');
+            updateCartCounter(data.totalQuantity);
+            // Réactive le bouton après un ajout réussi (si nécessaire)
+            addToCartBtn.disabled = false;
+        } else {
+            showCartMessage(data.message, 'error');
+            if (data.message.includes('existe déjà')) {
+                // Bloque définitivement le bouton si l'article est déjà dans le panier
+                addToCartBtn.disabled = true;
+                addToCartBtn.style.backgroundColor = '#cccccc';
+                addToCartBtn.style.cursor = 'not-allowed';
+            }
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        showCartMessage('Service temporairement indisponible', 'error');
+        // Réactive le bouton en cas d'erreur réseau
+        addToCartBtn.disabled = false;
+        addToCartBtn.style.backgroundColor = originalBackground;
+        addToCartBtn.style.cursor = originalCursor;
+    }
+});
+
+    function showCartMessage(message, type) {
+        const messageDiv = document.getElementById('cart-message');
+        messageDiv.textContent = message;
+        messageDiv.style.display = 'block';
+        messageDiv.style.padding = '15px 20px';
+        messageDiv.style.borderRadius = '5px';
+        messageDiv.style.margin = '15px 0';
+        messageDiv.style.fontSize = '16px';
+        
+        if (type === 'success') {
+            messageDiv.style.backgroundColor = '#d4edda';
+            messageDiv.style.color = '#155724';
+            messageDiv.style.border = '2px solid #c3e6cb';
+        } else {
+            messageDiv.style.backgroundColor = '#f8d7da';
+            messageDiv.style.color = '#721c24';
+            messageDiv.style.border = '2px solid #f5c6cb';
+            messageDiv.style.fontWeight = 'bold';
+        }
+        
+        setTimeout(() => {
+            messageDiv.style.display = 'none';
+        }, 5000);
+    }
+
+    function updateCartCounter(count) {
+        const counter = document.getElementById('cart-counter');
+        if (counter) {
+            counter.textContent = count;
+            counter.style.animation = 'none';
+            void counter.offsetWidth; // Trigger reflow
+            counter.style.animation = 'bounce 0.5s';
+        }
+    }
+});
+</script>
+<style>
+    @keyframes bounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+</style>
+{% endblock %}
+
+{% endblock %}

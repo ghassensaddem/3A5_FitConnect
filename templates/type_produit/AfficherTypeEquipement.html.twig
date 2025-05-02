@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Types d'Équipement{% endblock %}
+
+{% block body %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+       <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="get" action="{{ path('afficher_type_produit') }}">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control bg-light border-0 small" 
+                           placeholder="Rechercher..." aria-label="Search" 
+                           value="{{ search_term|default('') }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Types d'Équipement</h1>
+        <div>
+            <a href="{{ path('ajouter_type_produit')}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mr-2">
+                <i class="fas fa-plus fa-sm text-white-50"></i> Ajouter Type Equipement
+            </a>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+            </a>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des Types d'Équipement</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for categorie in categories %}
+                        <tr>
+                            <td>{{ categorie.id }}</td>
+                            <td>{{ categorie.nom }}</td>
+                            <td>{{ categorie.description }}</td>
+                            <td>
+                                <a href="{{ path('modifier_type_produit', {'id': categorie.id}) }}" class="btn btn-sm btn-primary shadow-sm">
+                                    <i class="fas fa-edit fa-sm text-white-50"></i> Modifier
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('delete_categorie', {'id': categorie.id}) }}" class="btn btn-sm btn-danger shadow-sm">
+                                    <i class="fas fa-trash fa-sm text-white-50"></i> Supprimer
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

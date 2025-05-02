@@ -1,0 +1,135 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Equipement{% endblock %}
+
+{% block body %}
+<main>
+    <!-- Hero Start -->
+    <div class="slider-area2">
+        <div class="slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap hero-cap2 text-center pt-70">
+                            <h2>Our Equipement</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ <div class="categories-container" style="padding: 40px 0; text-align: center;">
+        <div class="container">
+            <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 30px; margin: 0 auto; max-width: 1200px;">
+                <div style="display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+                    {% for categorie in categories %}
+                    <a href="{{ path('app_equipement_by_categorie', {'id': categorie.id}) }}" 
+                       class="btn header-btn" style="margin: 0 !important; flex: 0 0 auto;">
+                        {{ categorie.nom }}
+                    </a>
+                    {% endfor %}
+                </div>
+                
+              <div style="position: relative; display: inline-block;">
+                    <input type="text" id="searchInput" 
+                           style="padding: 8px 15px; padding-right: 50px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; width: 200px; transition: all 0.3s;" 
+                           placeholder="Search By Nom" 
+                           onfocus="this.style.outline='none'; this.style.borderColor='#555'; this.style.boxShadow='0 0 5px rgba(0,0,0,0.1)'"
+                           onblur="this.style.borderColor='#ddd'; this.style.boxShadow='none'">
+                    <i class="ti-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #777; pointer-events: none;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Area Start -->
+ <div class="gallery-area section-padding30">
+        <div class="container-fluid p-0 fix">
+            <div class="row" id="equipementsContainer">
+                {% for equipement in equipements %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="box snake mb-30">
+                        <div class="gallery-img small-img" style="background-image: url({{ asset('uploads/images/' ~ equipement.image) }}); background-size: cover; background-position: center;">
+                            <div class="overlay">
+                               <div class="overlay-content">
+                                    <a href="{{ path('app_equipement_front_equipement', {'id': equipement.id}) }}"><i class="ti-arrow-top-right"></i></a>
+                                    <h3>{{ equipement.nom }}</h3>
+                                    <p>{{ equipement.categorie ? equipement.categorie.nom : 'Non catégorisé' }}</p>
+                                    <h3>{{ equipement.prix|number_format(0, '.', '') }} DT</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Gallery Area End -->
+</main>
+<script>
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.trim();
+    
+    if (searchTerm.length >= 2) { // Ne lance la recherche qu'après 2 caractères
+        fetch(`{{ path('app_equipement_search') }}?term=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('equipementsContainer');
+                container.innerHTML = '';
+                
+                data.forEach(equipement => {
+                    const colDiv = document.createElement('div');
+                    colDiv.className = 'col-lg-3 col-md-4 col-sm-6';
+                    
+                    colDiv.innerHTML = `
+                        <div class="box snake mb-30">
+                            <div class="gallery-img small-img" style="background-image: url(${equipement.image}); background-size: cover; background-position: center;">
+                                <div class="overlay">
+                                   <div class="overlay-content">
+                                        <a href="${equipement.url}"><i class="ti-arrow-top-right"></i></a>
+                                        <h3>${equipement.nom}</h3>
+                                        <p>${equipement.categorie}</p>
+                                        <h3>${equipement.prix}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(colDiv);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    } else if (searchTerm.length === 0) {
+        // Si le champ est vide, recharge les équipements initiaux
+        fetch(`{{ path('app_equipement_front') }}`)
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newContainer = doc.getElementById('equipementsContainer');
+                document.getElementById('equipementsContainer').innerHTML = newContainer.innerHTML;
+            });
+    }
+});
+</script>
+
+<style>
+@media (max-width: 768px) {
+    .categories-container > .container > div {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .categories-container > .container > div > div:last-child {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .categories-container > .container > div > div:last-child input {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Équipements{% endblock %}
+
+{% block body %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+     <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="get" action="{{ path('afficher_equipement') }}" class="form-inline">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control bg-light border-0 small" 
+                           placeholder="Rechercher..." aria-label="Search" 
+                           value="{{ search_term|default('') }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" 
+                        id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Trier par: {{ current_sort == 'prix' ? 'Prix' : 'Quantité' }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <a class="dropdown-item" href="{{ path('afficher_equipement', {
+                        'q': search_term,
+                        'sort': 'prix',
+                        'direction': current_sort == 'prix' and current_direction == 'asc' ? 'desc' : 'asc'
+                    }) }}">
+                        Prix {% if current_sort == 'prix' %}
+                            <i class="fas fa-sort-{{ current_direction == 'asc' ? 'up' : 'down' }}"></i>
+                        {% endif %}
+                    </a>
+                    <a class="dropdown-item" href="{{ path('afficher_equipement', {
+                        'q': search_term,
+                        'sort': 'quantiteStock',
+                        'direction': current_sort == 'quantiteStock' and current_direction == 'asc' ? 'desc' : 'asc'
+                    }) }}">
+                        Quantité {% if current_sort == 'quantiteStock' %}
+                            <i class="fas fa-sort-{{ current_direction == 'asc' ? 'up' : 'down' }}"></i>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Gestion des Équipements</h1>
+        <div>
+            <a href="{{ path('ajouter_equipement')}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mr-2">
+                <i class="fas fa-plus fa-sm text-white-50"></i> Ajouter Équipement
+            </a>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fas fa-download fa-sm text-white-50"></i> Exporter
+            </a>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des Équipements</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Prix (DT)</th>
+                            <th>Quantité</th>
+                            <th>Catégorie</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for equipement in equipements %}
+                        <tr>
+                            <td class="text-center">
+                                {% if equipement.image %}
+                                    <img src="{{ asset('uploads/images/' ~ equipement.image) }}" 
+                                         alt="Image {{ equipement.nom }}" 
+                                         class="img-thumbnail" 
+                                         style="max-width: 80px; max-height: 80px;"
+                                         data-toggle="tooltip" 
+                                         data-placement="top" 
+                                         title="{{ equipement.nom }}">
+                                {% else %}
+                                    <span class="text-muted">Aucune image</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ equipement.id }}</td>
+                            <td>{{ equipement.nom }}</td>
+                            <td>{{ equipement.description|slice(0, 50) }}{% if equipement.description|length > 50 %}...{% endif %}</td>
+                            <td>{{ equipement.prix }}</td>
+                            <td>{{ equipement.quantiteStock }}</td>
+                            <td>{{ equipement.categorie.nom }}</td>
+                            <td class="text-nowrap">
+                                <a href="{{ path('modifier_equipement', {'id': equipement.id}) }}" 
+                                   class="btn btn-sm btn-primary shadow-sm mb-1"
+                                   title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ path('delete_equipement', {'id': equipement.id}) }}" 
+                                   class="btn btn-sm btn-danger shadow-sm mb-1"
+                                   title="Supprimer"
+                                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet équipement ?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+// Activer les tooltips Bootstrap
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
+// Confirmation avant suppression
+document.querySelectorAll('.btn-danger').forEach(button => {
+    button.addEventListener('click', function(e) {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer cet équipement ?')) {
+            e.preventDefault();
+        }
+    });
+});
+
+// Mise à jour visuelle du tri actif
+$(document).ready(function() {
+    const currentSort = '{{ current_sort }}';
+    const currentDirection = '{{ current_direction }}';
+    
+    if (currentSort) {
+        $('.dropdown-item').each(function() {
+            if ($(this).attr('href').includes(`sort=${currentSort}`)) {
+                $(this).addClass('active');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

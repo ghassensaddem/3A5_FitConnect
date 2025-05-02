@@ -1,0 +1,249 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Payment Success!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d62b2b;
+            --primary-light: #ff6b6b;
+            --primary-dark: #a71c1c;
+            --secondary-color: #2b2d42;
+            --accent-color: #f8d7da;
+            --light-color: #fff9f9;
+            --dark-color: #2b2d42;
+            --text-light: #ffffff;
+            --text-dark: #2b2d42;
+            --border-radius: 16px;
+            --box-shadow: 0 15px 30px rgba(214, 43, 43, 0.15);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .success-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        .success-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+        }
+        
+        .success-message {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: var(--dark-color);
+        }
+        
+        .delivery-progress {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            margin: 3rem auto;
+            max-width: 800px;
+        }
+        
+        .progress-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 3rem;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--accent-color);
+            z-index: 1;
+            border-radius: 3px;
+        }
+        
+        .progress-bar {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary-dark));
+            z-index: 2;
+            width: 75%; /* Augmenté à 75% pour refléter l'étape "Expédiée" */
+            border-radius: 3px;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 3;
+            width: 25%;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(214, 43, 43, 0.1);
+        }
+        
+        .step.active .step-icon {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .step.completed .step-icon {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            text-align: center;
+            font-weight: 600;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .step.active .step-label,
+        .step.completed .step-label {
+            opacity: 1;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: white;
+            box-shadow: 0 10px 20px rgba(214, 43, 43, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(214, 43, 43, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .success-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .success-title {
+                font-size: 2rem;
+            }
+            
+            .progress-steps {
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+            
+            .step {
+                width: calc(50% - 1rem);
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="success-container">
+    <h1 class="success-title">Merci pour votre commande!</h1>
+    <p class="success-message">
+        Excellente nouvelle ! Votre commande est en route et franchira votre porte dans un délai de 2 jours.
+        Merci de votre confiance, et à très vite pour la réception de votre colis !
+        Si vous avez des questions, veuillez envoyer un e-mail à
+        <a href="mailto:orders@example.com">orders@example.com</a>.
+    </p>
+    
+    <div class="delivery-progress">
+        <h3 class="progress-title">Suivi de Votre Livraison</h3>
+        <div class="progress-steps">
+            <div class="progress-bar"></div>
+            <div class="step completed">
+                <div class="step-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="step-label">Confirmée</div>
+            </div>
+            <div class="step completed">
+                <div class="step-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="step-label">Préparation</div>
+            </div>
+            <div class="step completed"> <!-- Changé en completed pour Expédiée -->
+                <div class="step-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <div class="step-label">Expédiée</div>
+            </div>
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="step-label">Livrée</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="action-buttons">
+        <button class="btn btn-primary" onclick="window.location.href='{{ path('app_equipement_front') }}'">
+            <i class="fas fa-arrow-left"></i> Retour à la boutique
+        </button>
+    </div>
+</div>
+{% endblock %}

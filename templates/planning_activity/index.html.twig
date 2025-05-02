@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FitConnect - Planning des Activités{% endblock %}
+
+{% block body %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Gestion du Planning des Activités</h1>
+        <a href="{{ path('app_planning_activity_new') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Ajouter un Planning
+        </a>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Liste des Planifications</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Activité</th>
+                            <th>Salle</th>
+                            <th>Capacité Max</th>
+                            <th>Taux d'occupation</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for planning in planning_activities %}
+                        <tr>
+                            <td>{{ planning.activity.idActivity }}-{{ planning.salle.idSalle }}</td>
+                            <td>{{ planning.activity.nomActivity|slice(0, 20) }}{% if planning.activity.nomActivity|length > 20 %}...{% endif %}</td>
+                            <td>{{ planning.salle.nomSalle|slice(0, 15) }}{% if planning.salle.nomSalle|length > 15 %}...{% endif %}</td>
+                            <td>{{ planning.capacityMax }}</td>
+                            <td>
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar progress-bar-striped bg-{{ planning.nombreInscription >= planning.capacityMax ? 'danger' : 'success' }}" 
+                                         role="progressbar" 
+                                         style="width: {{ ((planning.nombreInscription / planning.capacityMax) * 100)|round }}%" 
+                                         aria-valuenow="{{ planning.nombreInscription }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="{{ planning.capacityMax }}">
+                                        {{ planning.nombreInscription }}/{{ planning.capacityMax }} ({{ ((planning.nombreInscription / planning.capacityMax) * 100)|round }}%)
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="d-flex justify-content-center">
+                                <a href="{{ path('app_planning_activity_show', {
+                                    'activityId': planning.activity.idActivity,
+                                    'salleId': planning.salle.idSalle
+                                }) }}" 
+                                   class="btn btn-info btn-circle btn-sm mx-1"
+                                   title="Voir détails">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ path('app_planning_activity_edit', {
+                                    'activityId': planning.activity.idActivity,
+                                    'salleId': planning.salle.idSalle
+                                }) }}" 
+                                   class="btn btn-warning btn-circle btn-sm mx-1"
+                                   title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form method="post" 
+                                      action="{{ path('app_planning_activity_delete', {
+                                          'activityId': planning.activity.idActivity,
+                                          'salleId': planning.salle.idSalle
+                                      }) }}"
+                                      class="d-inline"
+                                      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette planification?');">
+                                    <input type="hidden" 
+                                           name="_token" 
+                                           value="{{ csrf_token('delete_' ~ planning.activity.idActivity ~ '_' ~ planning.salle.idSalle) }}">
+                                    <button class="btn btn-danger btn-circle btn-sm mx-1" title="Supprimer">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Aucune planification trouvée</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<!-- Page level plugins -->
+<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+<!-- Page level custom scripts -->
+<script>
+$(document).ready(function() {
+    $('#dataTable').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+        },
+        "columnDefs": [
+            { 
+                "orderable": false, 
+                "targets": [5] // Désactive le tri sur la colonne Actions
+            },
+            {
+                "type": "num", 
+                "targets": [3] // Traite la colonne Capacité comme numérique
+            }
+        ],
+        "order": [[1, 'asc']], // Tri par défaut sur la colonne Activité
+        "responsive": true
+    });
+});
+</script>
+{% endblock %}
