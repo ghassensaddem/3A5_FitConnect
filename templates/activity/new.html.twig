@@ -4,7 +4,23 @@
 
 {% block css %}
     {{ parent() }}
-    <!-- Additional CSS for this page if needed -->
+    <style>
+        /* Style personnalisé pour les erreurs */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: block;
+        }
+        /* Style pour les champs invalides */
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        /* Style pour les labels des champs invalides */
+        .invalid-label {
+            color: #dc3545;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -20,40 +36,63 @@
             
             {{ form_start(form, {'attr': {'class': 'user', 'enctype': 'multipart/form-data'}}) }}
                 <div class="form-group">
-                    {{ form_label(form.nomActivity, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_label(form.nomActivity, null, {
+                        'label_attr': {
+                            'class': form.nomActivity.vars.errors|length ? 'form-label invalid-label' : 'form-label'
+                        }
+                    }) }}
                     {{ form_widget(form.nomActivity, {
                         'attr': {
-                            'class': 'form-control form-control-user',
+                            'class': form.nomActivity.vars.errors|length ? 'form-control form-control-user is-invalid' : 'form-control form-control-user',
                             'placeholder': 'Nom de l\'activité',
                             'maxlength': 20
                         }
                     }) }}
-                    {{ form_errors(form.nomActivity) }}
+                    {{ form_errors(form.nomActivity, {
+                        'attr': {'class': 'error-message'},
+                        'label_attr': {'class': 'error-label'}
+                    }) }}
                 </div>
                 
                 <div class="form-group">
-                    {{ form_label(form.imageFile, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_label(form.imageFile, null, {
+                        'label_attr': {
+                            'class': form.imageFile.vars.errors|length ? 'form-label invalid-label' : 'form-label'
+                        }
+                    }) }}
                     <div class="custom-file">
                         {{ form_widget(form.imageFile, {
                             'attr': {
-                                'class': 'custom-file-input',
+                                'class': form.imageFile.vars.errors|length ? 'custom-file-input is-invalid' : 'custom-file-input',
                                 'lang': 'fr'
                             }
                         }) }}
-                        <label class="custom-file-label" for="activity_imageFile">Choisir un fichier...</label>
+                        <label class="custom-file-label" for="activity_imageFile">
+                            {{ form.vars.value.iconActivity ? form.vars.value.iconActivity : 'Choisir un fichier...' }}
+                        </label>
                     </div>
                     <small class="form-text text-muted">Formats acceptés: JPG, PNG, WEBP (max 2Mo)</small>
-                    {{ form_errors(form.imageFile) }}
+                    {{ form_errors(form.imageFile, {
+                        'attr': {'class': 'error-message'},
+                        'label_attr': {'class': 'error-label'}
+                    }) }}
                 </div>
                 
                 <div class="form-group">
-                    {{ form_label(form.categorieActivity, null, {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.categorieActivity, {
-                        'attr': {
-                            'class': 'form-control form-control-user'
+                    {{ form_label(form.categorieActivity, null, {
+                        'label_attr': {
+                            'class': form.categorieActivity.vars.errors|length ? 'form-label invalid-label' : 'form-label'
                         }
                     }) }}
-                    {{ form_errors(form.categorieActivity) }}
+                    {{ form_widget(form.categorieActivity, {
+                        'attr': {
+                            'class': form.categorieActivity.vars.errors|length ? 'form-control form-control-user is-invalid' : 'form-control form-control-user'
+                        }
+                    }) }}
+                    {{ form_errors(form.categorieActivity, {
+                        'attr': {'class': 'error-message'},
+                        'label_attr': {'class': 'error-label'}
+                    }) }}
                 </div>
                 
                 <div class="text-center mt-4">
@@ -74,6 +113,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             const fileInput = document.querySelector('.custom-file-input');
             if (fileInput) {
+                // Set initial filename if editing
+                const initialFile = '{{ form.vars.value.iconActivity }}';
+                if (initialFile) {
+                    const nextSibling = fileInput.nextElementSibling;
+                    nextSibling.innerText = initialFile;
+                }
+
                 fileInput.addEventListener('change', function(e) {
                     const fileName = e.target.files[0]?.name || 'Choisir un fichier...';
                     const nextSibling = e.target.nextElementSibling;

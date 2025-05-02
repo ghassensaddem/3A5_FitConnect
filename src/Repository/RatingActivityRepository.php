@@ -36,5 +36,17 @@ class RatingActivityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function countCommentsByActivityForSalle(int $salleId): array
+{
+    return $this->createQueryBuilder('r')
+        ->select('a.idActivity, a.nomActivity, COUNT(r) as commentCount')
+        ->join('r.activity', 'a')
+        ->where('r.salle = :salleId')
+        ->setParameter('salleId', $salleId)
+        ->groupBy('a.idActivity')
+        ->getQuery()
+        ->getResult();
+}
     
 }

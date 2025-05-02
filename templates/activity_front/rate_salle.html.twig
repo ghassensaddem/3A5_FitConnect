@@ -5,7 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noter {{ salle.nomSalle }} - {{ activity.nomActivity }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        /* Style pour le bouton microphone */
+/* Animation du microphone */
+    /* Animation du microphone */
+.pulse-animation {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-left: 5px;
+    border-radius: 50%;
+    background: #dc3545;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+    100% { transform: scale(0.95); opacity: 1; }
+}
+
+/* État d'enregistrement */
+#voiceCommentBtn.recording {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+}
+
+/* État d'enregistrement */
+#voiceCommentBtn.recording {
+    background-color: #dc3545 !important;
+    color: white !important;
+    animation: pulse 1.5s infinite;
+}
+
+/* Feedback visuel pour les navigateurs non supportés */
+#voiceCommentBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+
+
         :root {
             --primary: #28a745;
             --primary-light: #5cb85c;
@@ -592,7 +635,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
+                        <div class="form-group">
                         <label class="form-label required">Votre commentaire</label>
                         {{ form_widget(form.review, {'attr': {
                             'class': 'form-control',
@@ -608,64 +651,83 @@
                         <i class="fas fa-{{ userRating ? 'save' : 'paper-plane' }}"></i> 
                         {{ userRating ? 'Mettre à jour' : 'Publier' }} votre avis
                     </button>
+                    
                 {{ form_end(form) }}
+                <button type="button" id="voiceCommentBtn" class="btn btn-outline-secondary rounded-circle" 
+                    style="width: 50px; height: 50px; padding: 0; margin-left: 10px;">
+                    <i class="fas fa-microphone"></i>
+                    <span class="pulse-animation" style="display: none;"></span>
+                </button>
             </div>
             
             <div class="reviews-section">
-                <h2 class="section-title">
-                    <i class="fas fa-comments mr-2"></i>Avis des utilisateurs
-                </h2>
-                
-                {% if ratings|length > 0 %}
-                    {% for rating in ratings %}
-                        <div class="review-card" id="review-{{ rating.client.id }}">
-                            {% if rating.client.id == currentUserId %}
-                            <div class="review-actions">
-                                <button class="btn btn-primary btn-sm edit-review" 
-                                        data-rating="{{ rating.ratingStars }}"
-                                        data-review="{{ rating.review }}"
-                                        data-target="{{ path('rate_salle', {'activityId': activity.idActivity, 'salleId': salle.idSalle}) }}">
-                                    <i class="fas fa-edit"></i> Modifier
-                                </button>
-                                <button class="btn btn-danger btn-sm delete-review" 
-                                        data-target="{{ path('delete_rating', {
-                                            'activityId': activity.idActivity,
-                                            'salleId': salle.idSalle,
-                                            'clientId': currentUserId
-                                        }) }}">
-                                    <i class="fas fa-trash"></i> Supprimer
-                                </button>
-                            </div>
-                            {% endif %}
-                            
-                            <div class="review-header">
-                                <div class="review-stars">
-                                    {% for i in 1..6 %}
-                                        <i class="fas fa-star {{ i <= rating.ratingStars ? 'active' : '' }}"></i>
-                                    {% endfor %}
-                                </div>
-                                <span class="review-author">{{ rating.client.nom }} {{ rating.client.prenom }}</span>
-                            </div>
-                            <div class="review-content">
-                                {{ rating.review ? rating.review : "Cet utilisateur n'a pas laissé de commentaire." }}
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="no-reviews">
-                        <i class="far fa-comment-dots"></i>
-                        <p>Soyez le premier à donner votre avis !</p>
-                    </div>
-                {% endif %}
-            </div>
+            <h2 class="section-title">
+                <i class="fas fa-comments mr-2"></i>Avis des utilisateurs
+            </h2>
             
-            <div class="app-footer">
-                <a href="javascript:history.back()" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Retour
-                </a>
+           {% if ratings|length > 0 %}
+    {% for rating in ratings %}
+        <div class="review-card" id="review-{{ rating.client.id }}">
+            {% if rating.client.id == currentUserId %}
+            <div class="review-actions">
+                <button class="btn btn-primary btn-sm edit-review" 
+                        data-rating="{{ rating.ratingStars }}"
+                        data-review="{{ rating.review }}"
+                        data-target="{{ path('rate_salle', {'activityId': activity.idActivity, 'salleId': salle.idSalle}) }}">
+                    <i class="fas fa-edit"></i> Modifier
+                </button>
+                <button class="btn btn-danger btn-sm delete-review" 
+                        data-target="{{ path('delete_rating', {
+                            'activityId': activity.idActivity,
+                            'salleId': salle.idSalle,
+                            'clientId': currentUserId
+                        }) }}">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            </div>
+            {% endif %}
+            
+            <div class="review-header">
+                <div class="review-stars">
+                    {% for i in 1..6 %}
+                        <i class="fas fa-star {{ i <= rating.ratingStars ? 'active' : '' }}"></i>
+                    {% endfor %}
+                </div>
+                <span class="review-author">{{ rating.client.nom }} {{ rating.client.prenom }}</span>
+            </div>
+           <div class="review-content">
+    {{ rating.review ? rating.review : "Aucun commentaire" }}
+    
+    {% set compositeKey = rating.activity.idActivity ~ '_' ~ rating.salle.idSalle ~ '_' ~ rating.client.id %}
+    {% if rating.review and translatedReviews[compositeKey] is defined and translatedReviews[compositeKey] != rating.review %}
+        <div class="translation-box">
+            <button class="btn btn-sm btn-outline-info toggle-translation">
+                <i class="fas fa-language"></i> Traduire en anglais
+            </button>
+            <div class="translation-text" style="display: none;">
+                <strong>Traduction :</strong>
+                <p>{{ translatedReviews[compositeKey] }}</p>
             </div>
         </div>
+    {% endif %}
+</div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="no-reviews">
+        <i class="far fa-comment-dots"></i>
+        <p>Soyez le premier à donner votre avis !</p>
     </div>
+{% endif %}
+</div>
+
+<div class="app-footer">
+    <a href="javascript:history.back()" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Retour
+    </a>
+</div>
+</div>
+</div>
 
     <!-- Modal de confirmation de suppression -->
     <div class="modal" id="deleteModal">
@@ -867,7 +929,140 @@ document.querySelectorAll('.edit-review').forEach(button => {
                     }
                 }
             });
+
+            // gestion de bouton de traduction 
+            document.querySelectorAll('.toggle-translation').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const translationText = this.nextElementSibling;
+                    const isHidden = translationText.style.display === 'none';
+                    
+                    translationText.style.display = isHidden ? 'block' : 'none';
+                    this.innerHTML = isHidden 
+                        ? '<i class="fas fa-language"></i> Masquer la traduction' 
+                        : '<i class="fas fa-language"></i> Afficher la traduction';
+                });
+            });
+
+
         });
+
+
+
+
+        // Reconnaissance vocale
+// Reconnaissance vocale pour Opera/Chrome/Edge
+// Attend que TOUT le DOM soit chargé
+// Reconnaissance vocale améliorée
+document.addEventListener('DOMContentLoaded', function() {
+    const voiceBtn = document.getElementById('voiceCommentBtn');
+    const commentInput = document.getElementById('{{ form.review.vars.id }}');
+    const pulseAnimation = voiceBtn.querySelector('.pulse-animation');
+
+    // Vérification du support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+    if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'fr-FR';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        voiceBtn.addEventListener('click', function() {
+            if (voiceBtn.classList.contains('recording')) {
+                // Arrêt de l'enregistrement
+                recognition.stop();
+                resetMicButton();
+            } else {
+                // Démarrage de l'enregistrement
+                try {
+                    recognition.start();
+                    voiceBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                    voiceBtn.classList.add('recording');
+                    pulseAnimation.style.display = 'inline-block';
+                    
+                    // Feedback visuel
+                    Swal.fire({
+                        title: 'Parlez maintenant...',
+                        icon: 'info',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        toast: true,
+                        position: 'top-end'
+                    });
+                } catch (e) {
+                    console.error('Erreur:', e);
+                    Swal.fire({
+                        title: 'Erreur',
+                        text: 'Impossible d\'accéder au microphone',
+                        icon: 'error'
+                    });
+                    resetMicButton();
+                }
+            }
+        });
+
+        // Résultat de la reconnaissance
+        recognition.onresult = function(e) {
+            const transcript = e.results[0][0].transcript;
+            commentInput.value = commentInput.value + ' ' + transcript; // Ajoute au texte existant
+            resetMicButton();
+            
+            // Feedback de succès
+            Swal.fire({
+                title: 'Texte transcrit!',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        };
+
+        // Gestion des erreurs
+        recognition.onerror = function(e) {
+            console.error('Erreur reconnaissance:', e.error);
+            let errorMessage = 'Erreur lors de la reconnaissance';
+            
+            if (e.error === 'not-allowed') {
+                errorMessage = 'Permission microphone refusée';
+            } else if (e.error === 'no-speech') {
+                errorMessage = 'Aucune parole détectée';
+            }
+            
+            Swal.fire({
+                title: 'Erreur',
+                text: errorMessage,
+                icon: 'error'
+            });
+            resetMicButton();
+        };
+
+        // Réinitialisation quand c'est fini
+        recognition.onend = function() {
+            if (voiceBtn.classList.contains('recording')) {
+                resetMicButton();
+            }
+        };
+
+        function resetMicButton() {
+            voiceBtn.classList.remove('recording');
+            voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+            pulseAnimation.style.display = 'none';
+        }
+
+    } else {
+        // Navigateur non supporté
+        voiceBtn.onclick = function() {
+            Swal.fire({
+                title: 'Fonctionnalité non supportée',
+                text: 'La reconnaissance vocale ne fonctionne que sur Chrome, Edge et Opera',
+                icon: 'warning'
+            });
+        };
+        voiceBtn.style.opacity = '0.5';
+        voiceBtn.style.cursor = 'not-allowed';
+    }
+});
     </script>
 </body>
 </html>

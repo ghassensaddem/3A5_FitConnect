@@ -16,6 +16,8 @@ use App\Form\RatingType;
 use App\Repository\ClientRepository;
 use App\Repository\RatingActivityRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\LibreTranslateService;
+
 
 
 
@@ -96,17 +98,17 @@ public function rateSalle(
     int $salleId, 
     Request $request,
     ClientRepository $clientRepository,
-    RatingActivityRepository $ratingRepository
+    RatingActivityRepository $ratingRepository,
+    LibreTranslateService $translator
 ): Response {
     $activity = $this->activityRepository->find($activityId);
     $salle = $this->managerRegistry->getRepository(Sallesportif::class)->find($salleId);
-    $user = $clientRepository->find(2); // Remplacez par $this->getUser() en production
+    $user = $clientRepository->find(2); // À remplacer par $this->getUser() en production
 
     if (!$activity || !$salle) {
         throw $this->createNotFoundException('Activité ou salle non trouvée');
     }
 
-    // Cherche un rating existant ou crée un nouveau
     $rating = $ratingRepository->findUserRating($user, $activity, $salle) ?? new RatingActivity();
     
     $form = $this->createForm(RatingType::class, $rating);
@@ -128,11 +130,42 @@ public function rateSalle(
         ]);
     }
 
-    // Récupère tous les avis pour cette salle et activité
     $ratings = $ratingRepository->findBy([
         'activity' => $activity,
         'salle' => $salle
     ]);
+
+    // Traduction des avis - Version pour clé composite
+    $translatedReviews = [];
+    foreach ($ratings as $rating) {
+        $reviewText = $rating->getReview();
+        if (!empty(trim($reviewText ?? ''))) {
+            try {
+                $translation = $translator->translate(
+                    $reviewText, 
+                    'en',
+                    mb_strlen($reviewText) < 20 ? 'fr' : 'auto' 
+                );
+                
+                $compositeKey = sprintf(
+                    '%d_%d_%d',
+                    $rating->getActivity()->getIdActivity(),
+                    $rating->getSalle()->getIdSalle(),
+                    $rating->getClient()->getId()
+                );
+                $translatedReviews[$compositeKey] = $translation;
+            } catch (\Exception $e) {
+                // En cas d'erreur, on utilise le texte original
+                $compositeKey = sprintf(
+                    '%d_%d_%d',
+                    $rating->getActivity()->getIdActivity(),
+                    $rating->getSalle()->getIdSalle(),
+                    $rating->getClient()->getId()
+                );
+                $translatedReviews[$compositeKey] = $reviewText;
+            }
+        }
+    }
 
     return $this->render('activity_front/rate_salle.html.twig', [
         'activity' => $activity,
@@ -140,9 +173,21 @@ public function rateSalle(
         'ratings' => $ratings,
         'form' => $form->createView(),
         'userRating' => $ratingRepository->findUserRating($user, $activity, $salle),
-        'currentUserId' => 2 // ID fixe
+        /* 
+        ClientRepository $clientRepository,
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        if (!$user instanceof Client) {
+            throw new \LogicException('Utilisateur invalide.');
+        }
+             $user = $security->getUser();
+            */
+        'currentUserId' => 2, 
+        'translatedReviews' => $translatedReviews
     ]);
 }
+   
 #[Route('/activities/{activityId}/salle/{salleId}/comments', name: 'view_comments')]
 public function viewComments(int $activityId, int $salleId, RatingActivityRepository $ratingRepo): Response
 {
@@ -199,6 +244,16 @@ public function updateRating(
     ClientRepository $clientRepository,
     RatingActivityRepository $ratingRepository
 ): JsonResponse {
+    /* 
+        ClientRepository $clientRepository,
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+        if (!$user instanceof Client) {
+            throw new \LogicException('Utilisateur invalide.');
+        }
+             $user = $security->getUser();
+            */
     $user = $clientRepository->find(2); // ID fixe à 1
     $activity = $this->activityRepository->find($activityId);
     $salle = $this->managerRegistry->getRepository(Sallesportif::class)->find($salleId);
@@ -226,4 +281,7 @@ public function updateRating(
         'newReview' => $rating->getReview()
     ]);
 }
+
+
+
 }

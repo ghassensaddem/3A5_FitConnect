@@ -29,13 +29,16 @@ class Activity
     #[ORM\OneToMany(mappedBy: 'activity', targetEntity: PlanningActivity::class)]
     private Collection $plannings;
 
-   
-
     // Getters et Setters
 
     public function getIdActivity(): ?int
     {
         return $this->idActivity;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nomActivity;
     }
 
     public function getNomActivity(): ?string
@@ -46,7 +49,6 @@ class Activity
     public function setNomActivity(string $nomActivity): self
     {
         $this->nomActivity = $nomActivity;
-
         return $this;
     }
 
@@ -58,7 +60,6 @@ class Activity
     public function setIconActivity(string $iconActivity): self
     {
         $this->iconActivity = $iconActivity;
-
         return $this;
     }
 
@@ -70,24 +71,20 @@ class Activity
     public function setCategorieActivity(?CategorieActivity $categorieActivity): self
     {
         $this->categorieActivity = $categorieActivity;
-
         return $this;
     }
-
-    // Méthodes utiles
 
     public function __toString(): string
     {
         return $this->nomActivity ?? '';
     }
-    // Méthode pour récupérer les salles associées
-// Dans src/Entity/Activity.php
-public function getSallesAssociees(): array
-{
-    return $this->plannings
-        ->map(function($planning) {
-            return $planning->getSalle();
-        })
-        ->toArray();
-}
+
+    public function getSallesAssociees(): array
+    {
+        return $this->plannings
+            ->map(function($planning) {
+                return $planning->getSalle();
+            })
+            ->toArray();
+    }
 }

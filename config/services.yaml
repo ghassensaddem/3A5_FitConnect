@@ -1,10 +1,9 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
+# config/services.yaml
 
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     upload_directory: '%kernel.project_dir%/public/uploads/images'
+    default_client_phone: '%env(DEFAULT_CLIENT_PHONE)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -19,6 +18,24 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    # Configuration spécifique pour LibreTranslateService
+    App\Service\LibreTranslateService:
+        arguments:
+            $httpClient: '@http_client' # Ajoutez cette ligne si vous avez des erreurs d'injection
+            $logger: '@logger'
+
+     # Configuration pour TwilioCaller
+    App\Service\TwilioCaller:
+        arguments:
+            $accountSid: '%env(TWILIO_ACCOUNT_SID)%'
+            $authToken: '%env(TWILIO_AUTH_TOKEN)%'
+            $phoneNumber: '%env(TWILIO_PHONE_NUMBER)%'
+            $defaultClientPhone: '%env(DEFAULT_CLIENT_PHONE)%'
+            $defaultMessage: '%env(TWILIO_DEFAULT_CALL_MESSAGE)%'
+            $logger: '@?logger'
+            $timeout: '%env(int:TWILIO_CALL_TIMEOUT)%'
+            
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

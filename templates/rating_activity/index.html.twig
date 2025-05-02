@@ -25,12 +25,74 @@
         </div>
     </div>
 </div>
+
+<!-- Pie Chart Dynamique SEULEMENT -->
+<div class="col-xl-4 col-lg-5">
+    <div class="card shadow mb-4">
+        <!-- Card Header -->
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Répartition des commentaires par activité</h6> <!-- Titre modifié -->
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="chart-pie pt-4 pb-2">
+                <canvas id="commentairesChart"></canvas> <!-- ID modifié pour correspondre au JS -->
+            </div>
+            <div class="mt-4 text-center small">
+                {% for item in chartData %}
+                    <span class="mr-2">
+                        <i class="fas fa-circle" style="color: {{ item.color }}"></i> 
+                        {{ item.label }} ({{ item.quantite }} commentaires) <!-- Texte modifié -->
+                    </span>
+                    {% if not loop.last %}|{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('commentairesChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {{ chartData|map(item => item.label)|json_encode|raw }},
+            datasets: [{
+                data: {{ chartData|map(item => item.value)|json_encode|raw }},
+                backgroundColor: {{ chartData|map(item => item.color)|json_encode|raw }},
+                hoverBorderColor: "rgba(234, 236, 244, 1)"
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const quantities = {{ chartData|map(item => item.quantite)|json_encode|raw }};
+                            return `${context.label}: ${context.raw}% (${quantities[context.dataIndex]} commentaires)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+
+
+
+
 {% endblock %}
 
 {% block js %}
 {{ parent() }}
 <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <script>
 $(document).ready(function() {
@@ -45,6 +107,54 @@ $(document).ready(function() {
         "order": [[3, "desc"]],
         "responsive": true
     });
+
+
+// Gestion des appels
+   $('.call-btn').click(function() {
+    const phone = $(this).data('phone');
+    
+    Swal.fire({
+        title: 'Envoyer le rappel au client standard',
+        text: 'Voulez-vous envoyer le message vocal au client par défaut ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui, envoyer',
+        cancelButtonText: 'Annuler'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.post('{{ path("call_client") }}', {
+                phone: phone,
+                _token: '{{ csrf_token("call_client") }}'
+            }).then((response) => {
+                // Message mis à jour pour refléter le client statique
+                const successMsg = response.message || 'Message envoyé au client standard';
+                Swal.fire('Succès', successMsg, 'success');
+            }).catch((error) => {
+                const errorMsg = error.responseJSON?.message || 'Échec d\'envoi au client standard';
+                Swal.fire('Erreur', errorMsg, 'error');
+            });
+        }
+    });
 });
+    $.post('{{ path("call_client") }}', {
+    phone: phone,
+    _token: '{{ csrf_token("call_client") }}'
+}).then((response) => {
+    if (response.status === 'success') {
+        Swal.fire('Succès', response.message, 'success');
+    } else {
+        Swal.fire('Erreur', response.message, 'error');
+    }
+}).catch((error) => {
+    console.error('Full error:', error.responseJSON);
+    Swal.fire({
+        title: 'Erreur détaillée',
+        html: `<pre>${JSON.stringify(error.responseJSON, null, 2)}</pre>`,
+        icon: 'error'
+    });
+});
+
+});
+
 </script>
 {% endblock %}

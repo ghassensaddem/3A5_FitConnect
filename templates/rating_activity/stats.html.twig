@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="col-xl-4 col-lg-5">
+    <div class="card shadow mb-4">
+        <!-- Card Header -->
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Répartition des commentaires par activité</h6> <!-- Titre modifié -->
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="chart-pie pt-4 pb-2">
+                <canvas id="commentairesChart"></canvas> <!-- ID modifié pour correspondre au JS -->
+            </div>
+            <div class="mt-4 text-center small">
+                {% for item in chartData %}
+                    <span class="mr-2">
+                        <i class="fas fa-circle" style="color: {{ item.color }}"></i> 
+                        {{ item.label }} ({{ item.quantite }} commentaires) <!-- Texte modifié -->
+                    </span>
+                    {% if not loop.last %}|{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Ajout nécessaire si non présent dans base.html.twig -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('commentairesChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {{ chartData|map(item => item.label)|json_encode|raw }},
+            datasets: [{
+                data: {{ chartData|map(item => item.value)|json_encode|raw }},
+                backgroundColor: {{ chartData|map(item => item.color)|json_encode|raw }},
+                hoverBorderColor: "rgba(234, 236, 244, 1)"
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const quantities = {{ chartData|map(item => item.quantite)|json_encode|raw }};
+                            return `${context.label}: ${context.raw}% (${quantities[context.dataIndex]} commentaires)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
