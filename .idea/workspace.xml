@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4621b0c4-ae25-4615-8c5a-dabff9e42408" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Liste_Events.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Liste_Events.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commande.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/commande.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event_6.ics" beforeDir="false" afterPath="$PROJECT_DIR$/event_6.ics" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event_7.ics" beforeDir="false" afterPath="$PROJECT_DIR$/event_7.ics" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posts_export.csv" beforeDir="false" afterPath="$PROJECT_DIR$/posts_export.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esprit/controllers/AfficherEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esprit/controllers/AfficherEvents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esprit/controllers/AfficherProgramme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esprit/controllers/AfficherProgramme.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esprit/controllers/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esprit/controllers/Profile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esprit/excel/DonnéeÉvénements.XLS" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esprit/excel/DonnéeÉvénements.XLS" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esprit/services/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esprit/services/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/esprit/tests/MainProg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/esprit/tests/MainProg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/DetailsSalleActivity.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/DetailsSalleActivity.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+        <option value="FxmlFile" />
+        <option value="CSS File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2su1emZOXddhA6O2BQFqsyhKdJS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainProg.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainProg1.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.first_try_2025 [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.first_try_2025 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.workshop_pidev_3a5 [org.openjfx:javafx-maven-plugin:0.0.8:jlink].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.workshop_pidev_3a5 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;D:/java/TESTGUI/TESTGUI/src/main/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/3A5_FitConnect&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;D:/java/TESTGUI/TESTGUI/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\java\TESTGUI\TESTGUI\src\main\resources\Styles" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4621b0c4-ae25-4615-8c5a-dabff9e42408" name="Changes" comment="" />
+      <created>1739290747326</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739290747326</updated>
+      <workItem from="1739290748575" duration="7331000" />
+      <workItem from="1739299495326" duration="5975000" />
+      <workItem from="1739357505823" duration="58000" />
+      <workItem from="1739357938810" duration="24194000" />
+      <workItem from="1739391705055" duration="633000" />
+      <workItem from="1739438640963" duration="18481000" />
+      <workItem from="1739461385644" duration="5408000" />
+      <workItem from="1739466907139" duration="7764000" />
+      <workItem from="1739550898394" duration="15399000" />
+      <workItem from="1739624596158" duration="19801000" />
+      <workItem from="1739647682358" duration="261000" />
+      <workItem from="1739656354863" duration="2914000" />
+      <workItem from="1739732870843" duration="2185000" />
+      <workItem from="1739801375216" duration="921000" />
+      <workItem from="1739802307886" duration="19135000" />
+      <workItem from="1739867347227" duration="7016000" />
+      <workItem from="1739875873910" duration="2005000" />
+      <workItem from="1739881039726" duration="2768000" />
+      <workItem from="1739885599630" duration="2355000" />
+      <workItem from="1739977854153" duration="896000" />
+      <workItem from="1739988081374" duration="311000" />
+      <workItem from="1739990277068" duration="9000" />
+      <workItem from="1740946065829" duration="8990000" />
+      <workItem from="1740958407374" duration="233000" />
+      <workItem from="1741004915921" duration="6154000" />
+      <workItem from="1741011520055" duration="3432000" />
+      <workItem from="1741014986997" duration="935000" />
+      <workItem from="1741015961730" duration="382000" />
+      <workItem from="1741016357244" duration="2311000" />
+      <workItem from="1741032414582" duration="21280000" />
+      <workItem from="1741082495025" duration="1006000" />
+      <workItem from="1741086853936" duration="3920000" />
+      <workItem from="1741289279673" duration="3000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
