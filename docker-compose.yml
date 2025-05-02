@@ -16,6 +16,6 @@ services:
 ###< doctrine/doctrine-bundle ###
 
 volumes:
-###> doctrine/doctrine-bundle ###
+###> doctrine/doctrine-bundle ###//
   db-data:
 ###< doctrine/doctrine-bundle ###
