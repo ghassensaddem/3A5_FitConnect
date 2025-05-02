@@ -18,7 +18,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/b174585d1fe49ceed21928a945138948cb394600",
                 "reference": "b174585d1fe49ceed21928a945138948cb394600",
-                "shasum": ""
+                "shasum": ""//
             },
             "require": {
                 "composer-plugin-api": "^1.1.0 || ^2.0",
