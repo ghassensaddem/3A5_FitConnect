@@ -1,6 +1,6 @@
 # Fitconnect - Plateforme de mise en relation sportive
 
-![Fitconnect Logo]("C:\Users\rayan\Downloads\logo.png")
+![Fitconnect Logo](C:\Users\rayan\Downloads\logo.png)
 
 ## Table des Matières
 - [Description du projet](#-description-du-projet)
