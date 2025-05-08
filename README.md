@@ -1,6 +1,6 @@
 # Fitconnect - Plateforme de mise en relation sportive
 
-![Fitconnect Logo](images/logo.png)
+![Fitconnect Logo](uploads/logo.png)
 
 
 ## Table des Matières
